@@ -61,5 +61,27 @@ public class User {
         return true;
     } // tested
 
+    public boolean removeFriend(User friend, LinkedList<User> allUsers) {
+
+        return true;
+    }
+
+    public boolean removeCompany(Company company, LinkedList<Company> allCompanies) {
+
+        return true;
+    }
+
+    public boolean deleteUser(LinkedList<User> allUsers) {
+        // remove from allUsers
+        // remove from everyone friends with 'this'
+        return true;
+    }
+
+    public int numberOfMutualFriends(User user, LinkedList<User> allUsers) {
+        int count = 0;
+
+        return count;
+    }
+
 
 }

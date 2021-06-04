@@ -109,4 +109,26 @@ class UserTest {
         added = apinan.addCompany(toysrus, allCompanies);
         assertEquals(false, added);
     }
+
+    @Test
+    void removeFriendTest() {
+
+    }
+
+    @Test
+    void removeCompanyTest() {
+
+    }
+
+    @Test
+    void deleteUserTest() {
+
+    }
+
+    @Test
+    void numberOfMutualFriendsTest() {
+
+    }
+
+
 }
