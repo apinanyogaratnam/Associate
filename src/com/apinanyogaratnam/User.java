@@ -25,7 +25,7 @@ public class User {
         for (User userToPrint : listOfUsers) {
             printClass.print(userToPrint.firstName + ", " + userToPrint.lastName);
         }
-    }
+    } // tested
 
     public boolean isFollowingUser(User possiblyFollowingFriend) {
         for (User user : this.friendsList) {
@@ -50,12 +50,15 @@ public class User {
         return added;
     }// tested
 
-    public int addCompany(Company company, LinkedList<Company> allCompanies) {
-        if (this.isFollowingCompany(company)) return 0;
+    public boolean addCompany(Company company, LinkedList<Company> allCompanies) {
+        if (company == null) return false;
+        if (!helperMethods.isValidCompany(company.name, allCompanies)) return false;
+        if (this.isFollowingCompany(company)) return false;
 
-        this.companiesList.add(company);
+        boolean added = this.companiesList.add(company);
+        company.followersList.add(this);
 
-        return 1;
+        return true;
     }
 
 
