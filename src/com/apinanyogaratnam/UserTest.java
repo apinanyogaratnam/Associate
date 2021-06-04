@@ -73,12 +73,15 @@ class UserTest {
     void addCompanyTest() {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
+        LinkedList<Company> unofficialAllCompanies = new LinkedList<>();
 
         // creating new users and companies
         User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
         User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers);
         Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
+        Company toysrus = mainMethod.createNewCompany("ToysRus", unofficialAllCompanies);
 
+        // check if apinan and stewie are in mcdonald's followers list
         apinan.addCompany(mcdonald, allCompanies);
         stewie.addCompany(mcdonald, allCompanies);
 
@@ -94,7 +97,16 @@ class UserTest {
 
         assertEquals(true, found);
 
+        // check if apinan can add a null company
+        boolean added = apinan.addCompany(null, allCompanies);
+        assertEquals(false, added);
 
+        // check if apinan can follow a company again
+        added = apinan.addCompany(mcdonald, allCompanies);
+        assertEquals(false, added);
 
+        // check if apinan can add an invalid company
+        added = apinan.addCompany(toysrus, allCompanies);
+        assertEquals(false, added);
     }
 }
