@@ -117,7 +117,16 @@ class MainTest {
 
     @Test
     void getCountOfAllUsersTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
 
+        // create new users
+        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        User stewie = mainMethod.createNewUser("stewie", "angel", "stewietheangel", allUsers);
+        User walter = mainMethod.createNewUser("walter", "white", "heisenborg", allUsers);
+        User local = mainMethod.createNewUser("local", "librarian", "yourlocallibrarian", allUsers);
+
+        int count = mainHelperMethod.getCountOfAllUsers(allUsers);
+        assertEquals(4, count);
     }
 
 }
