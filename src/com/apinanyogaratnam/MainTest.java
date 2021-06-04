@@ -51,7 +51,7 @@ class MainTest {
             }
         }
 
-        assertEquals(null, foundUser);
+        assertEquals(true, foundUser);
     }
 
     @Test
@@ -70,7 +70,7 @@ class MainTest {
             }
         }
 
-        assertEquals(null, foundCompany);
+        assertEquals(true, foundCompany);
     }
 
     @Test
@@ -86,7 +86,7 @@ class MainTest {
     }
 
     @Test
-    public void isValidComapnyTest() {
+    public void isValidCompanyTest() {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
