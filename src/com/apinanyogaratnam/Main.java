@@ -7,19 +7,14 @@ public class Main {
     public static void main(String[] args) {
         LinkedList<User> totalUsers = new LinkedList<>();
 
-
-        User user1 = new User("Apinan", "Yogaratnam", totalUsers);
-        print(totalUsers);
+        createNewUser("Apinan", "Yogaratnam", totalUsers);
     }
 
-    public static void print(String stringToPrint) {
-        System.out.println(stringToPrint);
-    }
+    public static User createNewUser(String firstName, String lastName, LinkedList<User> totalUsers) {
+        Print printClass = new Print();
+        User newUser = new User(firstName, lastName, totalUsers);
+        newUser.print(totalUsers);
 
-    public static void print(LinkedList<User> listOfUsers) {
-        for (int i=0; i<listOfUsers.size(); i++) {
-            User userToPrint = listOfUsers.get(i);
-            print(userToPrint.firstName + ", " + userToPrint.lastName);
-        }
+        return newUser;
     }
 }
