@@ -4,12 +4,11 @@ import java.util.LinkedList;
 
 public class Main {
     private static MainHelper helperMethods = new MainHelper();
+    private static Print printClass = new Print();
     public static void main(String[] args) {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 
-        createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
-        createNewCompany("McDonald's", allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
