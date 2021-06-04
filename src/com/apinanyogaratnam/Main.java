@@ -9,17 +9,17 @@ public class Main {
 
 
         User user1 = new User("Apinan", "Yogaratnam", totalUsers);
-        printListOfUsers(totalUsers);
+        print(totalUsers);
     }
 
-    public static void printString(String stringToPrint) {
+    public static void print(String stringToPrint) {
         System.out.println(stringToPrint);
     }
 
-    public static void printListOfUsers(LinkedList<User> listOfUsers) {
+    public static void print(LinkedList<User> listOfUsers) {
         for (int i=0; i<listOfUsers.size(); i++) {
             User userToPrint = listOfUsers.get(i);
-            printString(userToPrint.firstName + ", " + userToPrint.lastName);
+            print(userToPrint.firstName + ", " + userToPrint.lastName);
         }
     }
 }
