@@ -83,6 +83,10 @@ class MainTest {
 
         isUser = mainHelperMethod.isValidUser("api", allUsers);
         assertEquals(false, isUser);
+
+        String username = null;
+        isUser = mainHelperMethod.isValidUser(username, allUsers);
+        assertEquals(false, isUser);
     }
 
     @Test
@@ -94,6 +98,10 @@ class MainTest {
         assertEquals(true, isCompany);
 
         isCompany = mainHelperMethod.isValidCompany("tim hortons", allCompanies);
+        assertEquals(false, isCompany);
+
+        String companyName = null;
+        isCompany = mainHelperMethod.isValidCompany(companyName, allCompanies);
         assertEquals(false, isCompany);
     }
 

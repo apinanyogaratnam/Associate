@@ -40,6 +40,8 @@ public class User {
     }
 
     public int addFriend(User friend, LinkedList<User> allUsers) {
+        if (friend == null) return 0;
+        if (helperMethods.isValidUser(friend.username, allUsers)) return 0;
         if (this.isFollowingUser(friend)) return 0;
 
         this.friendsList.add(friend);
