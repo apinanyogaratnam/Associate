@@ -152,7 +152,61 @@ class UserTest {
 
     @Test
     void removeCompanyTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+        LinkedList<Company> unofficialAllCompanies = new LinkedList<>();
 
+        // creating new users and companies
+        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers);
+        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
+        Company toysrus = mainMethod.createNewCompany("ToysRus", unofficialAllCompanies);
+
+        // check if apinan and stewie are in mcdonald's followers list
+        apinan.addCompany(mcdonald, allCompanies);
+        stewie.addCompany(mcdonald, allCompanies);
+
+        boolean apinanFound = false;
+        boolean stewieFound = false;
+        boolean found = apinanFound && stewieFound;
+        for (User user : mcdonald.followersList) {
+            if (user.username.equals(apinan.username)) apinanFound = true;
+            if (user.username.equals(stewie.username)) stewieFound = true;
+            found = apinanFound && stewieFound;
+            if (found) break;
+        }
+
+        assertEquals(true, found);
+
+        // check if apinan can remove a null company
+        boolean removed = apinan.removeCompany(null, allCompanies);
+        assertEquals(false, removed);
+
+        // check if apinan can remove mcdonald
+        removed = apinan.removeCompany(mcdonald, allCompanies);
+        assertEquals(true, removed);
+
+        // check if apinan is still following mcdonald
+        boolean isFollowing = apinan.isFollowingCompany(mcdonald);
+        assertEquals(false, isFollowing);
+
+        // check if apinan can remove a company again
+        removed = apinan.addCompany(mcdonald, allCompanies);
+        assertEquals(false, removed);
+
+        // check if apinan can remove an invalid company
+        removed = apinan.removeCompany(toysrus, allCompanies);
+        assertEquals(false, removed);
+
+        // check if apinan and stewie are still in mcdonald's followers list
+        boolean isFoundApinan = false;
+        boolean isFoundStewie = false;
+        for (User user : mcdonald.followersList) {
+            if (user.username.equals(apinan.username)) isFoundApinan = true;
+            if (user.username.equals(stewie.username)) isFoundStewie = true;
+        }
+        assertEquals(false, isFoundApinan);
+        assertEquals(true, isFoundStewie);
     }
 
     @Test
