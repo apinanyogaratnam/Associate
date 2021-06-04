@@ -9,6 +9,7 @@ public class Main {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         createNewUser("Apinan", "Yogaratnam", allUsers);
+        createNewCompany("McDonald's", allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, LinkedList<User> allUsers) {
@@ -22,7 +23,7 @@ public class Main {
     public static Company createNewCompany(String name, LinkedList<Company> allCompanies) {
         Print printClass = new Print();
         Company newCompany = new Company(name, allCompanies);
-        newCompany.print(allCompanies;
+        newCompany.print(allCompanies);
 
         return newCompany;
     }
