@@ -112,7 +112,42 @@ class UserTest {
 
     @Test
     void removeFriendTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<User> unofficialAllUsers = new LinkedList<>();
 
+        // create new users
+        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers);
+        User angel = mainMethod.createNewUser("angel", "angel", "angel", unofficialAllUsers);
+
+        // check if apinan is friends with stewie
+        apinan.addFriend(stewie, allUsers);
+        boolean isFollowing = apinan.isFollowingUser(stewie);
+        assertEquals(true, isFollowing);
+
+        // check if stewie is friends with apinan
+        isFollowing = stewie.isFollowingUser(apinan);
+        assertEquals(true, isFollowing);
+
+        // check if apinan can remove stewie
+        boolean removed = apinan.removeFriend(stewie, allUsers);
+        assertEquals(true, removed);
+
+        // check if apinan is still friends with stewie
+        isFollowing = apinan.isFollowingUser(stewie);
+        assertEquals(false, isFollowing);
+
+        // check if apinan can remove stewie again
+        removed = apinan.removeFriend(stewie, allUsers);
+        assertEquals(false, removed);
+
+        // check if apinan can remove a null friend
+        removed = apinan.removeFriend(null, allUsers);
+        assertEquals(false, removed);
+
+        // check if apinan can remove an invalid user
+        removed = apinan.removeFriend(angel, allUsers);
+        assertEquals(false, removed);
     }
 
     @Test

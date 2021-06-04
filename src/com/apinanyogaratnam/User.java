@@ -62,6 +62,12 @@ public class User {
     } // tested
 
     public boolean removeFriend(User friend, LinkedList<User> allUsers) {
+        if (friend == null) return false;
+        if (!helperMethods.isValidUser(friend.username, allUsers)) return false;
+        if (!isFollowingUser(friend)) return false;
+
+        this.friendsList.remove(this.friendsList.indexOf(friend));
+        friend.friendsList.remove(friend.friendsList.indexOf(this));
 
         return true;
     }
