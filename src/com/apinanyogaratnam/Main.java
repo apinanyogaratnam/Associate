@@ -8,13 +8,14 @@ public class Main {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 
-        createNewUser("Apinan", "Yogaratnam", allUsers);
+        createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
         createNewCompany("McDonald's", allCompanies);
     }
 
-    public static User createNewUser(String firstName, String lastName, LinkedList<User> allUsers) {
+    public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
         Print printClass = new Print();
-        User newUser = new User(firstName, lastName, allUsers);
+        User newUser = new User(firstName, lastName, username, allUsers);
+        if (!newUser.createdSuccessfully) return null;
         newUser.print(allUsers);
 
         return newUser;
@@ -26,10 +27,6 @@ public class Main {
         newCompany.print(allCompanies);
 
         return newCompany;
-    }
-
-    public static void addFriend(User user) {
-        // finish function
     }
 
 }
