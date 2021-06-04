@@ -25,6 +25,6 @@ public class MainHelper {
 
     public static int getCountOfAllUsers(LinkedList<User> allUsers) {
         return allUsers.size();
-    }
+    } // tested
 
 }
