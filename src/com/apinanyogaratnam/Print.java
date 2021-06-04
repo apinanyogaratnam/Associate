@@ -18,4 +18,6 @@ public class Print {
     public static void print(double doubleToPrint) {
         System.out.println(doubleToPrint);
     }
+
+
 }
