@@ -12,7 +12,7 @@ public class User {
     boolean visited;
     boolean createdSuccessfully = true;
 
-    // initializing a new user (make error checks to see if username currently exists)
+    // initializing a new user
     User(String firstName, String lastName, String username, LinkedList<User> allUsers) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,6 +63,7 @@ public class User {
 
     public int addCompany(Company company, LinkedList<Company> allCompanies) {
         // Finish code
+        return 1;
     }
 
 
