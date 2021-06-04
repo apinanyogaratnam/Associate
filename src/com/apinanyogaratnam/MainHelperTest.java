@@ -7,6 +7,9 @@ import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainHelperTest {
+    private static MainHelper mainHelperMethod = new MainHelper();
+    static Main mainMethod = new Main();
+
     @Test
     public void isValidUserTest() {
         LinkedList<User> allUsers = new LinkedList<>();
