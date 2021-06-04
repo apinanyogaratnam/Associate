@@ -63,6 +63,7 @@ public class User {
 
     public int addCompany(Company company, LinkedList<Company> allCompanies) {
         // Finish code
+
         return 1;
     }
 
