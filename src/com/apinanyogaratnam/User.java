@@ -33,21 +33,22 @@ public class User {
         }
 
         return false;
-    }
+    } // tested
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
         return helperMethods.isValidCompany(possiblyFollowingCompany.name, this.companiesList);
     }
 
-    public int addFriend(User friend, LinkedList<User> allUsers) {
-        if (friend == null) return 0;
-        if (helperMethods.isValidUser(friend.username, allUsers)) return 0;
-        if (this.isFollowingUser(friend)) return 0;
+    public boolean addFriend(User friend, LinkedList<User> allUsers) {
+        if (friend == null) return false;
+        if (!helperMethods.isValidUser(friend.username, allUsers)) return false;
+        if (this.isFollowingUser(friend)) return false;
 
-        this.friendsList.add(friend);
+        boolean added = this.friendsList.add(friend);
+        added = friend.friendsList.add(this) && added;
 
-        return 1;
-    }
+        return added;
+    }// tested
 
     public int addCompany(Company company, LinkedList<Company> allCompanies) {
         if (this.isFollowingCompany(company)) return 0;

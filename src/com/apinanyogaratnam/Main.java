@@ -15,7 +15,6 @@ public class Main {
         Print printClass = new Print();
         if (helperMethods.isValidUser(username, allUsers)) return null;
         User newUser = new User(firstName, lastName, username, allUsers);
-        newUser.print(allUsers);
 
         return newUser;
     }
@@ -24,7 +23,6 @@ public class Main {
         Print printClass = new Print();
         if (helperMethods.isValidCompany(name, allCompanies)) return null;
         Company newCompany = new Company(name, allCompanies);
-        newCompany.print(allCompanies);
 
         return newCompany;
     }
