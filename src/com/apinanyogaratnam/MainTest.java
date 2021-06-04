@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
-    private static MainHelper helperMethods = new MainHelper();
+    private static MainHelper mainHelperMethod = new MainHelper();
     static Main mainMethod = new Main();
 
     @Test
@@ -18,7 +18,7 @@ class MainTest {
         // create duplicate user
         User apinanCopy = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
 
-        assertEquals(apinanCopy, null);
+        assertEquals(null, apinanCopy);
     }
 
     @Test
@@ -32,7 +32,7 @@ class MainTest {
         // create duplicate company
         Company timhortonsCopy = mainMethod.createNewCompany("Tim Hortons", allCompanies);
 
-        assertEquals(timhortonsCopy, null);
+        assertEquals(null, timhortonsCopy);
     }
 
     @Test
@@ -51,7 +51,7 @@ class MainTest {
             }
         }
 
-        assertEquals(foundUser, true);
+        assertEquals(null, foundUser);
     }
 
     @Test
@@ -70,6 +70,31 @@ class MainTest {
             }
         }
 
-        assertEquals(foundCompany, true);
+        assertEquals(null, foundCompany);
     }
+
+    @Test
+    public void isValidUserTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+
+        User apinan = mainMethod.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers);
+        boolean isUser = mainHelperMethod.isValidUser(apinan.username, allUsers);
+        assertEquals(true, isUser);
+
+        isUser = mainHelperMethod.isValidUser("api", allUsers);
+        assertEquals(false, isUser);
+    }
+
+    @Test
+    public void isValidComapnyTest() {
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
+        boolean isCompany = mainHelperMethod.isValidCompany(mcdonald.name, allCompanies);
+        assertEquals(true, isCompany);
+
+        isCompany = mainHelperMethod.isValidCompany("tim hortons", allCompanies);
+        assertEquals(false, isCompany);
+    }
+
 }
