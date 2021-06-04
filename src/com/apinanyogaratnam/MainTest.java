@@ -115,4 +115,9 @@ class MainTest {
         assertEquals(false, isCompany);
     }
 
+    @Test
+    void getCountOfAllUsersTest() {
+
+    }
+
 }

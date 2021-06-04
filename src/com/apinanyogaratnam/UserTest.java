@@ -145,6 +145,11 @@ class UserTest {
 
     }
 
+    @Test
+    void suggestCompanies() {
+
+    }
+
 
 
 }

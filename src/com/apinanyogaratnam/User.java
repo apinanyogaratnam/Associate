@@ -99,4 +99,10 @@ public class User {
         return suggestedUsers;
     }
 
+    public LinkedList<Company> suggestCompanies(LinkedList<User> allCompanies) {
+        LinkedList<Company> suggestedCompanies = new LinkedList<>();
+
+        return suggestedCompanies;
+    }
+
 }
