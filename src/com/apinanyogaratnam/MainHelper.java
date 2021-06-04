@@ -22,4 +22,9 @@ public class MainHelper {
 
         return false;
     } // tested
+
+    public static int getCountOfAllUsers(LinkedList<User> allUsers) {
+        return allUsers.size();
+    }
+
 }

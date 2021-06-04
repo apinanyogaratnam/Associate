@@ -126,9 +126,25 @@ class UserTest {
     }
 
     @Test
-    void numberOfMutualFriendsTest() {
+    void getCountOfMutualFriendsTest() {
 
     }
+
+    @Test
+    void getListOfMutualFriendsTest() {
+
+    }
+
+    @Test
+    void getDegreeTest() {
+
+    }
+
+    @Test
+    void suggestUsersTest() {
+
+    }
+
 
 
 }

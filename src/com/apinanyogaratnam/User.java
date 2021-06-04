@@ -77,11 +77,26 @@ public class User {
         return true;
     }
 
-    public int numberOfMutualFriends(User user, LinkedList<User> allUsers) {
+    public int getCountOfMutualFriends(User user, LinkedList<User> allUsers) {
+        return getListOfMutualFriends(user, allUsers).size();
+    }
+
+    public LinkedList<User> getListOfMutualFriends(User user, LinkedList<User> allUsers) {
+        LinkedList<User> mutualFriends = new LinkedList<>();
+
+        return mutualFriends;
+    }
+
+    public int getDegree(User user, LinkedList<User> allUsers) {
         int count = 0;
 
         return count;
     }
 
+    public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
+        LinkedList<User> suggestedUsers = new LinkedList<>();
+
+        return suggestedUsers;
+    }
 
 }
