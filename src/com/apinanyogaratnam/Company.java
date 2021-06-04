@@ -14,7 +14,7 @@ public class Company {
     }
 
     // print company name of all companies
-    public void printCompanies(LinkedList<Company> listOfCompanies) {
+    public void print(LinkedList<Company> listOfCompanies) {
         for (Company companyToPrint : listOfCompanies) {
             printClass.print(companyToPrint.name);
         }

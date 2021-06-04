@@ -19,5 +19,4 @@ public class Print {
         System.out.println(doubleToPrint);
     }
 
-
 }

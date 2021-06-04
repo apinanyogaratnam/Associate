@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         LinkedList<User> allUsers = new LinkedList<>();
-        LinkedList<User> allCompanies = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
 
         createNewUser("Apinan", "Yogaratnam", allUsers);
     }
@@ -18,4 +18,13 @@ public class Main {
 
         return newUser;
     }
+
+    public static Company createNewCompany(String name, LinkedList<Company> allCompanies) {
+        Print printClass = new Print();
+        Company newCompany = new Company(name, allCompanies);
+        newCompany.print(allCompanies;
+
+        return newCompany;
+    }
+
 }
