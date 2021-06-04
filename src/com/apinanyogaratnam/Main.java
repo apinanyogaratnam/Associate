@@ -28,4 +28,8 @@ public class Main {
         return newCompany;
     }
 
+    public static void addFriend(User user) {
+        // finish function
+    }
+
 }
