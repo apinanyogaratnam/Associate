@@ -2,3 +2,4 @@
 
 - Undirected Graphs
 - users identified with username
+- company identified with company name
