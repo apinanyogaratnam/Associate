@@ -1,9 +1,7 @@
 package com.apinanyogaratnam;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.LinkedList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -11,16 +9,29 @@ class MainTest {
     static Main mainMethod = new Main();
 
     @Test
-    public void duplicateUsernameTest() {// creates new users and companies
+    public void duplicateUsernameTest() {
         LinkedList<User> allUsers = new LinkedList<>();
+
+        // creates new users and companies
+        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+
+        // creates null
+        User apinanCopy = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+
+        assertEquals(apinanCopy, null);
+    }
+
+    @Test
+    public void duplicateCompanyTest() {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        // creates new users and companies
+        Company timhortons = mainMethod.createNewCompany("Tim Hortons", allCompanies);
         Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
 
         // creates null
-        User api = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        Company timhortonsCopy = mainMethod.createNewCompany("Tim Hortons", allCompanies);
 
-        assertEquals(api, null);
+        assertEquals(timhortonsCopy, null);
     }
 }
