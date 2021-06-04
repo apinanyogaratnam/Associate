@@ -37,7 +37,7 @@ public class User {
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
         return helperMethods.isValidCompany(possiblyFollowingCompany.name, this.companiesList);
-    }
+    } // tested
 
     public boolean addFriend(User friend, LinkedList<User> allUsers) {
         if (friend == null) return false;
@@ -48,7 +48,7 @@ public class User {
         added = friend.friendsList.add(this) && added;
 
         return added;
-    }// tested
+    } // tested
 
     public boolean addCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
@@ -59,7 +59,7 @@ public class User {
         company.followersList.add(this);
 
         return true;
-    }
+    } // tested
 
 
 }

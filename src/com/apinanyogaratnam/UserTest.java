@@ -71,5 +71,30 @@ class UserTest {
 
     @Test
     void addCompanyTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        // creating new users and companies
+        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers);
+        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
+
+        apinan.addCompany(mcdonald, allCompanies);
+        stewie.addCompany(mcdonald, allCompanies);
+
+        boolean apinanFound = false;
+        boolean stewieFound = false;
+        boolean found = apinanFound && stewieFound;
+        for (User user : mcdonald.followersList) {
+            if (user.username.equals(apinan.username)) apinanFound = true;
+            if (user.username.equals(stewie.username)) stewieFound = true;
+            found = apinanFound && stewieFound;
+            if (found) break;
+        }
+
+        assertEquals(true, found);
+
+
+
     }
 }
