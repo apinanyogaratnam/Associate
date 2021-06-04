@@ -3,7 +3,7 @@ package com.apinanyogaratnam;
 import java.util.LinkedList;
 
 public class User {
-    MainHelper helperMethods = new MainHelper();
+    MainHelper mainHelperMethods = new MainHelper();
     Print printClass = new Print();
     String firstName;
     String lastName;
@@ -36,12 +36,12 @@ public class User {
     } // tested
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
-        return helperMethods.isValidCompany(possiblyFollowingCompany.name, this.companiesList);
+        return mainHelperMethods.isValidCompany(possiblyFollowingCompany.name, this.companiesList);
     } // tested
 
     public boolean addFriend(User friend, LinkedList<User> allUsers) {
         if (friend == null) return false;
-        if (!helperMethods.isValidUser(friend.username, allUsers)) return false;
+        if (!mainHelperMethods.isValidUser(friend.username, allUsers)) return false;
         if (this.isFollowingUser(friend)) return false;
 
         boolean added = this.friendsList.add(friend);
@@ -52,7 +52,7 @@ public class User {
 
     public boolean addCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
-        if (!helperMethods.isValidCompany(company.name, allCompanies)) return false;
+        if (!mainHelperMethods.isValidCompany(company.name, allCompanies)) return false;
         if (this.isFollowingCompany(company)) return false;
 
         boolean added = this.companiesList.add(company);
@@ -63,7 +63,7 @@ public class User {
 
     public boolean removeFriend(User friend, LinkedList<User> allUsers) {
         if (friend == null) return false;
-        if (!helperMethods.isValidUser(friend.username, allUsers)) return false;
+        if (!mainHelperMethods.isValidUser(friend.username, allUsers)) return false;
         if (!isFollowingUser(friend)) return false;
 
         this.friendsList.remove(this.friendsList.indexOf(friend));
@@ -73,6 +73,12 @@ public class User {
     }
 
     public boolean removeCompany(Company company, LinkedList<Company> allCompanies) {
+        if (company == null) return false;
+        if (!mainHelperMethods.isValidCompany(company.name, allCompanies)) return false;
+        if (!isFollowingCompany(company)) return false;
+
+        this.companiesList.remove(this.companiesList.indexOf(company));
+        company.followersList.remove(company.followersList.indexOf(this));
 
         return true;
     }

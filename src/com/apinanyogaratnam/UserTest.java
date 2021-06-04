@@ -191,7 +191,7 @@ class UserTest {
         assertEquals(false, isFollowing);
 
         // check if apinan can remove a company again
-        removed = apinan.addCompany(mcdonald, allCompanies);
+        removed = apinan.removeCompany(mcdonald, allCompanies);
         assertEquals(false, removed);
 
         // check if apinan can remove an invalid company
