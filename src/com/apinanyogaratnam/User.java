@@ -9,9 +9,11 @@ public class User {
     LinkedList<Company> companiesList = new LinkedList<>();
     boolean visited;
 
-    public void createNewUser(String firstName, String lastName) {
+    // initializing a new user
+    User(String firstName, String lastName, LinkedList<User> totalUsers) {
         this.firstName = firstName;
         this.lastName = lastName;
+        totalUsers.add(this);
     }
 
 }
