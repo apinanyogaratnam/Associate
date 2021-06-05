@@ -25,6 +25,22 @@ public class Main {
                 printClass.print(result.getString("first_name") + ", " +
                         result.getString("last_name") + ", " + result.getString("username"));
             }
+
+            printClass.print("------------------------------------");
+
+            // insert into database
+            statement.executeUpdate(secrets.query);
+
+            // execute SQL query
+            query = "SELECT * FROM users";
+            result = statement.executeQuery(query);
+
+            // process the result set
+            while (result.next()) {
+                printClass.print(result.getString("first_name") + ", " +
+                        result.getString("last_name") + ", " + result.getString("username"));
+            }
+
             connection.close();
         } catch(Exception e) {
             e.printStackTrace();
