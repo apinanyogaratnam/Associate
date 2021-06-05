@@ -17,3 +17,4 @@ TODO:
 - make company methods
 - unit tests for all methods
 - for sql methods, migrate methods to User and Company classes
+- make sql methods concurrent with user methods
