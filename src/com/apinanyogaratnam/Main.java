@@ -34,7 +34,13 @@ public class Main {
             printClass.print("------------------------------------");
 
             // insert into database
-            statement.executeUpdate(secrets.query);
+            String query = "INSERT INTO users (\n" +
+                    "    first_name,\n" +
+                    "    last_name,\n" +
+                    "    username\n" +
+                    ")\n" +
+                    "VALUES ('stewie', 'angel', 'stewietheangel');";
+            statement.executeUpdate(query);
 
             // execute SQL query
             query = "SELECT * FROM users";
