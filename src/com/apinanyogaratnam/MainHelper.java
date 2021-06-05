@@ -27,4 +27,14 @@ public class MainHelper {
         return allUsers.size();
     } // tested
 
+    public static User getUser(String username, LinkedList<User> allUsers) {
+        if (username == null) return null;
+
+        for (User user : allUsers) {
+            if (username.equals(user.username)) return user;
+        }
+
+        return null;
+    }
+
 }

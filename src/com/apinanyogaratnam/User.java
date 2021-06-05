@@ -20,13 +20,6 @@ public class User {
         allUsers.add(this);
     }
 
-    // print first and last name of all users
-    public void print(LinkedList<User> listOfUsers) {
-        for (User userToPrint : listOfUsers) {
-            printClass.print(userToPrint.firstName + ", " + userToPrint.lastName);
-        }
-    } // tested
-
     public boolean isFollowingUser(User possiblyFollowingFriend) {
         for (User user : this.friendsList) {
             if (possiblyFollowingFriend.username.equals(user.username)) return true;
@@ -49,6 +42,17 @@ public class User {
 
         return added;
     } // tested
+
+    public void addFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
+        String csv = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
+
+        String [] strings = csv.split(",");
+        for (int i=0; i<strings.length; i++) {
+            User friend = mainHelperMethods.getUser(strings[i], allUsers);
+            if (friend != null) this.friendsList.add(friend);
+        }
+    }
+
 
     public boolean addCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;

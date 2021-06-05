@@ -210,6 +210,17 @@ class UserTest {
     }
 
     @Test
+    void addFriendsTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+
+        // create new user
+        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+//        apinan.addFriends("{\"apinanyogaratnam\", \"stewietheangel\"}");
+//        assertEquals("\"apinanyogaratnam\", \"stewietheangel\"", );
+        // change test
+    }
+
+    @Test
     void deleteUserTest() {
 
     }

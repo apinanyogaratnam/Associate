@@ -24,6 +24,15 @@ INSERT INTO users (
 )
 VALUES ('stewie', 'angel', 'stewietheangel', '{"apinanyogaratnam"}');
 
+-- insert a user into table
+INSERT INTO users (
+    first_name,
+    last_name,
+    username,
+    friends
+)
+VALUES ('apinan', 'yogaratnam', 'apinanyogaratnam', '{}');
+
 -- show users table data
 SELECT * FROM users;
 

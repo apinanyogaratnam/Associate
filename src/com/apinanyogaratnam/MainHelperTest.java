@@ -65,4 +65,9 @@ class MainHelperTest {
         int count = mainHelperMethod.getCountOfAllUsers(allUsers);
         assertEquals(4, count);
     }
+
+    @Test
+    void getUserTest() {
+
+    }
 }

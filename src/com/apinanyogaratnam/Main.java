@@ -12,7 +12,9 @@ public class Main {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 
-        loadDBData(allUsers);
+        loadDBUserData(allUsers);
+        createNewUser("walter", "white", "heisenborg", allUsers);
+        printClass.print(allUsers);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
@@ -33,7 +35,7 @@ public class Main {
         return newCompany;
     }
 
-    public static void loadDBData(LinkedList<User> allUsers) {
+    public static void loadDBUserData(LinkedList<User> allUsers) {
         try {
             // connect to database
             Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
@@ -50,7 +52,8 @@ public class Main {
                 String lastName = result.getString("last_name");
                 String username = result.getString("username");
                 String friends = result.getString("friends");
-                printClass.print(firstName + ", " + lastName + ", " + username + ", " + friends);
+                User user = createNewUser(firstName, lastName, username, allUsers);
+                if (user != null) user.addFriends(friends, allUsers);
             }
 
             connection.close();
@@ -60,7 +63,7 @@ public class Main {
         }
     }
 
-    public static void addUserToDB(User user) {
+    public static boolean addUserToDB(User user) {
         try {
             // get a connection to database
             Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
@@ -78,8 +81,6 @@ public class Main {
             // close connection to server
             connection.close();
         } catch(Exception e) {
-//            e.printStackTrace();
-            printClass.print("Unable to add user to db.");
         }
     }
 

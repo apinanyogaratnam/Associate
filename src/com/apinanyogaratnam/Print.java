@@ -19,4 +19,10 @@ public class Print {
         System.out.println(doubleToPrint);
     }
 
+    // print first and last name of all users
+    public static void print(LinkedList<User> listOfUsers) {
+        for (User userToPrint : listOfUsers) {
+            print(userToPrint.firstName + ", " + userToPrint.lastName);
+        }
+    } // tested
 }
