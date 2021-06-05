@@ -1,4 +1,4 @@
 package com.apinanyogaratnam;
 
-public class testing {
+public class check {
 }

@@ -1,3 +1,4 @@
 /automate_git
-/src/com.apinanyogaratnam/testing
-/src/com.apinanyogaratnam/testing.java
+/src/com.apinanyogaratnam/check
+/src/com.apinanyogaratnam/check*
+/src/com.apinanyogaratnam/check.java
