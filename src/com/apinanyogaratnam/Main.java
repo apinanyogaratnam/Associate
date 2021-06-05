@@ -6,11 +6,14 @@ import java.sql.*;
 public class Main {
     private static MainHelper helperMethods = new MainHelper();
     private static Print printClass = new Print();
+    private static Secrets secrets = new Secrets();
 
     public static void main(String[] args) {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
         try {
             // get a connection to database
-            Secrets secrets = new Secrets();
             Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
@@ -24,6 +27,7 @@ public class Main {
             while (result.next()) {
                 printClass.print(result.getString("first_name") + ", " +
                         result.getString("last_name") + ", " + result.getString("username"));
+
             }
 
             printClass.print("------------------------------------");
@@ -45,13 +49,9 @@ public class Main {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        LinkedList<User> allUsers = new LinkedList<>();
-        LinkedList<Company> allCompanies = new LinkedList<>();
-
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
-        Print printClass = new Print();
         if (helperMethods.isValidUser(username, allUsers)) return null;
         if (firstName == null || lastName == null) return null;
         User newUser = new User(firstName, lastName, username, allUsers);
@@ -60,7 +60,6 @@ public class Main {
     }
 
     public static Company createNewCompany(String name, LinkedList<Company> allCompanies) {
-        Print printClass = new Print();
         if (helperMethods.isValidCompany(name, allCompanies)) return null;
         Company newCompany = new Company(name, allCompanies);
 
