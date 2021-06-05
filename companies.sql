@@ -1,12 +1,12 @@
 -- create companies table
 CREATE TABLE companies(
-  	name VARCHAR(50) NOT NULL,
+  	name VARCHAR(50) NOT NULL PRIMARY KEY,
   	network_list LONGTEXT,
-  	followers_list LONGTEXT,
+  	followers_list LONGTEXT
 );
 
 -- insert a company into table
-INSERT INTO users (
+INSERT INTO companies (
     name,
     network_list,
     followers_list
@@ -14,7 +14,7 @@ INSERT INTO users (
 VALUES ("McDonald's", "{}", "{}");
 
 -- insert a company into table
-INSERT INTO users (
+INSERT INTO companies (
     name,
     network_list,
     followers_list
