@@ -1,4 +1,4 @@
 package com.apinanyogaratnam;
 
-public class check {
+public class random {
 }
