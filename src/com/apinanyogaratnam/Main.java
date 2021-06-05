@@ -10,14 +10,14 @@ public class Main {
     public static void main(String[] args) {
         try {
             // get a connection to database
-
-            Connection connection = DriverManager.getConnection(url, username, password);
+            Secrets secrets = new Secrets();
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
 
             // execute SQL query
-
+            String query = "SELECT * FROM users";
             ResultSet result = statement.executeQuery(query);
 
             // process the result set
