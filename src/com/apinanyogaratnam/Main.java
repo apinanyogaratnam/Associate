@@ -12,7 +12,7 @@ public class Main {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 
-//        loadDBUserData(allUsers);
+        loadDBUserData(allUsers);
         createNewUser("walter", "white", "heisenborg", allUsers);
     }
 
@@ -79,7 +79,9 @@ public class Main {
 
             // close connection to server
             connection.close();
-        } catch(Exception e) {
+        } catch(SQLIntegrityConstraintViolationException e) {
+            printClass.print("username already exists in db.");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
