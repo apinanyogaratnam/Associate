@@ -14,6 +14,7 @@ public class Main {
 
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
+        createNewCompany("Coca Cola", allCompanies);
         printClass.print(allUsers);
         printClass.printCompanies(allCompanies);
     }
