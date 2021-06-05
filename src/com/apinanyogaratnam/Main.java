@@ -12,9 +12,8 @@ public class Main {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 
-        loadDBUserData(allUsers);
+//        loadDBUserData(allUsers);
         createNewUser("walter", "white", "heisenborg", allUsers);
-        printClass.print(allUsers);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
@@ -63,7 +62,7 @@ public class Main {
         }
     }
 
-    public static boolean addUserToDB(User user) {
+    public static void addUserToDB(User user) {
         try {
             // get a connection to database
             Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
@@ -73,14 +72,15 @@ public class Main {
 
             // data to insert into database
             String query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
-                    "(%s, %s, %s, %s);", user.firstName, user.lastName, user.username, "{}");
-
+                    "(\"%s\", \"%s\", \"%s\", \"%s\");", user.firstName, user.lastName, user.username, "{}");
+            printClass.print(query);
             // insert data into database
             statement.executeUpdate(query);
 
             // close connection to server
             connection.close();
         } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 
