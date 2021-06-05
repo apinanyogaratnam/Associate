@@ -13,7 +13,9 @@ public class Main {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         loadDBUserData(allUsers);
-        createNewUser("walter", "white", "heisenborg", allUsers);
+        loadDBCompanyData(allCompanies, allUsers);
+        printClass.print(allUsers);
+        printClass.printCompanies(allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
@@ -30,6 +32,9 @@ public class Main {
     public static Company createNewCompany(String name, LinkedList<Company> allCompanies) {
         if (helperMethods.isValidCompany(name, allCompanies)) return null;
         Company newCompany = new Company(name, allCompanies);
+
+        // if company already exists, nothing happens
+        addCompanyToDB(newCompany);
 
         return newCompany;
     }
@@ -51,8 +56,41 @@ public class Main {
                 String lastName = result.getString("last_name");
                 String username = result.getString("username");
                 String friends = result.getString("friends");
+
                 User user = createNewUser(firstName, lastName, username, allUsers);
                 if (user != null) user.addFriends(friends, allUsers);
+            }
+
+            connection.close();
+        } catch (Exception e){
+            e.printStackTrace();
+            printClass.print("Unable to load users into allUsers");
+        }
+    }
+
+    public static void loadDBCompanyData(LinkedList<Company> allCompanies, LinkedList<User> allUsers) {
+        try {
+            // connect to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // execute SQL query
+            String query = "SELECT * FROM companies";
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                String name = result.getString("name");
+                String networkList = result.getString("network_list");
+                String followersList = result.getString("followers_list");
+                Company company = createNewCompany(name, allCompanies);
+
+                if (company != null) {
+                    company.addNetworks(networkList, allCompanies);
+                    company.addFollowers(followersList, allUsers);
+                }
+
             }
 
             connection.close();
@@ -73,7 +111,7 @@ public class Main {
             // data to insert into database
             String query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
                     "(\"%s\", \"%s\", \"%s\", \"%s\");", user.firstName, user.lastName, user.username, "{}");
-            printClass.print(query);
+
             // insert data into database
             statement.executeUpdate(query);
 
@@ -86,4 +124,27 @@ public class Main {
         }
     }
 
+    public static void addCompanyToDB(Company company) {
+        try {
+            // get a connection to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // data to insert into database
+            String query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\");", company.name, "{}", "{}");
+
+            // insert data into database
+            statement.executeUpdate(query);
+
+            // close connection to server
+            connection.close();
+        } catch(SQLIntegrityConstraintViolationException e) {
+            printClass.print("company already exists in db.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

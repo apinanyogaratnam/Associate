@@ -21,8 +21,15 @@ public class Print {
 
     // print first and last name of all users
     public static void print(LinkedList<User> listOfUsers) {
-        for (User userToPrint : listOfUsers) {
-            print(userToPrint.firstName + ", " + userToPrint.lastName);
+        for (User user : listOfUsers) {
+            print(user.firstName + ", " + user.lastName);
+        }
+    } // tested
+
+    // print company name
+    public static void printCompanies(LinkedList<Company> listOfCompanies) {
+        for (Company company : listOfCompanies) {
+            print(company.name);
         }
     } // tested
 }
