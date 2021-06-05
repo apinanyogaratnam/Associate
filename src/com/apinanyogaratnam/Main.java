@@ -17,6 +17,7 @@ public class Main {
             Statement statement = connection.createStatement();
 
             // execute SQL query
+
             ResultSet result = statement.executeQuery(query);
 
             // process the result set
