@@ -16,3 +16,4 @@ TODO:
 - finish user methods
 - make company methods
 - unit tests for all methods
+- for sql methods, migrate methods to User and Company classes

@@ -49,7 +49,7 @@ public class User {
         String [] strings = csv.split(",");
         for (int i=0; i<strings.length; i++) {
             User friend = mainHelperMethods.getUser(strings[i], allUsers);
-            if (friend != null) this.friendsList.add(friend);
+            addFriend(friend, allUsers);
         }
     }
 

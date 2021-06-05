@@ -22,6 +22,10 @@ public class Company {
         }
     }
 
+    public void addNetwork(Company company, LinkedList<Company> allCompanies) {
+
+    }
+
     public void addNetworks(String listOfNetworksInStringFormat, LinkedList<Company> allCompanies) {
         String csv = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
 
@@ -30,6 +34,10 @@ public class Company {
             Company network = mainHelperMethods.getCompany(strings[i], allCompanies);
             if (network != null) this.networksList.add(network);
         }
+    }
+
+    public void addFollower(User follower, LinkedList<User> allUsers) {
+
     }
 
     public void addFollowers(String listOfFollowersInStringFormat, LinkedList<User> allUsers) {
