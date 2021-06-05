@@ -25,9 +25,10 @@ public class Main {
 
             // process the result set
             while (result.next()) {
-                printClass.print(result.getString("first_name") + ", " +
-                        result.getString("last_name") + ", " + result.getString("username"));
-
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String username = result.getString("username");
+//                printClass.print(firstName + ", " + lastName + ", " + username);
             }
 
             printClass.print("------------------------------------");
@@ -41,8 +42,14 @@ public class Main {
 
             // process the result set
             while (result.next()) {
-                printClass.print(result.getString("first_name") + ", " +
-                        result.getString("last_name") + ", " + result.getString("username"));
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String username = result.getString("username");
+//                printClass.print(firstName + ", " + lastName + ", " + username);
+
+                // create users and add users to allUsers
+                User stews = createNewUser(firstName, lastName, username, allUsers);
+                stews.print(allUsers);
             }
 
             connection.close();
