@@ -7,6 +7,7 @@ public class Main {
     private static MainHelper helperMethods = new MainHelper();
     private static Print printClass = new Print();
     private static Secrets secrets = new Secrets();
+    private static SQL sql = new SQL();
 
     public static void main(String[] args) {
         LinkedList<User> allUsers = new LinkedList<>();
@@ -25,7 +26,7 @@ public class Main {
         User newUser = new User(firstName, lastName, username, allUsers);
 
         // if user already exists, nothing happens
-        addUserToDB(newUser);
+        sql.addUserToDB(newUser);
 
         return newUser;
     }
@@ -98,30 +99,6 @@ public class Main {
         } catch (Exception e){
             e.printStackTrace();
             printClass.print("Unable to load users into allUsers");
-        }
-    }
-
-    public static void addUserToDB(User user) {
-        try {
-            // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
-
-            // create a statement
-            Statement statement = connection.createStatement();
-
-            // data to insert into database
-            String query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\", \"%s\");", user.firstName, user.lastName, user.username, "{}");
-
-            // insert data into database
-            statement.executeUpdate(query);
-
-            // close connection to server
-            connection.close();
-        } catch(SQLIntegrityConstraintViolationException e) {
-            printClass.print("username already exists in db.");
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
