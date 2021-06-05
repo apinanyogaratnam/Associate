@@ -31,7 +31,7 @@ INSERT INTO users (
     username,
     friends
 )
-VALUES ('apinan', 'yogaratnam', 'apinanyogaratnam', '{}');
+VALUES ('walter', 'white', 'heisenborg', '{}');
 
 -- show users table data
 SELECT * FROM users;
