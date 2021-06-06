@@ -13,9 +13,10 @@ public class Main {
 
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
-        createNewCompany("Apple", allCompanies);
-        Print.print(allUsers);
-        Print.printCompanies(allCompanies);
+        User walter = MainHelper.getUser("heisenborg", allUsers);
+        User apinan = MainHelper.getUser("apinanyogaratnam", allUsers);
+        walter.addFriend(apinan, allUsers);
+        Print.print(walter.friendsList);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
@@ -58,7 +59,7 @@ public class Main {
                 String friends = result.getString("friends");
 
                 User user = createNewUser(firstName, lastName, username, allUsers);
-                if (user != null) user.addFriends(friends, allUsers);
+                if (user != null) user.loadFriends(friends, allUsers);
             }
 
             connection.close();

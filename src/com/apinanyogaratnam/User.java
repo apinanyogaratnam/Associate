@@ -5,6 +5,7 @@ import java.util.LinkedList;
 public class User {
     MainHelper mainHelperMethods = new MainHelper();
     Print printClass = new Print();
+    SQL sql = new SQL();
     String firstName;
     String lastName;
     String username;
@@ -40,10 +41,12 @@ public class User {
         boolean added = this.friendsList.add(friend);
         added = friend.friendsList.add(this) && added;
 
+        sql.updateFriend(this, friend);
+
         return added;
     } // tested
 
-    public void addFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
+    public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
         String csv = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
 
         String [] strings = csv.split(",");
