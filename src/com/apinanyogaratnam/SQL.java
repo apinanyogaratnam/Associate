@@ -6,7 +6,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 public class SQL {
-    private static Secrets secrets = new Secrets();
+    private static final Secrets secrets = new Secrets();
     private static Print printClass = new Print();
 
     public void addObjectToDB(Object obj) {

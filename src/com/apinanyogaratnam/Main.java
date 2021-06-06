@@ -4,10 +4,8 @@ import java.util.LinkedList;
 import java.sql.*;
 
 public class Main {
-    private static MainHelper helperMethods = new MainHelper();
-    private static Print printClass = new Print();
-    private static Secrets secrets = new Secrets();
-    private static SQL sql = new SQL();
+    private static final Secrets secrets = new Secrets();
+    private static final SQL sql = new SQL();
 
     public static void main(String[] args) {
         LinkedList<User> allUsers = new LinkedList<>();
@@ -16,12 +14,12 @@ public class Main {
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
         createNewCompany("Apple", allCompanies);
-        printClass.print(allUsers);
-        printClass.printCompanies(allCompanies);
+        Print.print(allUsers);
+        Print.printCompanies(allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
-        if (helperMethods.isValidUser(username, allUsers)) return null;
+        if (MainHelper.isValidUser(username, allUsers)) return null;
         if (firstName == null || lastName == null) return null;
         User newUser = new User(firstName, lastName, username, allUsers);
 
@@ -32,7 +30,7 @@ public class Main {
     }
 
     public static Company createNewCompany(String name, LinkedList<Company> allCompanies) {
-        if (helperMethods.isValidCompany(name, allCompanies)) return null;
+        if (MainHelper.isValidCompany(name, allCompanies)) return null;
         Company newCompany = new Company(name, allCompanies);
 
         // if company already exists, nothing happens
@@ -66,7 +64,7 @@ public class Main {
             connection.close();
         } catch (Exception e){
             e.printStackTrace();
-            printClass.print("Unable to load users into allUsers");
+            Print.print("Unable to load users into allUsers");
         }
     }
 
@@ -98,7 +96,7 @@ public class Main {
             connection.close();
         } catch (Exception e){
             e.printStackTrace();
-            printClass.print("Unable to load users into allUsers");
+            Print.print("Unable to load users into allUsers");
         }
     }
 
