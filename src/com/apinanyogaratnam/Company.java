@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 public class Company {
     MainHelper mainHelperMethods = new MainHelper();
+    SQL sql = new SQL();
     String name;
     LinkedList<Company> networksList = new LinkedList<>();
     LinkedList<User> followersList = new LinkedList<>();
@@ -14,18 +15,36 @@ public class Company {
         allCompanies.add(this);
     }
 
-    public boolean isNetworkedWith(Company company) {
+    public boolean hasNetwork(Company company) {
+        return this.networksList.indexOf(company) != -1;
+    }
 
+    public boolean hasFollower(User user) {
+        return this.followersList.indexOf(user) != -1;
     }
 
     public boolean addNetwork(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
         if (MainHelper.isValidCompany(company.name, allCompanies)) return false;
-        if (isNetworkedWith(company)) return false;
+        if (hasNetwork(company)) return false;
+
+        this.networksList.add(company);
+        company.networksList.add(this);
+
+        sql.updateNetworks(this, company);
+
+        return true;
     }
 
-    public boolean addFollower(User follower, LinkedList<User> allUsers) {
+    public boolean addFollower(User follower) {
+        if (follower == null) return false;
+        if (hasFollower(follower)) return false;
 
+        this.followersList.add(follower);
+
+        sql.updateFollowers();
+
+        return true;
     }
 
     public void loadNetworks(String listOfNetworksInStringFormat, LinkedList<Company> allCompanies) {
@@ -33,7 +52,7 @@ public class Company {
 
         String [] strings = csv.split(",");
         for (int i=0; i<strings.length; i++) {
-            Company network = mainHelperMethods.getCompany(strings[i], allCompanies);
+            Company network = MainHelper.getCompany(strings[i], allCompanies);
             if (network != null) this.networksList.add(network);
         }
     }
@@ -43,7 +62,7 @@ public class Company {
 
         String [] strings = csv.split(",");
         for (int i=0; i<strings.length; i++) {
-            User follower = mainHelperMethods.getUser(strings[i], allUsers);
+            User follower = MainHelper.getUser(strings[i], allUsers);
             if (follower != null) this.followersList.add(follower);
         }
     }

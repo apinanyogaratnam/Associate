@@ -65,8 +65,11 @@ public class SQL {
     }
 
     public void updateUsername(User user, String newUsername) {
+        // need to also update every friend's list
+        // and companies follwers list
         String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
         updateDBWithQuery(query);
+        // complete
     }
 
     public void updateFirstName(User user, String newFirstName) {
@@ -126,18 +129,67 @@ public class SQL {
     }
 
     public void updateName(Company company, String newName) {
+        // when updating name, need to also update netowrks list and all go through
+        // all followers and change their companiesList as well
+        // need to also check if company name already exists
         String query = String.format("UPDATE company SET name=\"%s\" WHERE name=\"%s\"", newName, company.name);
         updateDBWithQuery(query);
+        // complete
     }
 
-    public void updateObjectFromDB(Object obj, String updateItemColumn, String updateItemName) {
-        String query = "";
+     public void updateNetworksHelper(Company company, Company network) {
+         String listOfNetworksInStringFormat = "";
+         try {
+             // get a connection to database
+             Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
-        if (obj instanceof User) {
-            // user has first_name, last_name, username to update
-            // update users set username=apinanyogaratnam
-            query = String.format("UPDATE users set " + updateItemColumn + "=" + "\"%s\"", updateItemName);
-        }
-        // complete method
+             // create a statement
+             Statement statement = connection.createStatement();
+
+             // insert data into database
+             ResultSet result = statement.executeQuery("SELECT * FROM companies");
+             while (result.next()) {
+                 String username = result.getString("name");
+                 if (username.equals(company.name)) {
+                     listOfNetworksInStringFormat = result.getString("network_list");
+                 }
+             }
+
+
+             // close connection to server
+             connection.close();
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+
+         // check if user already is friends with friend
+         String temp = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
+         if (MainHelper.nameInList(network.name, temp)) return;
+
+         String networks = listOfNetworksInStringFormat;
+         boolean isEmpty = networks.equals("{}");
+
+         // format string
+         networks = networks.substring(0, networks.length() - 1);
+         networks = isEmpty ? networks + network.name + "}" : networks + "," + network.name + "}";
+
+         // update user data
+         String query = String.format("UPDATE companies SET networks=\"%s\" WHERE name=\"%s\"", networks, company.name);
+         updateDBWithQuery(query);
+     }
+
+     public void updateNetworks(Company company, Company network) {
+        updateNetworksHelper(company, network);
+        updateNetworksHelper(network, company);
     }
+
+    public void updateFollowers() {
+
+    }
+
+    public void updateCompany() {
+
+    }
+
+
 }

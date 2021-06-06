@@ -3,7 +3,8 @@ CREATE TABLE users(
   	first_name VARCHAR(50) NOT NULL,
   	last_name VARCHAR(50) NOT NULL,
   	username VARCHAR(50) NOT NULL PRIMARY KEY,
-  	friends LONGTEXT
+  	friends LONGTEXT,
+  	companies LONGTEXT
 );
 
 -- insert a user into table
@@ -11,30 +12,33 @@ INSERT INTO users (
     first_name,
     last_name,
     username,
-    friends
+    friends,
+    companies
 )
-VALUES ('apinan', 'yogaratnam', 'apinanyogaratnam', '{}');
+VALUES ('apinan', 'yogaratnam', 'apinanyogaratnam', '{}', '{}');
 
 -- insert a user into table
 INSERT INTO users (
     first_name,
     last_name,
     username,
-    friends
+    friends,
+    companies
 )
-VALUES ('stewie', 'angel', 'stewietheangel', '{"apinanyogaratnam"}');
+VALUES ('stewie', 'angel', 'stewietheangel', '{}', '{heisenborg}');
 
 -- insert a user into table
 INSERT INTO users (
     first_name,
     last_name,
     username,
-    friends
+    friends,
+    companies
 )
-VALUES ('walter', 'white', 'heisenborg', '{}');
+VALUES ('walter', 'white', 'heisenborg', '{apinanyogaratnam}', '{stewietheangel}');
 
 -- update user info
-UPDATE companies set username="heisenborg" where name="vai9er"
+UPDATE users set username="heisenborg" where name="vai9er"
 
 -- show users table data
 SELECT * FROM users;

@@ -20,3 +20,9 @@ TODO:
 - make sql methods concurrent with user methods
 - add comments to all code
 - make getDegree in another way
+- possibly make SQL class with polymorphism
+
+SQL ready:
+- create new user
+- create new company
+- add friend

@@ -3,8 +3,6 @@ package com.apinanyogaratnam;
 import java.util.LinkedList;
 
 public class User {
-    MainHelper mainHelperMethods = new MainHelper();
-    Print printClass = new Print();
     SQL sql = new SQL();
     String firstName;
     String lastName;
@@ -22,24 +20,24 @@ public class User {
     }
 
     public boolean isFollowingUser(User possiblyFollowingFriend) {
-        return MainHelper.isValidUser(possiblyFollowingFriend, this.friendsList);
+        return this.friendsList.indexOf(possiblyFollowingFriend) != -1;
     }
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
-        return mainHelperMethods.isValidCompany(possiblyFollowingCompany.name, this.companiesList);
-    } // tested
+        return this.companiesList.indexOf(possiblyFollowingCompany) != -1;
+    }
 
     public boolean addFriend(User friend, LinkedList<User> allUsers) {
         if (friend == null) return false;
-        if (!mainHelperMethods.isValidUser(friend.username, allUsers)) return false;
+        if (!MainHelper.isValidUser(friend.username, allUsers)) return false;
         if (this.isFollowingUser(friend)) return false;
 
-        boolean added = this.friendsList.add(friend);
-        added = friend.friendsList.add(this) && added;
+        this.friendsList.add(friend);
+        friend.friendsList.add(this);
 
         sql.updateFriend(this, friend);
 
-        return added;
+        return true;
     } // tested
 
     public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
@@ -47,26 +45,27 @@ public class User {
 
         String [] strings = csv.split(",");
         for (int i=0; i<strings.length; i++) {
-            User friend = mainHelperMethods.getUser(strings[i], allUsers);
+            User friend = MainHelper.getUser(strings[i], allUsers);
             addFriend(friend, allUsers);
         }
     }
 
-
     public boolean addCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
-        if (!mainHelperMethods.isValidCompany(company.name, allCompanies)) return false;
+        if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
         if (this.isFollowingCompany(company)) return false;
 
         boolean added = this.companiesList.add(company);
-        company.followersList.add(this);
+        company.addFollower(this);
+
+        sql.updateCompany();
 
         return true;
     } // tested
 
     public boolean removeFriend(User friend, LinkedList<User> allUsers) {
         if (friend == null) return false;
-        if (!mainHelperMethods.isValidUser(friend.username, allUsers)) return false;
+        if (!MainHelper.isValidUser(friend.username, allUsers)) return false;
         if (!isFollowingUser(friend)) return false;
 
         this.friendsList.remove(this.friendsList.indexOf(friend));
@@ -77,7 +76,7 @@ public class User {
 
     public boolean removeCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
-        if (!mainHelperMethods.isValidCompany(company.name, allCompanies)) return false;
+        if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
         if (!isFollowingCompany(company)) return false;
 
         this.companiesList.remove(this.companiesList.indexOf(company));

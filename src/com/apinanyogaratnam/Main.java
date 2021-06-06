@@ -14,9 +14,10 @@ public class Main {
         // load data from db to current variables
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
+        User apinan = MainHelper.getUser("apinanyogaratnam", allUsers);
+        Company mcd = MainHelper.getCompany("McDonald's", allCompanies);
 
-        Company mcdonald = MainHelper.getCompany("McDonald's", allCompanies);
-        Print.print(mcdonald.)
+        apinan.addCompany(mcd, allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
