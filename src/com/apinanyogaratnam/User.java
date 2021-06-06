@@ -22,14 +22,8 @@ public class User {
     }
 
     public boolean isFollowingUser(User possiblyFollowingFriend) {
-        for (User user : this.friendsList) {
-            if (possiblyFollowingFriend.username.equals(user.username)) return true;
-        }
-
-        return false;
-//        return MainHelper.isValidUser(possiblyFollowingFriend, this.friendsList;);
-        // return this.friendsList.indexOf(possibleFollowingFriend) != -1;
-    } // tested
+        return MainHelper.isValidUser(possiblyFollowingFriend, this.friendsList);
+    }
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
         return mainHelperMethods.isValidCompany(possiblyFollowingCompany.name, this.companiesList);
