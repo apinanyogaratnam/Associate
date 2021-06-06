@@ -15,7 +15,7 @@ public class Main {
 
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
-        createNewCompany("Coca Cola", allCompanies);
+        createNewCompany("Apple", allCompanies);
         printClass.print(allUsers);
         printClass.printCompanies(allCompanies);
     }
@@ -26,7 +26,7 @@ public class Main {
         User newUser = new User(firstName, lastName, username, allUsers);
 
         // if user already exists, nothing happens
-        sql.addUserToDB(newUser);
+        sql.addObjectToDB(newUser);
 
         return newUser;
     }
@@ -36,7 +36,7 @@ public class Main {
         Company newCompany = new Company(name, allCompanies);
 
         // if company already exists, nothing happens
-        sql.addCompanyToDB(newCompany);
+        sql.addObjectToDB(newCompany);
 
         return newCompany;
     }

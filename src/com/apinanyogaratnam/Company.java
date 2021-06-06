@@ -51,11 +51,15 @@ public class Company {
     }
 
     public Company suggestNetwork(LinkedList<Company> allCompanies) {
+        Company suggestedNetwork = null;
 
+        return suggestedNetwork;
     }
 
-    public Company suggestNetworks(LinkedList<Company> allCompanies) {
+    public LinkedList<Company> suggestNetworks(LinkedList<Company> allCompanies) {
+        LinkedList<Company> suggestedNetworksList = new LinkedList<>();
 
+        return suggestedNetworksList;
     }
 
 }
