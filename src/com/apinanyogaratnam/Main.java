@@ -11,11 +11,12 @@ public class Main {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 
+        // load data from db to current variables
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
-        User walter = MainHelper.getUser("heisenborg", allUsers);
-        User apinan = MainHelper.getUser("apinanyogaratnam", allUsers);
-        walter.addFriend(apinan, allUsers);
+
+        Company mcdonald = MainHelper.getCompany("McDonald's", allCompanies);
+        Print.print(mcdonald.)
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
@@ -87,10 +88,9 @@ public class Main {
                 Company company = createNewCompany(name, allCompanies);
 
                 if (company != null) {
-                    company.addNetworks(networkList, allCompanies);
-                    company.addFollowers(followersList, allUsers);
+                    company.loadNetworks(networkList, allCompanies);
+                    company.loadFollowers(followersList, allUsers);
                 }
-
             }
 
             connection.close();

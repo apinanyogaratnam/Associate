@@ -27,6 +27,8 @@ public class User {
         }
 
         return false;
+//        return MainHelper.isValidUser(possiblyFollowingFriend, this.friendsList;);
+        // return this.friendsList.indexOf(possibleFollowingFriend) != -1;
     } // tested
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {

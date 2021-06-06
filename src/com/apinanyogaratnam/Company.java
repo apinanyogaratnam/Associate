@@ -3,7 +3,6 @@ package com.apinanyogaratnam;
 import java.util.LinkedList;
 
 public class Company {
-    Print printClass = new Print();
     MainHelper mainHelperMethods = new MainHelper();
     String name;
     LinkedList<Company> networksList = new LinkedList<>();
@@ -15,18 +14,21 @@ public class Company {
         allCompanies.add(this);
     }
 
-    // print company name of all companies
-    public void print(LinkedList<Company> listOfCompanies) {
-        for (Company companyToPrint : listOfCompanies) {
-            printClass.print(companyToPrint.name);
-        }
-    }
-
-    public void addNetwork(Company company, LinkedList<Company> allCompanies) {
+    public boolean isNetworkedWith(Company company) {
 
     }
 
-    public void addNetworks(String listOfNetworksInStringFormat, LinkedList<Company> allCompanies) {
+    public boolean addNetwork(Company company, LinkedList<Company> allCompanies) {
+        if (company == null) return false;
+        if (MainHelper.isValidCompany(company.name, allCompanies)) return false;
+        if (isNetworkedWith(company)) return false;
+    }
+
+    public boolean addFollower(User follower, LinkedList<User> allUsers) {
+
+    }
+
+    public void loadNetworks(String listOfNetworksInStringFormat, LinkedList<Company> allCompanies) {
         String csv = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
 
         String [] strings = csv.split(",");
@@ -36,11 +38,7 @@ public class Company {
         }
     }
 
-    public void addFollower(User follower, LinkedList<User> allUsers) {
-
-    }
-
-    public void addFollowers(String listOfFollowersInStringFormat, LinkedList<User> allUsers) {
+    public void loadFollowers(String listOfFollowersInStringFormat, LinkedList<User> allUsers) {
         String csv = listOfFollowersInStringFormat.substring(1, listOfFollowersInStringFormat.length()-1);
 
         String [] strings = csv.split(",");
