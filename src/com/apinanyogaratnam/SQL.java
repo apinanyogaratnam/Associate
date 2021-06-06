@@ -5,11 +5,8 @@ import java.util.LinkedList;
 
 public class SQL {
     private static final Secrets secrets = new Secrets();
-    private static final String update = "UPDATE";
-    private static final String read = "READ";
 
-    public ResultSet updateDBWithQuery(String query, String sqlMethod) {
-        LinkedList<String> resultString = new LinkedList<>();
+    public void updateDBWithQuery(String query) {
         try {
             // get a connection to database
             Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
@@ -18,24 +15,16 @@ public class SQL {
             Statement statement = connection.createStatement();
 
             // insert data into database
-            if (sqlMethod.equalsIgnoreCase(update)) statement.executeUpdate(query);
-
-            // read data from database
-            if (sqlMethod.equalsIgnoreCase(read)) {
-                ResultSet result = statement.executeQuery(query);
-                data = result;
-            }
+            statement.executeUpdate(query);
 
 
             // close connection to server
-//            connection.close();
+            connection.close();
         } catch(SQLIntegrityConstraintViolationException e) {
             Print.print("Object already exists in db.");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return data;
     }
 
     public void addObjectToDB(Object obj) {
@@ -56,7 +45,7 @@ public class SQL {
             return;
         }
 
-        updateDBWithQuery(query, update);
+        updateDBWithQuery(query);
     }
 
     public void removeObjectFromDB(Object obj) {
@@ -77,44 +66,58 @@ public class SQL {
 
     public void updateUsername(User user, String newUsername) {
         String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
-        updateDBWithQuery(query, update);
+        updateDBWithQuery(query);
     }
 
     public void updateFirstName(User user, String newFirstName) {
         String query = String.format("UPDATE users SET first_name=\"%s\" WHERE first_name=\"%s\"", newFirstName, user.firstName);
-        updateDBWithQuery(query, update);
+        updateDBWithQuery(query);
     }
 
     public void updateLastName(User user, String newLastName) {
         String query = String.format("UPDATE users SET last_name=\"%s\" WHERE last_name=\"\"", newLastName, user.lastName);
-        updateDBWithQuery(query, update);
+        updateDBWithQuery(query);
     }
 
     public void updateFriendHelper(User user, User friend) {
-        // reading user data
-        String query = String.format("SELECT * FROM users WHERE username=\"%s\"", user.username);
-        ResultSet result = updateDBWithQuery(query, read);
-        String friends = "";
-
-        // getting user data
+        String listOfFriendsInStringFormat = "";
         try {
+            // get a connection to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // insert data into database
+            ResultSet result = statement.executeQuery("SELECT * FROM users");
             while (result.next()) {
-                friends = result.getString("friends");
+                String username = result.getString("username");
+                if (username.equals(user.username)) {
+                    listOfFriendsInStringFormat = result.getString("friends");
+                }
             }
 
+
+            // close connection to server
             connection.close();
         } catch (Exception e) {
-//            Print.print("Could not read user data from db.");
             e.printStackTrace();
         }
 
-        // {apinanyogaratnam} => {apinanyogaratnam,stewietheangel}
-        friends = friends.substring(0, friends.length()-1);
-        friends = "," + friends + friend.username + "}";
+        // check if user already is friends with friend
+        String temp = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
+        if (MainHelper.nameInList(friend.username, temp)) return;
+
+        String friends = listOfFriendsInStringFormat;
+        boolean isEmpty = friends.equals("{}");
+
+        // format string
+        friends = friends.substring(0, friends.length() - 1);
+        friends = isEmpty ? friends + friend.username + "}" : friends + "," + friend.username + "}";
 
         // update user data
-        query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", friends, user.username);
-        updateDBWithQuery(query, update);
+        String query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", friends, user.username);
+        updateDBWithQuery(query);
     }
 
     public void updateFriend(User user, User friend) {
@@ -124,7 +127,7 @@ public class SQL {
 
     public void updateName(Company company, String newName) {
         String query = String.format("UPDATE company SET name=\"%s\" WHERE name=\"%s\"", newName, company.name);
-        updateDBWithQuery(query, update);
+        updateDBWithQuery(query);
     }
 
     public void updateObjectFromDB(Object obj, String updateItemColumn, String updateItemName) {

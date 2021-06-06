@@ -19,6 +19,14 @@ public class Print {
         System.out.println(doubleToPrint);
     }
 
+    public static void print(boolean bool) {
+        if (bool) {
+            print("True");
+            return;
+        }
+
+        print("False");
+    }
     // print first and last name of all users
     public static void print(LinkedList<User> listOfUsers) {
         for (User user : listOfUsers) {

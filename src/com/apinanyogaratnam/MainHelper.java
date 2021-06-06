@@ -47,4 +47,14 @@ public class MainHelper {
         return null;
     }
 
+    public static boolean nameInList(String friendUsername, String listOfFriendsInStringFormat) {
+        String [] strings = listOfFriendsInStringFormat.split(",");
+
+        for (int i=0; i<strings.length; i++) {
+            if (strings[i].equals(friendUsername)) return true;
+        }
+
+        return false;
+    }
+
 }

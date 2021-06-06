@@ -16,7 +16,6 @@ public class Main {
         User walter = MainHelper.getUser("heisenborg", allUsers);
         User apinan = MainHelper.getUser("apinanyogaratnam", allUsers);
         walter.addFriend(apinan, allUsers);
-        Print.print(walter.friendsList);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
