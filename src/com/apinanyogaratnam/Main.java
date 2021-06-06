@@ -20,7 +20,7 @@ public class Main {
 
         apinan.addCompany(mcd, allCompanies);
         mcd.addNetwork(tims, allCompanies);
-        Print.print(mcd.networksList, 0);
+        Print.print(allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
