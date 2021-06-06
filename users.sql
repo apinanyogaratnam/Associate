@@ -33,6 +33,9 @@ INSERT INTO users (
 )
 VALUES ('walter', 'white', 'heisenborg', '{}');
 
+-- update user info
+UPDATE companies set username="heisenborg" where name="vai9er"
+
 -- show users table data
 SELECT * FROM users;
 

@@ -14,14 +14,14 @@ public class SQL {
         String errorMessage = "already exists in db.";
 
         // set desired query and error message for adding object to db
-        if (obj instanceof Company) {
-            query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
-            errorMessage = "Company " + errorMessage;
-        } else if (obj instanceof User) {
+        if (obj instanceof User) {
             query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
                     "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}");
             errorMessage = "User " + errorMessage;
+        } else if (obj instanceof Company) {
+            query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
+            errorMessage = "Company " + errorMessage;
         } else {
             printClass.print("Object type not supported to add to db.");
         }
@@ -43,7 +43,29 @@ public class SQL {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // complete method
+    public void removeObjectFromDB(Object obj) {
+        String query = "";
+
+        if (obj instanceof User) {
+            query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}");
+        } else if (obj instanceof Company) {
+            query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
+        } else {
+            printClass.print("Object type not supported to add to db.");
+        }
 
     }
 
+    public void updateObjectFromDB(Object obj) {
+        String query = "";
+
+        if (obj instanceof User) {
+            query = "UPDATE "
+        }
+    }
 }

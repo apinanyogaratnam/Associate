@@ -21,4 +21,7 @@ INSERT INTO companies (
 )
 VALUES ("Tim Hortons", "{}", "{}");
 
+-- update company info
+UPDATE companies set name="McDonald" where name="MdDonald's"
+
 SELECT * FROM companies;
