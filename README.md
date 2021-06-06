@@ -28,4 +28,4 @@ SQL ready:
 - create new user
 - create new company
 - add friend
-- add company
+- add company (company also adds follower)

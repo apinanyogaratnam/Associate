@@ -42,7 +42,7 @@ public class Company {
 
         this.followersList.add(follower);
 
-        sql.updateFollowers();
+        sql.updateFollowers(this, follower);
 
         return true;
     }

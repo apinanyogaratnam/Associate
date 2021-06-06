@@ -183,8 +183,45 @@ public class SQL {
         updateNetworksHelper(network, company);
     }
 
-    public void updateFollowers() {
+    public void updateFollowers(Company company, User user) {
+        String listOfFollowersInStringFormat = "";
+        try {
+            // get a connection to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // insert data into database
+            ResultSet result = statement.executeQuery("SELECT * FROM companies");
+            while (result.next()) {
+                String companyName = result.getString("name");
+                if (companyName.equals(company.name)) {
+                    listOfFollowersInStringFormat = result.getString("followers_list");
+                }
+            }
+
+
+            // close connection to server
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // check if user already is friends with friend
+        String temp = listOfFollowersInStringFormat.substring(1, listOfFollowersInStringFormat.length()-1);
+        if (MainHelper.nameInList(company.name, temp)) return;
+
+        String followers = listOfFollowersInStringFormat;
+        boolean isEmpty = followers.equals("{}");
+
+        // format string
+        followers = followers.substring(0, followers.length() - 1);
+        followers = isEmpty ? followers + user.username + "}" : followers + "," + company.name + "}";
+
+        // update user data
+        String query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followers, company.name);
+        updateDBWithQuery(query);
     }
 
     public void updateCompany(User user, Company company) {
