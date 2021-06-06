@@ -135,10 +135,29 @@ public class User {
         return degree;
     }
 
-    public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
-        LinkedList<User> suggestedUsers = new LinkedList<>();
+    public User suggestUser(LinkedList<User> allUsers) {
+        int getDegreeMin = 2;
+        User userMin = null;
 
-        return suggestedUsers;
+        for (User user : allUsers) {
+            if (user.username.equals(this.username)) continue;
+            if (this.isFollowingUser(user)) continue;
+
+            // finding close users with nearby degrees
+            int currentDegree = getDegree(this, user, allUsers);
+            if (currentDegree != -1 && currentDegree != 1 && currentDegree <= getDegreeMin) {
+                getDegreeMin = currentDegree;
+                userMin = user;
+            }
+        }
+
+        return userMin;
+    }
+
+    public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
+        LinkedList<User> suggestedUsersList = new LinkedList<>();
+
+        return suggestedUsersList;
     }
 
     public LinkedList<Company> suggestCompanies(LinkedList<User> allCompanies) {

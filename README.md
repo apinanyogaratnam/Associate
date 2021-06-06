@@ -19,3 +19,4 @@ TODO:
 - for sql methods, migrate methods to User and Company classes
 - make sql methods concurrent with user methods
 - add comments to all code
+- make getDegree in another way

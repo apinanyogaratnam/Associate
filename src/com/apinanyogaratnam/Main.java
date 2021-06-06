@@ -36,7 +36,7 @@ public class Main {
         Company newCompany = new Company(name, allCompanies);
 
         // if company already exists, nothing happens
-        addCompanyToDB(newCompany);
+        sql.addCompanyToDB(newCompany);
 
         return newCompany;
     }
@@ -102,27 +102,5 @@ public class Main {
         }
     }
 
-    public static void addCompanyToDB(Company company) {
-        try {
-            // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
-            // create a statement
-            Statement statement = connection.createStatement();
-
-            // data to insert into database
-            String query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\");", company.name, "{}", "{}");
-
-            // insert data into database
-            statement.executeUpdate(query);
-
-            // close connection to server
-            connection.close();
-        } catch(SQLIntegrityConstraintViolationException e) {
-            printClass.print("company already exists in db.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

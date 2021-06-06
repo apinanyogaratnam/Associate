@@ -50,4 +50,12 @@ public class Company {
         }
     }
 
+    public Company suggestNetwork(LinkedList<Company> allCompanies) {
+
+    }
+
+    public Company suggestNetworks(LinkedList<Company> allCompanies) {
+
+    }
+
 }
