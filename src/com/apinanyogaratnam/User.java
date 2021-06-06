@@ -88,8 +88,17 @@ public class User {
     }
 
     public boolean deleteUser(LinkedList<User> allUsers) {
-        // remove from allUsers
+        int indexOfUser = allUsers.indexOf(this);
+        if (indexOfUser == -1) return false;
+
         // remove from everyone friends with 'this'
+        for (User friend : this.friendsList) {
+            this.removeFriend(friend, allUsers);
+        }
+
+        // remove from allUsers
+        allUsers.remove(indexOfUser);
+
         return true;
     }
 
@@ -100,6 +109,7 @@ public class User {
     public LinkedList<User> getListOfMutualFriends(User user, LinkedList<User> allUsers) {
         LinkedList<User> mutualFriends = new LinkedList<>();
 
+        for
         return mutualFriends;
     }
 
