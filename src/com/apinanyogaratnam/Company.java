@@ -31,7 +31,7 @@ public class Company {
         this.networksList.add(company);
         company.networksList.add(this);
 
-        sql.updateNetworks(this, company);
+        sql.updateNetwork(this, company);
 
         return true;
     }

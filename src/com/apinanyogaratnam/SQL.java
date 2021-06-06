@@ -178,7 +178,7 @@ public class SQL {
          updateDBWithQuery(query);
      }
 
-     public void updateNetworks(Company company, Company network) {
+     public void updateNetwork(Company company, Company network) {
         updateNetworksHelper(company, network);
         updateNetworksHelper(network, company);
     }
