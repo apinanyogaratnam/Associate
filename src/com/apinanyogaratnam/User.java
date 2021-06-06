@@ -109,14 +109,30 @@ public class User {
     public LinkedList<User> getListOfMutualFriends(User user, LinkedList<User> allUsers) {
         LinkedList<User> mutualFriends = new LinkedList<>();
 
-        for
+        for (User friendOfUser : user.friendsList) {
+            if (this.isFollowingUser(friendOfUser)) mutualFriends.add(friendOfUser);
+        }
+
         return mutualFriends;
     }
 
-    public int getDegree(User user, LinkedList<User> allUsers) {
-        int count = 0;
+    public int getDegree(User a, User b, LinkedList<User> allUsers) {
+        if (a.isFollowingUser(b)) return 1;
+        a.visited = true;
+        int degree = 0;
+        int temp = 0;
 
-        return count;
+        for (User friend : this.friendsList) {
+            if (friend.visited) continue;
+            temp = 1 + getDegree(friend, b, allUsers);
+
+            if (degree == 0 || (temp > 0 && temp < degree)) degree = temp;
+        }
+
+        a.visited = false;
+        if (degree == 0) return -1;
+
+        return degree;
     }
 
     public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
