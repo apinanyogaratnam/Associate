@@ -187,8 +187,45 @@ public class SQL {
 
     }
 
-    public void updateCompany() {
+    public void updateCompany(User user, Company company) {
+        String listOfCompaniesInStringFormat = "";
+        try {
+            // get a connection to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // insert data into database
+            ResultSet result = statement.executeQuery("SELECT * FROM users");
+            while (result.next()) {
+                String username = result.getString("username");
+                if (username.equals(user.username)) {
+                    listOfCompaniesInStringFormat = result.getString("companies");
+                }
+            }
+
+
+            // close connection to server
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // check if user already is friends with friend
+        String temp = listOfCompaniesInStringFormat.substring(1, listOfCompaniesInStringFormat.length()-1);
+        if (MainHelper.nameInList(company.name, temp)) return;
+
+        String companies = listOfCompaniesInStringFormat;
+        boolean isEmpty = companies.equals("{}");
+
+        // format string
+        companies = companies.substring(0, companies.length() - 1);
+        companies = isEmpty ? companies + company.name + "}" : companies + "," + company.name + "}";
+
+        // update user data
+        String query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companies, user.username);
+        updateDBWithQuery(query);
     }
 
 

@@ -15,7 +15,7 @@ class MainHelperTest {
         LinkedList<User> allUsers = new LinkedList<>();
 
         // create new user
-        User apinan = mainMethod.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers);
+        User apinan = mainMethod.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers, false);
 
         // checking if new user is a valid user
         boolean isUser = mainHelperMethod.isValidUser(apinan.username, allUsers);
@@ -36,7 +36,7 @@ class MainHelperTest {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // creating a new company
-        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
+        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies, false);
 
         // checking if new company is a new company
         boolean isCompany = mainHelperMethod.isValidCompany(mcdonald.name, allCompanies);
@@ -57,10 +57,10 @@ class MainHelperTest {
         LinkedList<User> allUsers = new LinkedList<>();
 
         // create new users
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
-        User stewie = mainMethod.createNewUser("stewie", "angel", "stewietheangel", allUsers);
-        User walter = mainMethod.createNewUser("walter", "white", "heisenborg", allUsers);
-        User local = mainMethod.createNewUser("local", "librarian", "yourlocallibrarian", allUsers);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("stewie", "angel", "stewietheangel", allUsers, false);
+        User walter = Main.createNewUser("walter", "white", "heisenborg", allUsers, false);
+        User local = Main.createNewUser("local", "librarian", "yourlocallibrarian", allUsers, false);
 
         int count = mainHelperMethod.getCountOfAllUsers(allUsers);
         assertEquals(4, count);

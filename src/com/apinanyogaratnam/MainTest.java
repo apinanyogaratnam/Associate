@@ -13,10 +13,10 @@ class MainTest {
         LinkedList<User> allUsers = new LinkedList<>();
 
         // create new user
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
 
         // create duplicate user
-        User apinanCopy = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        User apinanCopy = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
 
         assertEquals(null, apinanCopy);
     }
@@ -26,11 +26,11 @@ class MainTest {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // creates new companies
-        Company timhortons = mainMethod.createNewCompany("Tim Hortons", allCompanies);
-        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
+        Company timhortons = mainMethod.createNewCompany("Tim Hortons", allCompanies, false);
+        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies, false);
 
         // create duplicate company
-        Company timhortonsCopy = mainMethod.createNewCompany("Tim Hortons", allCompanies);
+        Company timhortonsCopy = mainMethod.createNewCompany("Tim Hortons", allCompanies, false);
 
         assertEquals(null, timhortonsCopy);
     }
@@ -40,7 +40,7 @@ class MainTest {
         LinkedList<User> allUsers = new LinkedList<>();
 
         // create new user
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers);
+        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
 
         // search through allUsers for new user
         boolean foundUser = false;
@@ -59,7 +59,7 @@ class MainTest {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // create new company
-        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies);
+        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies, false);
 
         // search through allCompanies for new company
         boolean foundCompany = false;

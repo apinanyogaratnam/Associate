@@ -21,8 +21,11 @@ TODO:
 - add comments to all code
 - make getDegree in another way
 - possibly make SQL class with polymorphism
+- rename methods in sql from update to add
+- shorten uses of code (make it more modular)
 
 SQL ready:
 - create new user
 - create new company
 - add friend
+- add company

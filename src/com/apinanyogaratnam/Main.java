@@ -20,23 +20,23 @@ public class Main {
         apinan.addCompany(mcd, allCompanies);
     }
 
-    public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers) {
+    public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
         if (MainHelper.isValidUser(username, allUsers)) return null;
         if (firstName == null || lastName == null) return null;
         User newUser = new User(firstName, lastName, username, allUsers);
 
         // if user already exists, nothing happens
-        sql.addObjectToDB(newUser);
+        if (withSQL) sql.addObjectToDB(newUser);
 
         return newUser;
     }
 
-    public static Company createNewCompany(String name, LinkedList<Company> allCompanies) {
+    public static Company createNewCompany(String name, LinkedList<Company> allCompanies, boolean withSQL) {
         if (MainHelper.isValidCompany(name, allCompanies)) return null;
         Company newCompany = new Company(name, allCompanies);
 
         // if company already exists, nothing happens
-        sql.addObjectToDB(newCompany);
+        if (withSQL) sql.addObjectToDB(newCompany);
 
         return newCompany;
     }
@@ -59,7 +59,7 @@ public class Main {
                 String username = result.getString("username");
                 String friends = result.getString("friends");
 
-                User user = createNewUser(firstName, lastName, username, allUsers);
+                User user = createNewUser(firstName, lastName, username, allUsers, false);
                 if (user != null) user.loadFriends(friends, allUsers);
             }
 
@@ -86,7 +86,7 @@ public class Main {
                 String name = result.getString("name");
                 String networkList = result.getString("network_list");
                 String followersList = result.getString("followers_list");
-                Company company = createNewCompany(name, allCompanies);
+                Company company = createNewCompany(name, allCompanies, false);
 
                 if (company != null) {
                     company.loadNetworks(networkList, allCompanies);
@@ -100,6 +100,4 @@ public class Main {
             Print.print("Unable to load users into allUsers");
         }
     }
-
-
 }

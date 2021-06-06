@@ -58,7 +58,7 @@ public class User {
         boolean added = this.companiesList.add(company);
         company.addFollower(this);
 
-        sql.updateCompany();
+        sql.updateCompany(this, company);
 
         return true;
     } // tested

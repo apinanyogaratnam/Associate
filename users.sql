@@ -25,7 +25,7 @@ INSERT INTO users (
     friends,
     companies
 )
-VALUES ('stewie', 'angel', 'stewietheangel', '{}', '{heisenborg}');
+VALUES ('stewie', 'angel', 'stewietheangel', '{heisenborg}', '{}');
 
 -- insert a user into table
 INSERT INTO users (
@@ -35,7 +35,11 @@ INSERT INTO users (
     friends,
     companies
 )
-VALUES ('walter', 'white', 'heisenborg', '{apinanyogaratnam}', '{stewietheangel}');
+VALUES ('walter', 'white', 'heisenborg', '{stewietheangel}', '{}');
+
+
+
+
 
 -- update user info
 UPDATE users set username="heisenborg" where name="vai9er"
