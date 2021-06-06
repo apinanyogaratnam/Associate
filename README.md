@@ -29,3 +29,4 @@ SQL ready:
 - create new company
 - add friend
 - add company (company also adds follower)
+- add network (both networks are added)

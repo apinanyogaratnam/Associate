@@ -174,7 +174,7 @@ public class SQL {
          networks = isEmpty ? networks + network.name + "}" : networks + "," + network.name + "}";
 
          // update user data
-         String query = String.format("UPDATE companies SET networks=\"%s\" WHERE name=\"%s\"", networks, company.name);
+         String query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networks, company.name);
          updateDBWithQuery(query);
      }
 

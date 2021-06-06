@@ -25,7 +25,7 @@ public class Company {
 
     public boolean addNetwork(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
-        if (MainHelper.isValidCompany(company.name, allCompanies)) return false;
+        if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
         if (hasNetwork(company)) return false;
 
         this.networksList.add(company);

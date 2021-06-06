@@ -28,10 +28,15 @@ public class Print {
         print("False");
     }
 
-    public static void print(LinkedList<Object> listOfObjects) {
-        for (Object obj : listOfObjects) {
-            if (obj instanceof User) print("First name: " + ((User) obj).firstName + ", Last name: " + ((User) obj).lastName);
-            else if (obj instanceof Company) print("Company name: " + ((Company) obj).name);
+    public static void print(LinkedList<User> listOfObjects) {
+        for (User user : listOfObjects) {
+            print("First name: " + user.firstName + ", Last name: " + user.lastName);
+        }
+    }
+
+    public static void print(LinkedList<Company> listOfObjects, int placeholder) {
+        for (Company company : listOfObjects) {
+            print("Company name: " + company.name);
         }
     }
 }

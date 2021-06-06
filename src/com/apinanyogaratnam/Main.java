@@ -16,8 +16,11 @@ public class Main {
         loadDBCompanyData(allCompanies, allUsers);
         User apinan = MainHelper.getUser("apinanyogaratnam", allUsers);
         Company mcd = MainHelper.getCompany("McDonald's", allCompanies);
+        Company tims = MainHelper.getCompany("Tim Hortons", allCompanies);
 
         apinan.addCompany(mcd, allCompanies);
+        mcd.addNetwork(tims, allCompanies);
+        Print.print(mcd.networksList, 0);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
