@@ -45,7 +45,6 @@ public class SQL {
         }
     }
 
-    // complete method
     public void removeObjectFromDB(Object obj) {
         String query = "";
 
@@ -59,13 +58,16 @@ public class SQL {
             printClass.print("Object type not supported to add to db.");
         }
 
+        // complete method
     }
 
-    public void updateObjectFromDB(Object obj) {
+    public void updateObjectFromDB(Object obj, String updateItemColumn, String updateItemName) {
         String query = "";
 
         if (obj instanceof User) {
-            query = "UPDATE "
+            // user has first_name, last_name, username to update
+            query = String.format("UPDATE users set " + updateItemColumn + "=" + "\"%s\"", updateItemName);
         }
+        // complete method
     }
 }
