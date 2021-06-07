@@ -17,8 +17,6 @@ public class Main {
         User stewie = MainHelper.getUser("stewietheangel", allUsers);
         User walter = MainHelper.getUser("heisenborg", allUsers);
         stewie.updateUsername("angel", allUsers);
-        Print.print(stewie.username);
-        Print.print(walter.friendsList);
 
     }
 

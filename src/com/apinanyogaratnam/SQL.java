@@ -181,7 +181,52 @@ public class SQL {
 
     public void updateUsername(User user, String newUsername) {
         // need to also update every friend's list
-        // and companies follwers list
+        // update every friend of user in db
+        String friendsString = "{";
+        for (User friend : user.friendsList) {
+            friendsString += friend.username + ",";
+        }
+        friendsString = Utils.removeCurlyBraces(friendsString);
+        String [] strings = Utils.splitCommas(friendsString);
+
+        for (int i=0; i<strings.length; i++) {
+            try {
+                // connect to database
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+                // create a statement
+                Statement statement = connection.createStatement();
+
+                // execute SQL query
+                String query = String.format("SELECT * FROM users WHERE username=\"%s\"", strings[i]);
+                ResultSet result = statement.executeQuery(query);
+
+                while (result.next()) {
+                    String usernameFriends = result.getString("friends");
+                    String [] users = Utils.splitCommas(Utils.removeCurlyBraces(usernameFriends));
+                    usernameFriends = "{";
+
+                    for (int j=0; j<users.length; j++) {
+                        if (users[j].equals(user.username)) {
+                            users[j] = newUsername;
+                        }
+                        Print.print(users[j]);
+                        usernameFriends += users[j] + ",";
+                    }
+                    usernameFriends = usernameFriends.substring(0, usernameFriends.length()-1) + "}";
+                    query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", usernameFriends, strings[i]);
+                    updateDBWithQuery(query);
+
+                }
+
+                connection.close();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        // and companies followers list
+        // sql query command
         String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
         updateDBWithQuery(query);
         // complete

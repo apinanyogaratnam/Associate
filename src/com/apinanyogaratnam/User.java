@@ -60,7 +60,7 @@ public class User {
         sql.updateFirstName(this, newName);
 
         return true;
-    }
+    } // tested
 
     public boolean updateLastName(String newName) {
         if (newName == null) return false;
@@ -69,7 +69,7 @@ public class User {
         sql.updateLastName(this, newName);
 
         return true;
-    }
+    } // tested
 
     public boolean updateUsername(String newName, LinkedList<User> allUsers) {
         if (newName == null) return false;
@@ -78,8 +78,9 @@ public class User {
             return false;
         }
 
+        sql.updateUsername(this, newName);
         this.username = newName;
-        // sql.updateUsername(this, newName);
+
         return true;
     }
 
