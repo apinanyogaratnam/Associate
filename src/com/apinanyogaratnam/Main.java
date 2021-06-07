@@ -15,8 +15,11 @@ public class Main {
         sql.loadDBUserData(allUsers);
         sql.loadDBCompanyData(allCompanies, allUsers);
         User stewie = MainHelper.getUser("stewietheangel", allUsers);
-        stewie.updateFirstName("baby");
-        stewie.updateLastName("stews");
+        User walter = MainHelper.getUser("heisenborg", allUsers);
+        stewie.updateUsername("angel", allUsers);
+        Print.print(stewie.username);
+        Print.print(walter.friendsList);
+
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {

@@ -71,6 +71,18 @@ public class User {
         return true;
     }
 
+    public boolean updateUsername(String newName, LinkedList<User> allUsers) {
+        if (newName == null) return false;
+        if (MainHelper.isValidUser(newName, allUsers)) {
+            Print.print("Username already exists.");
+            return false;
+        }
+
+        this.username = newName;
+        // sql.updateUsername(this, newName);
+        return true;
+    }
+
     public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
         String csv = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
 

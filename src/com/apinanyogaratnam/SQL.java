@@ -169,14 +169,6 @@ public class SQL {
         // complete method
     }
 
-    public void updateUsername(User user, String newUsername) {
-        // need to also update every friend's list
-        // and companies follwers list
-        String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
-        updateDBWithQuery(query);
-        // complete
-    }
-
     public void updateFirstName(User user, String newFirstName) {
         String query = String.format("UPDATE users SET first_name=\"%s\" WHERE username=\"%s\"", newFirstName, user.username);
         updateDBWithQuery(query);
@@ -185,6 +177,14 @@ public class SQL {
     public void updateLastName(User user, String newLastName) {
         String query = String.format("UPDATE users SET last_name=\"%s\" WHERE username=\"%s\"", newLastName, user.username);
         updateDBWithQuery(query);
+    }
+
+    public void updateUsername(User user, String newUsername) {
+        // need to also update every friend's list
+        // and companies follwers list
+        String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
+        updateDBWithQuery(query);
+        // complete
     }
 
     public void addFriendHelper(User user, User friend) {
