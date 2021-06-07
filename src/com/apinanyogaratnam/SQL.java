@@ -259,7 +259,7 @@ public class SQL {
                         followersList += users[j] + ",";
                     }
                     followersList = followersList.substring(0, followersList.length()-1) + "}";
-                    query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", followersList, strings[i]);
+                    query = String.format("UPDATE companies SET follower_list=\"%s\" WHERE name=\"%s\"", followersList, strings[i]);
                     updateDBWithQuery(query);
 
                 }
@@ -270,10 +270,9 @@ public class SQL {
             }
         }
 
-        // sql query command
+        // sql update username query command
         String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
         updateDBWithQuery(query);
-        // complete
     }
 
     public void addFriendHelper(User user, User friend) {
