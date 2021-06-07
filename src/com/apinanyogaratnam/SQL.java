@@ -187,7 +187,7 @@ public class SQL {
         updateDBWithQuery(query);
     }
 
-    public void updateFriendHelper(User user, User friend) {
+    public void addFriendHelper(User user, User friend) {
         String listOfFriendsInStringFormat = "";
         try {
             // get a connection to database
@@ -228,9 +228,9 @@ public class SQL {
         updateDBWithQuery(query);
     }
 
-    public void updateFriend(User user, User friend) {
-        updateFriendHelper(user, friend);
-        updateFriendHelper(friend, user);
+    public void addFriend(User user, User friend) {
+        addFriendHelper(user, friend);
+        addFriendHelper(friend, user);
     }
 
     public void updateName(Company company, String newName) {

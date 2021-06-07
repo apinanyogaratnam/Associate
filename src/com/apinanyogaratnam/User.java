@@ -35,7 +35,7 @@ public class User {
         this.friendsList.add(friend);
         friend.friendsList.add(this);
 
-        sql.updateFriend(this, friend);
+        sql.addFriend(this, friend);
 
         return true;
     } // tested
