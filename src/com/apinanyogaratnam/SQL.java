@@ -226,6 +226,49 @@ public class SQL {
         }
 
         // and companies followers list
+        String companiesListString = "{";
+        for (Company company : user.companiesList) {
+            companiesListString += company.name + ",";
+        }
+
+        companiesListString = Utils.removeCurlyBraces(companiesListString);
+        String [] arrayOfCompaniesName = Utils.splitCommas(companiesListString);
+
+        for (int i=0; i<arrayOfCompaniesName.length; i++) {
+            try {
+                // connect to database
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+                // create a statement
+                Statement statement = connection.createStatement();
+
+                // execute SQL query
+                String query = String.format("SELECT * FROM companies WHERE name=\"%s\"", strings[i]);
+                ResultSet result = statement.executeQuery(query);
+
+                while (result.next()) {
+                    String followersList = result.getString("followers_list");
+                    String [] users = Utils.splitCommas(Utils.removeCurlyBraces(followersList));
+                    followersList = "{";
+
+                    for (int j=0; j<users.length; j++) {
+                        if (users[j].equals(user.username)) {
+                            users[j] = newUsername;
+                        }
+                        Print.print(users[j]);
+                        followersList += users[j] + ",";
+                    }
+                    followersList = followersList.substring(0, followersList.length()-1) + "}";
+                    query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", followersList, strings[i]);
+                    updateDBWithQuery(query);
+
+                }
+
+                connection.close();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
         // sql query command
         String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);

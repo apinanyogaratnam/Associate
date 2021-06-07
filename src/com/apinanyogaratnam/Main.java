@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.sql.*;
 
 public class Main {
-    private static final Secrets secrets = new Secrets();
     private static final SQL sql = new SQL();
 
     public static void main(String[] args) {
