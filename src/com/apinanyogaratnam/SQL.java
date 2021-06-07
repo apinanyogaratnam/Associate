@@ -226,6 +226,7 @@ public class SQL {
         }
 
         // and companies followers list
+
         // sql query command
         String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
         updateDBWithQuery(query);
