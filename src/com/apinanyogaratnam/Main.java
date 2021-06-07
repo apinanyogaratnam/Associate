@@ -15,8 +15,7 @@ public class Main {
         sql.loadDBCompanyData(allCompanies, allUsers);
         User stewie = MainHelper.getUser("angel", allUsers);
         Print.print(stewie.companiesList);
-//        Company mcd = MainHelper.getCompany("McDonald's", allCompanies);
-//        stewie.updateUsername("angel", allUsers);
+        stewie.updateUsername("stewietheangel", allUsers);
 
     }
 

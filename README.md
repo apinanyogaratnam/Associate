@@ -22,6 +22,7 @@ TODO:
 - possibly make SQL class with polymorphism
 - rename methods in sql from update to add
 - shorten uses of code (make it more modular)
+- add return; after catch statements for loading methods
 
 SQL ready:
 - create new user - tested

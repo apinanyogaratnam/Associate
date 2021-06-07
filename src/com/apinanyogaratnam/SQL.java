@@ -218,41 +218,41 @@ public class SQL {
         friendsString = Utils.removeCurlyBraces(friendsString);
         String [] strings = Utils.splitCommas(friendsString);
 
-//        for (int i=0; i<strings.length; i++) {
-//            try {
-//                // connect to database
-//                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
-//
-//                // create a statement
-//                Statement statement = connection.createStatement();
-//
-//                // execute SQL query
-//                String query = String.format("SELECT * FROM users WHERE username=\"%s\"", strings[i]);
-//                ResultSet result = statement.executeQuery(query);
-//
-//                while (result.next()) {
-//                    String usernameFriends = result.getString("friends");
-//                    String [] users = Utils.splitCommas(Utils.removeCurlyBraces(usernameFriends));
-//                    usernameFriends = "{";
-//
-//                    for (int j=0; j<users.length; j++) {
-//                        if (users[j].equals(user.username)) {
-//                            users[j] = newUsername;
-//                        }
-//                        Print.print(users[j]);
-//                        usernameFriends += users[j] + ",";
-//                    }
-//                    usernameFriends = usernameFriends.substring(0, usernameFriends.length()-1) + "}";
-//                    query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", usernameFriends, strings[i]);
-//                    updateDBWithQuery(query);
-//
-//                }
-//
-//                connection.close();
-//            } catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
+        for (int i=0; i<strings.length; i++) {
+            try {
+                // connect to database
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+                // create a statement
+                Statement statement = connection.createStatement();
+
+                // execute SQL query
+                String query = String.format("SELECT * FROM users WHERE username=\"%s\"", strings[i]);
+                ResultSet result = statement.executeQuery(query);
+
+                while (result.next()) {
+                    String usernameFriends = result.getString("friends");
+                    String [] users = Utils.splitCommas(Utils.removeCurlyBraces(usernameFriends));
+                    usernameFriends = "{";
+
+                    for (int j=0; j<users.length; j++) {
+                        if (users[j].equals(user.username)) {
+                            users[j] = newUsername;
+                        }
+                        Print.print(users[j]);
+                        usernameFriends += users[j] + ",";
+                    }
+                    usernameFriends = usernameFriends.substring(0, usernameFriends.length()-1) + "}";
+                    query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", usernameFriends, strings[i]);
+                    updateDBWithQuery(query);
+
+                }
+
+                connection.close();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
         // and companies followers list
         String companiesListString = "{";
@@ -290,7 +290,7 @@ public class SQL {
                     }
                     followersList = followersList.substring(0, followersList.length()-1) + "}";
                     query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followersList, arrayOfCompaniesName[i]);
-//                    updateDBWithQuery(query);
+                    updateDBWithQuery(query);
 
                 }
 
