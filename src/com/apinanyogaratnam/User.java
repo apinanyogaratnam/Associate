@@ -85,12 +85,22 @@ public class User {
     }
 
     public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
-        String csv = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
+        String csv = Utils.removeCurlyBraces(listOfFriendsInStringFormat);
 
-        String [] strings = csv.split(",");
+        String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {
             User friend = MainHelper.getUser(strings[i], allUsers);
             addFriend(friend, allUsers);
+        }
+    }
+
+    public void loadCompanies(String listOfCompaniesInStringFormat, LinkedList<Company> allCompanies) {
+        String csv = Utils.removeCurlyBraces(listOfCompaniesInStringFormat);
+
+        String [] strings = Utils.splitCommas(csv);
+        for (int i=0; i<strings.length; i++) {
+            Company company = MainHelper.getCompany(strings[i], allCompanies);
+            addCompany(company, allCompanies);
         }
     }
 

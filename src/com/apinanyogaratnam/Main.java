@@ -11,11 +11,12 @@ public class Main {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // load data from db to current variables
-        sql.loadDBUserData(allUsers);
+        sql.loadDBUserData(allUsers, allCompanies);
         sql.loadDBCompanyData(allCompanies, allUsers);
-        User stewie = MainHelper.getUser("stewietheangel", allUsers);
-        User walter = MainHelper.getUser("heisenborg", allUsers);
-        stewie.updateUsername("angel", allUsers);
+        User stewie = MainHelper.getUser("angel", allUsers);
+        Print.print(stewie.companiesList);
+//        Company mcd = MainHelper.getCompany("McDonald's", allCompanies);
+//        stewie.updateUsername("angel", allUsers);
 
     }
 
