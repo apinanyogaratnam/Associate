@@ -3,7 +3,6 @@ package com.apinanyogaratnam;
 import java.util.LinkedList;
 
 public class Company {
-    MainHelper mainHelperMethods = new MainHelper();
     SQL sql = new SQL();
     String name;
     LinkedList<Company> networksList = new LinkedList<>();

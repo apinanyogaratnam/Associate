@@ -12,15 +12,11 @@ public class Main {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // load data from db to current variables
-        loadDBUserData(allUsers);
-        loadDBCompanyData(allCompanies, allUsers);
-        User apinan = MainHelper.getUser("apinanyogaratnam", allUsers);
-        Company mcd = MainHelper.getCompany("McDonald's", allCompanies);
-        Company tims = MainHelper.getCompany("Tim Hortons", allCompanies);
-
-        apinan.addCompany(mcd, allCompanies);
-        mcd.addNetwork(tims, allCompanies);
-        Print.print(allCompanies);
+        sql.loadDBUserData(allUsers);
+        sql.loadDBCompanyData(allCompanies, allUsers);
+        User stewie = MainHelper.getUser("stewietheangel", allUsers);
+        stewie.updateFirstName("baby");
+        stewie.updateLastName("stews");
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
@@ -44,63 +40,4 @@ public class Main {
         return newCompany;
     }
 
-    public static void loadDBUserData(LinkedList<User> allUsers) {
-        try {
-            // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
-
-            // create a statement
-            Statement statement = connection.createStatement();
-
-            // execute SQL query
-            String query = "SELECT * FROM users";
-            ResultSet result = statement.executeQuery(query);
-
-            while (result.next()) {
-                String firstName = result.getString("first_name");
-                String lastName = result.getString("last_name");
-                String username = result.getString("username");
-                String friends = result.getString("friends");
-
-                User user = createNewUser(firstName, lastName, username, allUsers, false);
-                if (user != null) user.loadFriends(friends, allUsers);
-            }
-
-            connection.close();
-        } catch (Exception e){
-            e.printStackTrace();
-            Print.print("Unable to load users into allUsers");
-        }
-    }
-
-    public static void loadDBCompanyData(LinkedList<Company> allCompanies, LinkedList<User> allUsers) {
-        try {
-            // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
-
-            // create a statement
-            Statement statement = connection.createStatement();
-
-            // execute SQL query
-            String query = "SELECT * FROM companies";
-            ResultSet result = statement.executeQuery(query);
-
-            while (result.next()) {
-                String name = result.getString("name");
-                String networkList = result.getString("network_list");
-                String followersList = result.getString("followers_list");
-                Company company = createNewCompany(name, allCompanies, false);
-
-                if (company != null) {
-                    company.loadNetworks(networkList, allCompanies);
-                    company.loadFollowers(followersList, allUsers);
-                }
-            }
-
-            connection.close();
-        } catch (Exception e){
-            e.printStackTrace();
-            Print.print("Unable to load users into allUsers");
-        }
-    }
 }

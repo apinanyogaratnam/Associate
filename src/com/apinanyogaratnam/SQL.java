@@ -6,6 +6,111 @@ import java.util.LinkedList;
 public class SQL {
     private static final Secrets secrets = new Secrets();
 
+    public static void loadDBUserData(LinkedList<User> allUsers) {
+        try {
+            // connect to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // execute SQL query
+            String query = "SELECT * FROM users";
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String username = result.getString("username");
+                Main.createNewUser(firstName, lastName, username, allUsers, false);
+            }
+
+            connection.close();
+        } catch (Exception e){
+            e.printStackTrace();
+            Print.print("Unable to load users into allUsers");
+        }
+
+        // second time needed for loading before defining a user
+        try {
+            // connect to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // execute SQL query
+            String query = "SELECT * FROM users";
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                String username = result.getString("username");
+                String friends = result.getString("friends");
+                User user = MainHelper.getUser(username, allUsers);
+                if (user != null) user.loadFriends(friends, allUsers);
+            }
+
+            connection.close();
+        } catch (Exception e){
+            e.printStackTrace();
+            Print.print("Unable to load users into allUsers");
+        }
+    }
+
+    public static void loadDBCompanyData(LinkedList<Company> allCompanies, LinkedList<User> allUsers) {
+        try {
+            // connect to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // execute SQL query
+            String query = "SELECT * FROM companies";
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                String name = result.getString("name");
+                Main.createNewCompany(name, allCompanies, false);
+            }
+
+            connection.close();
+        } catch (Exception e){
+            e.printStackTrace();
+            Print.print("Unable to load users into allUsers");
+        }
+
+        // needed second time to load all things since companies can be loaded before they are defined
+        try {
+            // connect to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // execute SQL query
+            String query = "SELECT * FROM companies";
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                String name = result.getString("name");
+                String networkList = result.getString("network_list");
+                String followersList = result.getString("followers_list");
+                Company company = MainHelper.getCompany(name, allCompanies);
+
+                if (company != null) {
+                    company.loadNetworks(networkList, allCompanies);
+                    company.loadFollowers(followersList, allUsers);
+                }
+            }
+
+            connection.close();
+        } catch (Exception e){
+            e.printStackTrace();
+            Print.print("Unable to load users into allUsers");
+        }
+    }
+
     public void updateDBWithQuery(String query) {
         try {
             // get a connection to database
@@ -33,8 +138,8 @@ public class SQL {
 
         // set desired query and error message for adding object to db
         if (obj instanceof User) {
-            query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}");
+            query = String.format("INSERT INTO users (first_name, last_name, username, friends, companies) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}", "{}");
             errorMessage = "User " + errorMessage;
         } else if (obj instanceof Company) {
             query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
@@ -73,12 +178,12 @@ public class SQL {
     }
 
     public void updateFirstName(User user, String newFirstName) {
-        String query = String.format("UPDATE users SET first_name=\"%s\" WHERE first_name=\"%s\"", newFirstName, user.firstName);
+        String query = String.format("UPDATE users SET first_name=\"%s\" WHERE username=\"%s\"", newFirstName, user.username);
         updateDBWithQuery(query);
     }
 
     public void updateLastName(User user, String newLastName) {
-        String query = String.format("UPDATE users SET last_name=\"%s\" WHERE last_name=\"\"", newLastName, user.lastName);
+        String query = String.format("UPDATE users SET last_name=\"%s\" WHERE username=\"%s\"", newLastName, user.username);
         updateDBWithQuery(query);
     }
 

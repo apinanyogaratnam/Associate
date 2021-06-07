@@ -40,16 +40,6 @@ public class User {
         return true;
     } // tested
 
-    public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
-        String csv = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
-
-        String [] strings = csv.split(",");
-        for (int i=0; i<strings.length; i++) {
-            User friend = MainHelper.getUser(strings[i], allUsers);
-            addFriend(friend, allUsers);
-        }
-    }
-
     public boolean addCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
         if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
@@ -62,6 +52,34 @@ public class User {
 
         return true;
     } // tested
+
+    public boolean updateFirstName(String newName) {
+        if (newName == null) return false;
+
+        this.firstName = newName;
+        sql.updateFirstName(this, newName);
+
+        return true;
+    }
+
+    public boolean updateLastName(String newName) {
+        if (newName == null) return false;
+
+        this.lastName = newName;
+        sql.updateLastName(this, newName);
+
+        return true;
+    }
+
+    public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
+        String csv = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
+
+        String [] strings = csv.split(",");
+        for (int i=0; i<strings.length; i++) {
+            User friend = MainHelper.getUser(strings[i], allUsers);
+            addFriend(friend, allUsers);
+        }
+    }
 
     public boolean removeFriend(User friend, LinkedList<User> allUsers) {
         if (friend == null) return false;

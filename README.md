@@ -25,8 +25,8 @@ TODO:
 - shorten uses of code (make it more modular)
 
 SQL ready:
-- create new user
-- create new company
-- add friend
-- add company (company also adds follower)
-- add network (both networks are added)
+- create new user - tested
+- create new company - tested
+- add friend - tested
+- add company (company also adds follower) - tested
+- add network (both networks are added) - tested
