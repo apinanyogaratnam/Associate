@@ -6,7 +6,12 @@ import java.util.LinkedList;
 public class SQL {
     private static final Secrets secrets = new Secrets();
 
-    protected static void loadDBUserData(LinkedList<User> allUsers, LinkedList<Company> allCompanies) {
+    protected static void loadDB(LinkedList<User> allUsers, LinkedList<Company> allCompanies) {
+        loadDBUserData(allUsers);
+        loadDBCompanyData(allCompanies, allUsers);
+    }
+
+    protected static void loadDBUserData(LinkedList<User> allUsers) {
         try {
             // connect to database
             Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
@@ -46,7 +51,6 @@ public class SQL {
             while (result.next()) {
                 String username = result.getString("username");
                 String friends = result.getString("friends");
-                String companies = result.getString("companies");
                 User user = MainHelper.getUser(username, allUsers);
 
                 if (user != null) user.loadFriends(friends, allUsers);
@@ -162,18 +166,15 @@ public class SQL {
     }
 
     protected void addObjectToDB(Object obj) {
-        String query = "";
-        String errorMessage = "already exists in db.";
+        String query;
 
         // set desired query and error message for adding object to db
         if (obj instanceof User) {
             query = String.format("INSERT INTO users (first_name, last_name, username, friends, companies) VALUES " +
                     "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}", "{}");
-            errorMessage = "User " + errorMessage;
         } else if (obj instanceof Company) {
             query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
                     "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
-            errorMessage = "Company " + errorMessage;
         } else {
             Print.print("Object type not supported to add to db.");
             return;
@@ -218,7 +219,7 @@ public class SQL {
         friendsString = Utils.removeCurlyBraces(friendsString);
         String [] strings = Utils.splitCommas(friendsString);
 
-        for (int i=0; i<strings.length; i++) {
+        for (String string : strings) {
             try {
                 // connect to database
                 Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
@@ -227,29 +228,29 @@ public class SQL {
                 Statement statement = connection.createStatement();
 
                 // execute SQL query
-                String query = String.format("SELECT * FROM users WHERE username=\"%s\"", strings[i]);
+                String query = String.format("SELECT * FROM users WHERE username=\"%s\"", string);
                 ResultSet result = statement.executeQuery(query);
 
                 while (result.next()) {
                     String usernameFriends = result.getString("friends");
-                    String [] users = Utils.splitCommas(Utils.removeCurlyBraces(usernameFriends));
+                    String[] users = Utils.splitCommas(Utils.removeCurlyBraces(usernameFriends));
                     usernameFriends = "{";
 
-                    for (int j=0; j<users.length; j++) {
+                    for (int j = 0; j < users.length; j++) {
                         if (users[j].equals(user.username)) {
                             users[j] = newUsername;
                         }
                         Print.print(users[j]);
                         usernameFriends += users[j] + ",";
                     }
-                    usernameFriends = usernameFriends.substring(0, usernameFriends.length()-1) + "}";
-                    query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", usernameFriends, strings[i]);
+                    usernameFriends = usernameFriends.substring(0, usernameFriends.length() - 1) + "}";
+                    query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", usernameFriends, string);
                     updateDBWithQuery(query);
 
                 }
 
                 connection.close();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -263,8 +264,7 @@ public class SQL {
         companiesListString = Utils.removeCurlyBraces(companiesListString);
         String [] arrayOfCompaniesName = Utils.splitCommas(companiesListString);
 
-        for (int i=0; i<arrayOfCompaniesName.length; i++) {
-            Print.print(arrayOfCompaniesName[i] + "------------");
+        for (String companyName : arrayOfCompaniesName) {
             try {
                 // connect to database
                 Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
@@ -273,29 +273,29 @@ public class SQL {
                 Statement statement = connection.createStatement();
 
                 // execute SQL query
-                String query = String.format("SELECT * FROM companies WHERE name=\"%s\"", arrayOfCompaniesName[i]);
+                String query = String.format("SELECT * FROM companies WHERE name=\"%s\"", companyName);
                 ResultSet result = statement.executeQuery(query);
 
                 while (result.next()) {
                     String followersList = result.getString("followers_list");
-                    String [] users = Utils.splitCommas(Utils.removeCurlyBraces(followersList));
+                    String[] users = Utils.splitCommas(Utils.removeCurlyBraces(followersList));
                     followersList = "{";
 
-                    for (int j=0; j<users.length; j++) {
+                    for (int j = 0; j < users.length; j++) {
                         if (users[j].equals(user.username)) {
                             users[j] = newUsername;
                         }
                         Print.print(users[j]);
                         followersList += users[j] + ",";
                     }
-                    followersList = followersList.substring(0, followersList.length()-1) + "}";
-                    query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followersList, arrayOfCompaniesName[i]);
+                    followersList = followersList.substring(0, followersList.length() - 1) + "}";
+                    query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followersList, companyName);
                     updateDBWithQuery(query);
 
                 }
 
                 connection.close();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -303,7 +303,7 @@ public class SQL {
         // sql update username query command
         String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
         updateDBWithQuery(query);
-    }
+    } // tested
 
     protected void addFriendHelper(User user, User friend) {
         String listOfFriendsInStringFormat = "";
@@ -344,17 +344,18 @@ public class SQL {
         // update user data
         String query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", friends, user.username);
         updateDBWithQuery(query);
-    }
+    } // tested
 
     protected void addFriend(User user, User friend) {
         addFriendHelper(user, friend);
         addFriendHelper(friend, user);
-    }
+    } // tested
 
     protected void updateName(Company company, String newName) {
-        // when updating name, need to also update netowrks list and all go through
+        // when updating name, need to also update networks list and all go through
         // all followers and change their companiesList as well
         // need to also check if company name already exists
+
         String query = String.format("UPDATE company SET name=\"%s\" WHERE name=\"%s\"", newName, company.name);
         updateDBWithQuery(query);
         // complete

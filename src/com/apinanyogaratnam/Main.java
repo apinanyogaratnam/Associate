@@ -10,12 +10,8 @@ public class Main {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 
-        // load data from db to current variables
-        sql.loadDBUserData(allUsers, allCompanies);
-        sql.loadDBCompanyData(allCompanies, allUsers);
-        User stewie = MainHelper.getUser("angel", allUsers);
-        Print.print(stewie.companiesList);
-        stewie.updateUsername("stewietheangel", allUsers);
+        // load data from db to current data structures
+        sql.loadDB(allUsers, allCompanies);
 
     }
 
