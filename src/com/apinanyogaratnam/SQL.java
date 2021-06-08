@@ -439,7 +439,7 @@ public class SQL {
                         networksNetworksList += companies[j] + ",";
                     }
                     networksNetworksList = networksNetworksList.substring(0, networksNetworksList.length()-1) + "}";
-                    query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networksNetworksList, company.name);
+                    query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networksNetworksList, networkName);
                     updateDBWithQuery(query);
                 }
 
