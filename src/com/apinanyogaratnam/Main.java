@@ -1,7 +1,6 @@
 package com.apinanyogaratnam;
 
 import java.util.LinkedList;
-import java.sql.*;
 
 public class Main {
     private static final SQL sql = new SQL();
@@ -11,10 +10,7 @@ public class Main {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // load data from db to current data structures
-        sql.loadDB(allUsers, allCompanies);
-
-        Company mcd = MainHelper.getCompany("McDonalds", allCompanies);
-        mcd.updateName("McDonald's", allCompanies);
+        SQL.loadDB(allUsers, allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
