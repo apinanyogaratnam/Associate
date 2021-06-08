@@ -539,6 +539,31 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
+    protected void removeFriendHelper(User user, User friend) {
+
+    }
+
+    protected  void removeFriend(User user, User friend) {
+        removeFriendHelper(user, friend);
+        removeFriendHelper(friend, user);
+    }
+
+    protected void removeCompany() {
+        // remove company from companies list
+        // remove user from followers_list
+        // check how i did add company as i did add company with another method
+    }
+
+    protected void removeNetworkHelper(Company company, Company network) {
+
+    }
+
+    protected void removeNetwork(Company company, Company network) {
+        removeNetworkHelper(company, network);
+        removeNetworkHelper(network, company);
+    }
+
+    // start delete methods here
     protected void removeObjectFromDB(Object obj) {
         String query = "";
 

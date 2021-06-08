@@ -19,7 +19,7 @@ TODO:
 - make sql methods concurrent with user methods
 - add comments to all code
 - make getDegree in another way
-- possibly make SQL class with polymorphism
+- possibly make SQL class with polymorphism CRUD with extends SQL
 - rename methods in sql from update to add
 - shorten uses of code (make it more modular)
 - add return; after catch statements for loading methods
