@@ -13,6 +13,8 @@ public class Main {
         // load data from db to current data structures
         sql.loadDB(allUsers, allCompanies);
 
+        Company mcd = MainHelper.getCompany("McDonalds", allCompanies);
+        mcd.updateName("McDonald's", allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {

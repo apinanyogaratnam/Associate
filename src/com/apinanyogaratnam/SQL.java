@@ -307,17 +307,15 @@ public class SQL {
                     String[] users = Utils.splitCommas(Utils.removeCurlyBraces(usernameFriends));
                     usernameFriends = "{";
 
-                    for (int j = 0; j < users.length; j++) {
+                    for (int j=0; j<users.length; j++) {
                         if (users[j].equals(user.username)) {
                             users[j] = newUsername;
                         }
-                        Print.print(users[j]);
                         usernameFriends += users[j] + ",";
                     }
                     usernameFriends = usernameFriends.substring(0, usernameFriends.length() - 1) + "}";
                     query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", usernameFriends, string);
                     updateDBWithQuery(query);
-
                 }
 
                 connection.close();
@@ -331,7 +329,7 @@ public class SQL {
         for (Company company : user.companiesList) {
             companiesListString += company.name + ",";
         }
-        Print.print(user.companiesList);
+
         companiesListString = Utils.removeCurlyBraces(companiesListString);
         String [] arrayOfCompaniesName = Utils.splitCommas(companiesListString);
 
@@ -352,14 +350,12 @@ public class SQL {
                     String[] users = Utils.splitCommas(Utils.removeCurlyBraces(followersList));
                     followersList = "{";
 
-                    for (int j = 0; j < users.length; j++) {
-                        if (users[j].equals(user.username)) {
-                            users[j] = newUsername;
-                        }
-                        Print.print(users[j]);
+                    for (int j=0; j<users.length; j++) {
+                        if (users[j].equals(user.username)) users[j] = newUsername;
+
                         followersList += users[j] + ",";
                     }
-                    followersList = followersList.substring(0, followersList.length() - 1) + "}";
+                    followersList = followersList.substring(0, followersList.length()-1) + "}";
                     query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followersList, companyName);
                     updateDBWithQuery(query);
 
@@ -381,9 +377,79 @@ public class SQL {
         // all followers and change their companiesList as well
         // need to also check if company name already exists
 
-        String query = String.format("UPDATE company SET name=\"%s\" WHERE name=\"%s\"", newName, company.name);
+        // update every user following company
+        String followersString = "{";
+        for (User follower : company.followersList) {
+            followersString += follower.username + ",";
+        }
+        followersString = Utils.removeCurlyBraces(followersString);
+        String [] strings = Utils.splitCommas(followersString);
+
+        for (String follower : strings) {
+            try {
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+                Statement statement = connection.createStatement();
+                String query = String.format("SELECT * FROM users WHERE username=\"%s\"", follower);
+                ResultSet result = statement.executeQuery(query);
+
+                while (result.next()) {
+                    String companiesList = result.getString("companies");
+                    String [] companies = Utils.splitCommas(Utils.removeCurlyBraces(companiesList));
+                    companiesList = "{";
+
+                    for (int j=0; j<companies.length; j++) {
+                        if (companies[j].equals(company.name)) companies[j] = newName;
+
+                        companiesList += companies[j] + ",";
+                    }
+                    companiesList = companiesList.substring(0, companiesList.length()-1) + "}";
+                    query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companiesList, follower);
+                    updateDBWithQuery(query);
+                }
+
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        String networksList = "{";
+        for (Company network : company.networksList) {
+            networksList += network.name + ",";
+        }
+
+        networksList = Utils.removeCurlyBraces(networksList);
+        String [] networks = Utils.splitCommas(networksList);
+
+        for (String networkName : networks) {
+            try {
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+                Statement statement = connection.createStatement();
+                String query = String.format("SELECT * FROM companies WHERE name=\"%s\"", networkName);
+                ResultSet result = statement.executeQuery(query);
+
+                while (result.next()) {
+                    String networksNetworksList = result.getString("network_list");
+                    String [] companies = Utils.splitCommas(Utils.removeCurlyBraces(networksNetworksList));
+                    networksNetworksList = "{";
+
+                    for (int j=0; j<companies.length; j++) {
+                        if (companies[j].equals(company.name)) companies[j] = newName;
+
+                        networksNetworksList += companies[j] + ",";
+                    }
+                    networksNetworksList = networksNetworksList.substring(0, networksNetworksList.length()-1) + "}";
+                    query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networksNetworksList, company.name);
+                    updateDBWithQuery(query);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        String query = String.format("UPDATE companies SET name=\"%s\" WHERE name=\"%s\"", newName, company.name);
         updateDBWithQuery(query);
-        // complete
     }
 
     protected void updateNetworksHelper(Company company, Company network) {
