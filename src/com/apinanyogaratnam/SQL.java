@@ -144,6 +144,111 @@ public class SQL {
         }
     }
 
+    protected void addObjectToDB(Object obj) {
+        String query;
+
+        // set desired query and error message for adding object to db
+        if (obj instanceof User) {
+            query = String.format("INSERT INTO users (first_name, last_name, username, friends, companies) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}", "{}");
+        } else if (obj instanceof Company) {
+            query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
+        } else {
+            Print.print("Object type not supported to add to db.");
+            return;
+        }
+
+        updateDBWithQuery(query);
+    }
+
+    protected void addFriendHelper(User user, User friend) {
+        String listOfFriendsInStringFormat = "";
+        try {
+            // get a connection to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // insert data into database
+            ResultSet result = statement.executeQuery("SELECT * FROM users");
+            while (result.next()) {
+                String username = result.getString("username");
+                if (username.equals(user.username)) {
+                    listOfFriendsInStringFormat = result.getString("friends");
+                }
+            }
+
+
+            // close connection to server
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // check if user already is friends with friend
+        String temp = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
+        if (MainHelper.nameInList(friend.username, temp)) return;
+
+        String friends = listOfFriendsInStringFormat;
+        boolean isEmpty = friends.equals("{}");
+
+        // format string
+        friends = friends.substring(0, friends.length() - 1);
+        friends = isEmpty ? friends + friend.username + "}" : friends + "," + friend.username + "}";
+
+        // update user data
+        String query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", friends, user.username);
+        updateDBWithQuery(query);
+    } // tested
+
+    protected void addFriend(User user, User friend) {
+        addFriendHelper(user, friend);
+        addFriendHelper(friend, user);
+    } // tested
+
+    protected void addCompany(User user, Company company) {
+        String listOfCompaniesInStringFormat = "";
+        try {
+            // get a connection to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+
+            // create a statement
+            Statement statement = connection.createStatement();
+
+            // insert data into database
+            ResultSet result = statement.executeQuery("SELECT * FROM users");
+            while (result.next()) {
+                String username = result.getString("username");
+                if (username.equals(user.username)) {
+                    listOfCompaniesInStringFormat = result.getString("companies");
+                }
+            }
+
+
+            // close connection to server
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // check if user already is friends with friend
+        String temp = listOfCompaniesInStringFormat.substring(1, listOfCompaniesInStringFormat.length()-1);
+        if (MainHelper.nameInList(company.name, temp)) return;
+
+        String companies = listOfCompaniesInStringFormat;
+        boolean isEmpty = companies.equals("{}");
+
+        // format string
+        companies = companies.substring(0, companies.length() - 1);
+        companies = isEmpty ? companies + company.name + "}" : companies + "," + company.name + "}";
+
+        // update user data
+        String query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companies, user.username);
+        updateDBWithQuery(query);
+    }
+
     protected void updateDBWithQuery(String query) {
         try {
             // get a connection to database
@@ -163,40 +268,6 @@ public class SQL {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    protected void addObjectToDB(Object obj) {
-        String query;
-
-        // set desired query and error message for adding object to db
-        if (obj instanceof User) {
-            query = String.format("INSERT INTO users (first_name, last_name, username, friends, companies) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}", "{}");
-        } else if (obj instanceof Company) {
-            query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
-        } else {
-            Print.print("Object type not supported to add to db.");
-            return;
-        }
-
-        updateDBWithQuery(query);
-    }
-
-    protected void removeObjectFromDB(Object obj) {
-        String query = "";
-
-        if (obj instanceof User) {
-            query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}");
-        } else if (obj instanceof Company) {
-            query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
-        } else {
-            Print.print("Object type not supported to add to db.");
-        }
-
-        // complete method
     }
 
     protected void updateFirstName(User user, String newFirstName) {
@@ -305,52 +376,6 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
-    protected void addFriendHelper(User user, User friend) {
-        String listOfFriendsInStringFormat = "";
-        try {
-            // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
-
-            // create a statement
-            Statement statement = connection.createStatement();
-
-            // insert data into database
-            ResultSet result = statement.executeQuery("SELECT * FROM users");
-            while (result.next()) {
-                String username = result.getString("username");
-                if (username.equals(user.username)) {
-                    listOfFriendsInStringFormat = result.getString("friends");
-                }
-            }
-
-
-            // close connection to server
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // check if user already is friends with friend
-        String temp = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
-        if (MainHelper.nameInList(friend.username, temp)) return;
-
-        String friends = listOfFriendsInStringFormat;
-        boolean isEmpty = friends.equals("{}");
-
-        // format string
-        friends = friends.substring(0, friends.length() - 1);
-        friends = isEmpty ? friends + friend.username + "}" : friends + "," + friend.username + "}";
-
-        // update user data
-        String query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", friends, user.username);
-        updateDBWithQuery(query);
-    } // tested
-
-    protected void addFriend(User user, User friend) {
-        addFriendHelper(user, friend);
-        addFriendHelper(friend, user);
-    } // tested
-
     protected void updateName(Company company, String newName) {
         // when updating name, need to also update networks list and all go through
         // all followers and change their companiesList as well
@@ -362,45 +387,45 @@ public class SQL {
     }
 
     protected void updateNetworksHelper(Company company, Company network) {
-         String listOfNetworksInStringFormat = "";
-         try {
-             // get a connection to database
-             Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+        String listOfNetworksInStringFormat = "";
+        try {
+            // get a connection to database
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
-             // create a statement
-             Statement statement = connection.createStatement();
+            // create a statement
+            Statement statement = connection.createStatement();
 
-             // insert data into database
-             ResultSet result = statement.executeQuery("SELECT * FROM companies");
-             while (result.next()) {
-                 String username = result.getString("name");
-                 if (username.equals(company.name)) {
-                     listOfNetworksInStringFormat = result.getString("network_list");
-                 }
-             }
+            // insert data into database
+            ResultSet result = statement.executeQuery("SELECT * FROM companies");
+            while (result.next()) {
+                String username = result.getString("name");
+                if (username.equals(company.name)) {
+                    listOfNetworksInStringFormat = result.getString("network_list");
+                }
+            }
 
 
-             // close connection to server
-             connection.close();
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
+            // close connection to server
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-         // check if user already is friends with friend
-         String temp = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
-         if (MainHelper.nameInList(network.name, temp)) return;
+        // check if user already is friends with friend
+        String temp = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
+        if (MainHelper.nameInList(network.name, temp)) return;
 
-         String networks = listOfNetworksInStringFormat;
-         boolean isEmpty = networks.equals("{}");
+        String networks = listOfNetworksInStringFormat;
+        boolean isEmpty = networks.equals("{}");
 
-         // format string
-         networks = networks.substring(0, networks.length() - 1);
-         networks = isEmpty ? networks + network.name + "}" : networks + "," + network.name + "}";
+        // format string
+        networks = networks.substring(0, networks.length() - 1);
+        networks = isEmpty ? networks + network.name + "}" : networks + "," + network.name + "}";
 
-         // update user data
-         String query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networks, company.name);
-         updateDBWithQuery(query);
-     }
+        // update user data
+        String query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networks, company.name);
+        updateDBWithQuery(query);
+    }
 
     protected void updateNetwork(Company company, Company network) {
         updateNetworksHelper(company, network);
@@ -448,46 +473,20 @@ public class SQL {
         updateDBWithQuery(query);
     }
 
-    protected void updateCompany(User user, Company company) {
-        String listOfCompaniesInStringFormat = "";
-        try {
-            // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+    protected void removeObjectFromDB(Object obj) {
+        String query = "";
 
-            // create a statement
-            Statement statement = connection.createStatement();
-
-            // insert data into database
-            ResultSet result = statement.executeQuery("SELECT * FROM users");
-            while (result.next()) {
-                String username = result.getString("username");
-                if (username.equals(user.username)) {
-                    listOfCompaniesInStringFormat = result.getString("companies");
-                }
-            }
-
-
-            // close connection to server
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (obj instanceof User) {
+            query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}");
+        } else if (obj instanceof Company) {
+            query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
+                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
+        } else {
+            Print.print("Object type not supported to add to db.");
         }
 
-        // check if user already is friends with friend
-        String temp = listOfCompaniesInStringFormat.substring(1, listOfCompaniesInStringFormat.length()-1);
-        if (MainHelper.nameInList(company.name, temp)) return;
-
-        String companies = listOfCompaniesInStringFormat;
-        boolean isEmpty = companies.equals("{}");
-
-        // format string
-        companies = companies.substring(0, companies.length() - 1);
-        companies = isEmpty ? companies + company.name + "}" : companies + "," + company.name + "}";
-
-        // update user data
-        String query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companies, user.username);
-        updateDBWithQuery(query);
+        // complete method
     }
-
 
 }

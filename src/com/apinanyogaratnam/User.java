@@ -48,7 +48,7 @@ public class User {
         boolean added = this.companiesList.add(company);
         company.addFollower(this);
 
-        sql.updateCompany(this, company);
+        sql.addCompany(this, company);
 
         return true;
     } // tested
@@ -74,7 +74,7 @@ public class User {
     public boolean updateUsername(String newName, LinkedList<User> allUsers) {
         if (newName == null) return false;
         if (MainHelper.isValidUser(newName, allUsers)) {
-            Print.print("Username already exists.");
+            Print.print("Cannot update username since username already exists.");
             return false;
         }
 
@@ -111,6 +111,8 @@ public class User {
 
         this.friendsList.remove(this.friendsList.indexOf(friend));
         friend.friendsList.remove(friend.friendsList.indexOf(this));
+
+        // sql.removeFriend();
 
         return true;
     }

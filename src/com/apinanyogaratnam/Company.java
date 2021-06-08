@@ -66,6 +66,19 @@ public class Company {
         }
     }
 
+    public boolean updateName(String newName, LinkedList<Company> allCompanies) {
+        if (newName == null) return false;
+        if (MainHelper.isValidCompany(newName, allCompanies)) {
+            Print.print("Cannot update company because company already exists.");
+            return false;
+        }
+
+        sql.updateName(this, newName);
+        this.name = newName;
+
+        return true;
+    }
+
     public Company suggestNetwork(LinkedList<Company> allCompanies) {
         Company suggestedNetwork = null;
 
