@@ -31,4 +31,4 @@ SQL ready:
 - add company (company also adds follower) - tested
 - add network (both networks are added) - tested
 - rename first, last, username (friends and company followers are also updated) - tested
-- rename company name
+- rename company name (everything updates across db) - tested
