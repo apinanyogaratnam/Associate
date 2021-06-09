@@ -7,9 +7,9 @@ public class User {
     private String firstName;
     private String lastName;
     private String username;
-    LinkedList<User> friendsList= new LinkedList<>();
-    LinkedList<Company> companiesList = new LinkedList<>();
-    boolean visited;
+    private LinkedList<User> friendsList= new LinkedList<>();
+    private LinkedList<Company> companiesList = new LinkedList<>();
+    private boolean visited;
 
     // initializing a new user
     User(String firstName, String lastName, String username, LinkedList<User> allUsers) {
@@ -31,11 +31,18 @@ public class User {
         return this.username;
     }
 
+    public LinkedList<User> getFriendsList() {
+        return this.friendsList;
+    }
+
+    public LinkedList<Company> getCompaniesList() {
+        return this.companiesList;
+    }
+
     public boolean isFollowingUser(User possiblyFollowingFriend) {
     //  return this.friendsList.indexOf(possiblyFollowingFriend) != -1;
         return this.friendsList.contains(possiblyFollowingFriend);
     }
-
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
         return this.companiesList.indexOf(possiblyFollowingCompany) != -1;

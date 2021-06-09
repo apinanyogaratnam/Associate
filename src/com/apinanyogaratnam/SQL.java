@@ -371,7 +371,7 @@ public class SQL {
         // need to also update every friend's list
         // update every friend of user in db
         String friendsString = "{";
-        for (User friend : user.friendsList) {
+        for (User friend : user.getFriendsList()) {
             friendsString += friend.getUsername() + ",";
         }
         friendsString = Utils.removeCurlyBraces(friendsString);
@@ -413,7 +413,7 @@ public class SQL {
 
         // and companies followers list
         String companiesListString = "{";
-        for (Company company : user.companiesList) {
+        for (Company company : user.getCompaniesList()) {
             companiesListString += company.name + ",";
         }
 
