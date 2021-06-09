@@ -540,7 +540,32 @@ public class SQL {
     } // tested
 
     protected void removeFriendHelper(User user, User friend) {
+        try {
+            Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
+            Statement statement = connection.createStatement();
+            String query = String.format("SELECT * FROM users WHERE username=\"%s\"", user.getUsername());
+            ResultSet result = statement.executeQuery("SELECT * FROM users");
+            while (result.next()) {
+                String username = result.getString("friends");
+                String [] usernameIndexed = Utils.splitCommas(Utils.removeCurlyBraces(username));
 
+                String updatedFriendsList = "{";
+                for (int i=0; i<usernameIndexed.length; i++) {
+                    if (usernameIndexed[i].equals(friend.getUsername())) continue;
+
+                    updatedFriendsList += usernameIndexed[i] + ",";
+                }
+                updatedFriendsList = updatedFriendsList.substring(0, updatedFriendsList.length()-1) + "}";
+
+                query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", updatedFriendsList, user.getUsername());
+                updateDBWithQuery(query);
+            }
+
+            // close connection to server
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected  void removeFriend(User user, User friend) {
