@@ -89,8 +89,8 @@ class UserTest {
         boolean stewieFound = false;
         boolean found = apinanFound && stewieFound;
         for (User user : mcdonald.followersList) {
-            if (user.username.equals(apinan.username)) apinanFound = true;
-            if (user.username.equals(stewie.username)) stewieFound = true;
+            if (user.getUsername().equals(apinan.getUsername())) apinanFound = true;
+            if (user.getUsername().equals(stewie.getUsername())) stewieFound = true;
             found = apinanFound && stewieFound;
             if (found) break;
         }
@@ -170,8 +170,8 @@ class UserTest {
         boolean stewieFound = false;
         boolean found = apinanFound && stewieFound;
         for (User user : mcdonald.followersList) {
-            if (user.username.equals(apinan.username)) apinanFound = true;
-            if (user.username.equals(stewie.username)) stewieFound = true;
+            if (user.getUsername().equals(apinan.getUsername())) apinanFound = true;
+            if (user.getUsername().equals(stewie.getUsername())) stewieFound = true;
             found = apinanFound && stewieFound;
             if (found) break;
         }
@@ -202,8 +202,8 @@ class UserTest {
         boolean isFoundApinan = false;
         boolean isFoundStewie = false;
         for (User user : mcdonald.followersList) {
-            if (user.username.equals(apinan.username)) isFoundApinan = true;
-            if (user.username.equals(stewie.username)) isFoundStewie = true;
+            if (user.getUsername().equals(apinan.getUsername())) isFoundApinan = true;
+            if (user.getUsername().equals(stewie.getUsername())) isFoundStewie = true;
         }
         assertEquals(false, isFoundApinan);
         assertEquals(true, isFoundStewie);

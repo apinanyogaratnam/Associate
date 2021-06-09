@@ -7,7 +7,7 @@ public class MainHelper {
         if (possibleUsername == null) return false;
 
         for (User user : allUsers) {
-            if (possibleUsername.equals(user.username)) return true;
+            if (possibleUsername.equals(user.getUsername())) return true;
         }
 
         return false;
@@ -31,7 +31,7 @@ public class MainHelper {
         if (username == null) return null;
 
         for (User user : allUsers) {
-            if (username.equals(user.username)) return user;
+            if (username.equals(user.getUsername())) return user;
         }
 
         return null;

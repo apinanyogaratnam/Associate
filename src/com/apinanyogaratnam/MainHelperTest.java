@@ -18,7 +18,7 @@ class MainHelperTest {
         User apinan = mainMethod.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers, false);
 
         // checking if new user is a valid user
-        boolean isUser = mainHelperMethod.isValidUser(apinan.username, allUsers);
+        boolean isUser = mainHelperMethod.isValidUser(apinan.getUsername(), allUsers);
         assertEquals(true, isUser);
 
         // checking if api is a valid user

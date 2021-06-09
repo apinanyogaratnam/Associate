@@ -4,9 +4,9 @@ import java.util.LinkedList;
 
 public class User {
     SQL sql = new SQL();
-    String firstName;
-    String lastName;
-    String username;
+    private String firstName;
+    private String lastName;
+    private String username;
     LinkedList<User> friendsList= new LinkedList<>();
     LinkedList<Company> companiesList = new LinkedList<>();
     boolean visited;
@@ -19,9 +19,23 @@ public class User {
         allUsers.add(this);
     }
 
-    public boolean isFollowingUser(User possiblyFollowingFriend) {
-        return this.friendsList.indexOf(possiblyFollowingFriend) != -1;
+    public String getFirstName() {
+        return this.firstName;
     }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public boolean isFollowingUser(User possiblyFollowingFriend) {
+    //  return this.friendsList.indexOf(possiblyFollowingFriend) != -1;
+        return this.friendsList.contains(possiblyFollowingFriend);
+    }
+
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
         return this.companiesList.indexOf(possiblyFollowingCompany) != -1;

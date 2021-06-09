@@ -30,8 +30,8 @@ public class Print {
 
     public static void print(LinkedList<?> listOfObjects) {
         for (Object obj : listOfObjects) {
-            if (obj instanceof User) print("First name: " + ((User) obj).firstName + ", Last name: "
-                    + ((User) obj).lastName + ", Username: " + ((User) obj).username);
+            if (obj instanceof User) print("First name: " + ((User) obj).getFirstName() + ", Last name: "
+                    + ((User) obj).getLastName() + ", Username: " + ((User) obj).getUsername());
             else if (obj instanceof Company) print("Company name: " + ((Company) obj).name);
         }
     }

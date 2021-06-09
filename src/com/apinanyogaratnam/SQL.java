@@ -14,7 +14,7 @@ public class SQL {
     protected static void loadDBUserData(LinkedList<User> allUsers) {
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -39,7 +39,7 @@ public class SQL {
         // second time needed for loading before defining a user
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -66,7 +66,7 @@ public class SQL {
     protected static void loadDBCompanyData(LinkedList<Company> allCompanies, LinkedList<User> allUsers) {
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -89,7 +89,7 @@ public class SQL {
         // needed second time to load all things since companies can be loaded before they are defined
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -118,7 +118,7 @@ public class SQL {
 
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -150,7 +150,7 @@ public class SQL {
         // set desired query and error message for adding object to db
         if (obj instanceof User) {
             query = String.format("INSERT INTO users (first_name, last_name, username, friends, companies) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}", "{}");
+                    "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), "{}", "{}");
         } else if (obj instanceof Company) {
             query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
                     "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
@@ -166,7 +166,7 @@ public class SQL {
         String listOfFriendsInStringFormat = "";
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -175,7 +175,7 @@ public class SQL {
             ResultSet result = statement.executeQuery("SELECT * FROM users");
             while (result.next()) {
                 String username = result.getString("username");
-                if (username.equals(user.username)) {
+                if (username.equals(user.getUsername())) {
                     listOfFriendsInStringFormat = result.getString("friends");
                 }
             }
@@ -189,17 +189,17 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
-        if (MainHelper.nameInList(friend.username, temp)) return;
+        if (MainHelper.nameInList(friend.getUsername(), temp)) return;
 
         String friends = listOfFriendsInStringFormat;
         boolean isEmpty = friends.equals("{}");
 
         // format string
         friends = friends.substring(0, friends.length() - 1);
-        friends = isEmpty ? friends + friend.username + "}" : friends + "," + friend.username + "}";
+        friends = isEmpty ? friends + friend.getUsername() + "}" : friends + "," + friend.getUsername() + "}";
 
         // update user data
-        String query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", friends, user.username);
+        String query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", friends, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
@@ -212,7 +212,7 @@ public class SQL {
         String listOfCompaniesInStringFormat = "";
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -221,7 +221,7 @@ public class SQL {
             ResultSet result = statement.executeQuery("SELECT * FROM users");
             while (result.next()) {
                 String username = result.getString("username");
-                if (username.equals(user.username)) {
+                if (username.equals(user.getUsername())) {
                     listOfCompaniesInStringFormat = result.getString("companies");
                 }
             }
@@ -245,7 +245,7 @@ public class SQL {
         companies = isEmpty ? companies + company.name + "}" : companies + "," + company.name + "}";
 
         // update user data
-        String query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companies, user.username);
+        String query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companies, user.getUsername());
         updateDBWithQuery(query);
     }
 
@@ -253,7 +253,7 @@ public class SQL {
         String listOfNetworksInStringFormat = "";
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -299,7 +299,7 @@ public class SQL {
         String listOfFollowersInStringFormat = "";
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -329,7 +329,7 @@ public class SQL {
 
         // format string
         followers = followers.substring(0, followers.length() - 1);
-        followers = isEmpty ? followers + user.username + "}" : followers + "," + company.name + "}";
+        followers = isEmpty ? followers + user.getUsername() + "}" : followers + "," + company.name + "}";
 
         // update user data
         String query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followers, company.name);
@@ -339,7 +339,7 @@ public class SQL {
     protected void updateDBWithQuery(String query) {
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -358,12 +358,12 @@ public class SQL {
     }
 
     protected void updateFirstName(User user, String newFirstName) {
-        String query = String.format("UPDATE users SET first_name=\"%s\" WHERE username=\"%s\"", newFirstName, user.username);
+        String query = String.format("UPDATE users SET first_name=\"%s\" WHERE username=\"%s\"", newFirstName, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
     protected void updateLastName(User user, String newLastName) {
-        String query = String.format("UPDATE users SET last_name=\"%s\" WHERE username=\"%s\"", newLastName, user.username);
+        String query = String.format("UPDATE users SET last_name=\"%s\" WHERE username=\"%s\"", newLastName, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
@@ -372,7 +372,7 @@ public class SQL {
         // update every friend of user in db
         String friendsString = "{";
         for (User friend : user.friendsList) {
-            friendsString += friend.username + ",";
+            friendsString += friend.getUsername() + ",";
         }
         friendsString = Utils.removeCurlyBraces(friendsString);
         String [] strings = Utils.splitCommas(friendsString);
@@ -380,7 +380,7 @@ public class SQL {
         for (String string : strings) {
             try {
                 // connect to database
-                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
                 // create a statement
                 Statement statement = connection.createStatement();
@@ -395,7 +395,7 @@ public class SQL {
                     usernameFriends = "{";
 
                     for (int j=0; j<users.length; j++) {
-                        if (users[j].equals(user.username)) {
+                        if (users[j].equals(user.getUsername())) {
                             users[j] = newUsername;
                         }
                         usernameFriends += users[j] + ",";
@@ -423,7 +423,7 @@ public class SQL {
         for (String companyName : arrayOfCompaniesName) {
             try {
                 // connect to database
-                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
 
                 // create a statement
                 Statement statement = connection.createStatement();
@@ -438,7 +438,7 @@ public class SQL {
                     followersList = "{";
 
                     for (int j=0; j<users.length; j++) {
-                        if (users[j].equals(user.username)) users[j] = newUsername;
+                        if (users[j].equals(user.getUsername())) users[j] = newUsername;
 
                         followersList += users[j] + ",";
                     }
@@ -455,7 +455,7 @@ public class SQL {
         }
 
         // sql update username query command
-        String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.username);
+        String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
@@ -467,14 +467,14 @@ public class SQL {
         // update every user following company
         String followersString = "{";
         for (User follower : company.followersList) {
-            followersString += follower.username + ",";
+            followersString += follower.getUsername() + ",";
         }
         followersString = Utils.removeCurlyBraces(followersString);
         String [] strings = Utils.splitCommas(followersString);
 
         for (String follower : strings) {
             try {
-                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
                 Statement statement = connection.createStatement();
                 String query = String.format("SELECT * FROM users WHERE username=\"%s\"", follower);
                 ResultSet result = statement.executeQuery(query);
@@ -569,7 +569,7 @@ public class SQL {
 
         if (obj instanceof User) {
             query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).firstName, ((User) obj).lastName, ((User) obj).username, "{}");
+                    "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), "{}");
         } else if (obj instanceof Company) {
             query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
                     "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");

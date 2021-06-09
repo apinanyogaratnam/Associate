@@ -45,7 +45,7 @@ class MainTest {
         // search through allUsers for new user
         boolean foundUser = false;
         for (User user : allUsers) {
-            if (user.username.equals(apinan.username)) {
+            if (user.getUsername().equals(apinan.getUsername())) {
                 foundUser = true;
                 break;
             }
