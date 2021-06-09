@@ -9,7 +9,7 @@ public class SQL {
     protected static void loadDB(LinkedList<User> allUsers, LinkedList<Company> allCompanies) {
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
-    }
+    } // tested
 
     protected static void loadDBUserData(LinkedList<User> allUsers) {
         try {
@@ -61,7 +61,7 @@ public class SQL {
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
         }
-    }
+    } // tested
 
     protected static void loadDBCompanyData(LinkedList<Company> allCompanies, LinkedList<User> allUsers) {
         try {
@@ -142,7 +142,7 @@ public class SQL {
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
         }
-    }
+    } // tested
 
     protected void addObjectToDB(Object obj) {
         String query;
@@ -160,7 +160,7 @@ public class SQL {
         }
 
         updateDBWithQuery(query);
-    }
+    } // tested
 
     protected void addFriendHelper(User user, User friend) {
         String listOfFriendsInStringFormat = "";
@@ -247,7 +247,7 @@ public class SQL {
         // update user data
         String query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companies, user.getUsername());
         updateDBWithQuery(query);
-    }
+    } // tested
 
     protected void addNetworksHelper(Company company, Company network) {
         String listOfNetworksInStringFormat = "";
@@ -266,7 +266,6 @@ public class SQL {
                     listOfNetworksInStringFormat = result.getString("network_list");
                 }
             }
-
 
             // close connection to server
             connection.close();
@@ -355,7 +354,7 @@ public class SQL {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    } // tested
 
     protected void updateFirstName(User user, String newFirstName) {
         String query = String.format("UPDATE users SET first_name=\"%s\" WHERE username=\"%s\"", newFirstName, user.getUsername());
@@ -550,12 +549,16 @@ public class SQL {
                 String [] usernameIndexed = Utils.splitCommas(Utils.removeCurlyBraces(username));
 
                 String updatedFriendsList = "{";
-                for (String s : usernameIndexed) {
-                    if (s.equals(friend.getUsername())) continue;
+                if (usernameIndexed.length > 1) {
+                    for (String s : usernameIndexed) {
+                        if (s.equals(friend.getUsername())) continue;
 
-                    updatedFriendsList += s + ",";
+                        updatedFriendsList += s + ",";
+                    }
+                    updatedFriendsList = updatedFriendsList.substring(0, updatedFriendsList.length() - 1) + "}";
+                } else if (usernameIndexed.length == 1) {
+                    if (usernameIndexed[0].equals(friend.getUsername())) updatedFriendsList += "}";
                 }
-                updatedFriendsList = updatedFriendsList.substring(0, updatedFriendsList.length()-1) + "}";
 
                 query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", updatedFriendsList, user.getUsername());
                 updateDBWithQuery(query);

@@ -103,7 +103,7 @@ public class User {
         this.username = newName;
 
         return true;
-    }
+    } // tested
 
     public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
         String csv = Utils.removeCurlyBraces(listOfFriendsInStringFormat);
@@ -113,7 +113,7 @@ public class User {
             User friend = MainHelper.getUser(strings[i], allUsers);
             addFriend(friend, allUsers);
         }
-    }
+    } // tested
 
     public void loadCompanies(String listOfCompaniesInStringFormat, LinkedList<Company> allCompanies) {
         String csv = Utils.removeCurlyBraces(listOfCompaniesInStringFormat);
@@ -123,7 +123,7 @@ public class User {
             Company company = MainHelper.getCompany(strings[i], allCompanies);
             addCompany(company, allCompanies);
         }
-    }
+    } // tested
 
     public boolean removeFriend(User friend, LinkedList<User> allUsers) {
         if (friend == null) return false;
@@ -133,7 +133,7 @@ public class User {
         this.friendsList.remove(this.friendsList.indexOf(friend));
         friend.friendsList.remove(friend.friendsList.indexOf(this));
 
-        // sql.removeFriend();
+        sql.removeFriend(this, friend);
 
         return true;
     }
