@@ -21,7 +21,7 @@ INSERT INTO companies (
 )
 VALUES ("Tim Hortons", "{}", "{}");
 
-
+UPDATE companies SET name="" WHERE name="";
 
 
 
