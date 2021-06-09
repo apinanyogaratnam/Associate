@@ -189,7 +189,7 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
-        if (MainHelper.getName()InList(friend.getUsername(), temp)) return;
+        if (MainHelper.nameInList(friend.getUsername(), temp)) return;
 
         String friends = listOfFriendsInStringFormat;
         boolean isEmpty = friends.equals("{}");
@@ -235,7 +235,7 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfCompaniesInStringFormat.substring(1, listOfCompaniesInStringFormat.length()-1);
-        if (MainHelper.getName()InList(company.getName(), temp)) return;
+        if (MainHelper.nameInList(company.getName(), temp)) return;
 
         String companies = listOfCompaniesInStringFormat;
         boolean isEmpty = companies.equals("{}");
@@ -276,7 +276,7 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
-        if (MainHelper.getName()InList(network.getName(), temp)) return;
+        if (MainHelper.nameInList(network.getName(), temp)) return;
 
         String networks = listOfNetworksInStringFormat;
         boolean isEmpty = networks.equals("{}");
@@ -322,7 +322,7 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfFollowersInStringFormat.substring(1, listOfFollowersInStringFormat.length()-1);
-        if (MainHelper.getName()InList(company.getName(), temp)) return;
+        if (MainHelper.nameInList(company.getName(), temp)) return;
 
         String followers = listOfFollowersInStringFormat;
         boolean isEmpty = followers.equals("{}");
@@ -544,16 +544,16 @@ public class SQL {
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
             String query = String.format("SELECT * FROM users WHERE username=\"%s\"", user.getUsername());
-            ResultSet result = statement.executeQuery("SELECT * FROM users");
+            ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String username = result.getString("friends");
                 String [] usernameIndexed = Utils.splitCommas(Utils.removeCurlyBraces(username));
 
                 String updatedFriendsList = "{";
-                for (int i=0; i<usernameIndexed.length; i++) {
-                    if (usernameIndexed[i].equals(friend.getUsername())) continue;
+                for (String s : usernameIndexed) {
+                    if (s.equals(friend.getUsername())) continue;
 
-                    updatedFriendsList += usernameIndexed[i] + ",";
+                    updatedFriendsList += s + ",";
                 }
                 updatedFriendsList = updatedFriendsList.substring(0, updatedFriendsList.length()-1) + "}";
 
