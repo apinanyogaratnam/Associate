@@ -153,7 +153,7 @@ public class SQL {
                     "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), "{}", "{}");
         } else if (obj instanceof Company) {
             query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
+                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).getName(), "{}", "{}");
         } else {
             Print.print("Object type not supported to add to db.");
             return;
@@ -189,7 +189,7 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
-        if (MainHelper.nameInList(friend.getUsername(), temp)) return;
+        if (MainHelper.getName()InList(friend.getUsername(), temp)) return;
 
         String friends = listOfFriendsInStringFormat;
         boolean isEmpty = friends.equals("{}");
@@ -235,14 +235,14 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfCompaniesInStringFormat.substring(1, listOfCompaniesInStringFormat.length()-1);
-        if (MainHelper.nameInList(company.name, temp)) return;
+        if (MainHelper.getName()InList(company.getName(), temp)) return;
 
         String companies = listOfCompaniesInStringFormat;
         boolean isEmpty = companies.equals("{}");
 
         // format string
         companies = companies.substring(0, companies.length() - 1);
-        companies = isEmpty ? companies + company.name + "}" : companies + "," + company.name + "}";
+        companies = isEmpty ? companies + company.getName() + "}" : companies + "," + company.getName() + "}";
 
         // update user data
         String query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companies, user.getUsername());
@@ -262,7 +262,7 @@ public class SQL {
             ResultSet result = statement.executeQuery("SELECT * FROM companies");
             while (result.next()) {
                 String username = result.getString("name");
-                if (username.equals(company.name)) {
+                if (username.equals(company.getName())) {
                     listOfNetworksInStringFormat = result.getString("network_list");
                 }
             }
@@ -276,17 +276,17 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
-        if (MainHelper.nameInList(network.name, temp)) return;
+        if (MainHelper.getName()InList(network.getName(), temp)) return;
 
         String networks = listOfNetworksInStringFormat;
         boolean isEmpty = networks.equals("{}");
 
         // format string
         networks = networks.substring(0, networks.length() - 1);
-        networks = isEmpty ? networks + network.name + "}" : networks + "," + network.name + "}";
+        networks = isEmpty ? networks + network.getName() + "}" : networks + "," + network.getName() + "}";
 
         // update user data
-        String query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networks, company.name);
+        String query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networks, company.getName());
         updateDBWithQuery(query);
     } // tested
 
@@ -308,7 +308,7 @@ public class SQL {
             ResultSet result = statement.executeQuery("SELECT * FROM companies");
             while (result.next()) {
                 String companyName = result.getString("name");
-                if (companyName.equals(company.name)) {
+                if (companyName.equals(company.getName())) {
                     listOfFollowersInStringFormat = result.getString("followers_list");
                 }
             }
@@ -322,17 +322,17 @@ public class SQL {
 
         // check if user already is friends with friend
         String temp = listOfFollowersInStringFormat.substring(1, listOfFollowersInStringFormat.length()-1);
-        if (MainHelper.nameInList(company.name, temp)) return;
+        if (MainHelper.getName()InList(company.getName(), temp)) return;
 
         String followers = listOfFollowersInStringFormat;
         boolean isEmpty = followers.equals("{}");
 
         // format string
         followers = followers.substring(0, followers.length() - 1);
-        followers = isEmpty ? followers + user.getUsername() + "}" : followers + "," + company.name + "}";
+        followers = isEmpty ? followers + user.getUsername() + "}" : followers + "," + company.getName() + "}";
 
         // update user data
-        String query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followers, company.name);
+        String query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followers, company.getName());
         updateDBWithQuery(query);
     } // tested
 
@@ -414,7 +414,7 @@ public class SQL {
         // and companies followers list
         String companiesListString = "{";
         for (Company company : user.getCompaniesList()) {
-            companiesListString += company.name + ",";
+            companiesListString += company.getName() + ",";
         }
 
         companiesListString = Utils.removeCurlyBraces(companiesListString);
@@ -466,7 +466,7 @@ public class SQL {
 
         // update every user following company
         String followersString = "{";
-        for (User follower : company.followersList) {
+        for (User follower : company.getFollowersList()) {
             followersString += follower.getUsername() + ",";
         }
         followersString = Utils.removeCurlyBraces(followersString);
@@ -485,7 +485,7 @@ public class SQL {
                     companiesList = "{";
 
                     for (int j=0; j<companies.length; j++) {
-                        if (companies[j].equals(company.name)) companies[j] = newName;
+                        if (companies[j].equals(company.getName())) companies[j] = newName;
 
                         companiesList += companies[j] + ",";
                     }
@@ -501,8 +501,8 @@ public class SQL {
         }
 
         String networksList = "{";
-        for (Company network : company.networksList) {
-            networksList += network.name + ",";
+        for (Company network : company.getNetworksList()) {
+            networksList += network.getName() + ",";
         }
 
         networksList = Utils.removeCurlyBraces(networksList);
@@ -521,7 +521,7 @@ public class SQL {
                     networksNetworksList = "{";
 
                     for (int j=0; j<companies.length; j++) {
-                        if (companies[j].equals(company.name)) companies[j] = newName;
+                        if (companies[j].equals(company.getName())) companies[j] = newName;
 
                         networksNetworksList += companies[j] + ",";
                     }
@@ -535,7 +535,7 @@ public class SQL {
             }
         }
 
-        String query = String.format("UPDATE companies SET name=\"%s\" WHERE name=\"%s\"", newName, company.name);
+        String query = String.format("UPDATE companies SET name=\"%s\" WHERE name=\"%s\"", newName, company.getName());
         updateDBWithQuery(query);
     } // tested
 
@@ -572,7 +572,7 @@ public class SQL {
                     "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), "{}");
         } else if (obj instanceof Company) {
             query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).name, "{}", "{}");
+                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).getName(), "{}", "{}");
         } else {
             Print.print("Object type not supported to add to db.");
         }

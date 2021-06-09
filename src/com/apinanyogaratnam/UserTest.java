@@ -88,7 +88,7 @@ class UserTest {
         boolean apinanFound = false;
         boolean stewieFound = false;
         boolean found = apinanFound && stewieFound;
-        for (User user : mcdonald.followersList) {
+        for (User user : mcdonald.getFollowersList()) {
             if (user.getUsername().equals(apinan.getUsername())) apinanFound = true;
             if (user.getUsername().equals(stewie.getUsername())) stewieFound = true;
             found = apinanFound && stewieFound;
@@ -169,7 +169,7 @@ class UserTest {
         boolean apinanFound = false;
         boolean stewieFound = false;
         boolean found = apinanFound && stewieFound;
-        for (User user : mcdonald.followersList) {
+        for (User user : mcdonald.getFollowersList()) {
             if (user.getUsername().equals(apinan.getUsername())) apinanFound = true;
             if (user.getUsername().equals(stewie.getUsername())) stewieFound = true;
             found = apinanFound && stewieFound;
@@ -201,7 +201,7 @@ class UserTest {
         // check if apinan and stewie are still in mcdonald's followers list
         boolean isFoundApinan = false;
         boolean isFoundStewie = false;
-        for (User user : mcdonald.followersList) {
+        for (User user : mcdonald.getFollowersList()) {
             if (user.getUsername().equals(apinan.getUsername())) isFoundApinan = true;
             if (user.getUsername().equals(stewie.getUsername())) isFoundStewie = true;
         }

@@ -4,14 +4,26 @@ import java.util.LinkedList;
 
 public class Company {
     SQL sql = new SQL();
-    String name;
-    LinkedList<Company> networksList = new LinkedList<>();
-    LinkedList<User> followersList = new LinkedList<>();
+    private String name;
+    private LinkedList<Company> networksList = new LinkedList<>();
+    private LinkedList<User> followersList = new LinkedList<>();
 
     // initializing a new company
     Company(String name, LinkedList<Company> allCompanies) {
         this.name = name;
         allCompanies.add(this);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public LinkedList<Company> getNetworksList() {
+        return this.networksList;
+    }
+
+    public LinkedList<User> getFollowersList() {
+        return this.followersList;
     }
 
     public boolean hasNetwork(Company company) {

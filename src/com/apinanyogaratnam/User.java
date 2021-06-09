@@ -63,7 +63,7 @@ public class User {
 
     public boolean addCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
-        if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
+        if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
         if (this.isFollowingCompany(company)) return false;
 
         boolean added = this.companiesList.add(company);
@@ -140,11 +140,11 @@ public class User {
 
     public boolean removeCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
-        if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
+        if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
         if (!isFollowingCompany(company)) return false;
 
         this.companiesList.remove(this.companiesList.indexOf(company));
-        company.followersList.remove(company.followersList.indexOf(this));
+        company.getFollowersList().remove(company.getFollowersList().indexOf(this));
 
         return true;
     }

@@ -17,7 +17,7 @@ public class MainHelper {
         if (name == null) return false;
 
         for (Company company : allCompanies) {
-            if (name.equals(company.name)) return true;
+            if (name.equals(company.getName())) return true;
         }
 
         return false;
@@ -41,7 +41,7 @@ public class MainHelper {
         if (name == null) return null;
 
         for (Company company : allCompanies) {
-            if (name.equals(company.name)) return company;
+            if (name.equals(company.getName())) return company;
         }
 
         return null;

@@ -39,7 +39,7 @@ class MainHelperTest {
         Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies, false);
 
         // checking if new company is a new company
-        boolean isCompany = mainHelperMethod.isValidCompany(mcdonald.name, allCompanies);
+        boolean isCompany = mainHelperMethod.isValidCompany(mcdonald.getName(), allCompanies);
         assertEquals(true, isCompany);
 
         // checking if tim hortons is a valid company

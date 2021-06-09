@@ -64,7 +64,7 @@ class MainTest {
         // search through allCompanies for new company
         boolean foundCompany = false;
         for (Company company : allCompanies) {
-            if (company.name.equals(mcdonald.name)) {
+            if (company.getName().equals(mcdonald.getName())) {
                 foundCompany = true;
                 break;
             }
