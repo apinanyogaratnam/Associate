@@ -14,7 +14,7 @@ public class SQL {
     protected static void loadDBUserData(LinkedList<User> allUsers) {
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -39,7 +39,7 @@ public class SQL {
         // second time needed for loading before defining a user
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -66,7 +66,7 @@ public class SQL {
     protected static void loadDBCompanyData(LinkedList<Company> allCompanies, LinkedList<User> allUsers) {
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -89,7 +89,7 @@ public class SQL {
         // needed second time to load all things since companies can be loaded before they are defined
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -118,7 +118,7 @@ public class SQL {
 
         try {
             // connect to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -166,7 +166,7 @@ public class SQL {
         String listOfFriendsInStringFormat = "";
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -212,7 +212,7 @@ public class SQL {
         String listOfCompaniesInStringFormat = "";
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -253,7 +253,7 @@ public class SQL {
         String listOfNetworksInStringFormat = "";
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -299,7 +299,7 @@ public class SQL {
         String listOfFollowersInStringFormat = "";
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -339,7 +339,7 @@ public class SQL {
     protected void updateDBWithQuery(String query) {
         try {
             // get a connection to database
-            Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+            Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
             // create a statement
             Statement statement = connection.createStatement();
@@ -380,7 +380,7 @@ public class SQL {
         for (String string : strings) {
             try {
                 // connect to database
-                Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
                 // create a statement
                 Statement statement = connection.createStatement();
@@ -423,7 +423,7 @@ public class SQL {
         for (String companyName : arrayOfCompaniesName) {
             try {
                 // connect to database
-                Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
 
                 // create a statement
                 Statement statement = connection.createStatement();
@@ -474,7 +474,7 @@ public class SQL {
 
         for (String follower : strings) {
             try {
-                Connection connection = DriverManager.getConnection(secrets.url, secrets.getUsername(), secrets.password);
+                Connection connection = DriverManager.getConnection(secrets.url, secrets.username, secrets.password);
                 Statement statement = connection.createStatement();
                 String query = String.format("SELECT * FROM users WHERE username=\"%s\"", follower);
                 ResultSet result = statement.executeQuery(query);
