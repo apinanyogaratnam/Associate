@@ -30,7 +30,7 @@ TODO:
 - shorten uses of code (make it more modular)
 - add return; after catch statements for loading methods
 
-SQL ready: <br />
+SQL ready: (COMPLETED)<br />
 
     CREATE: <br />
         - user: create new user - tested <br />
