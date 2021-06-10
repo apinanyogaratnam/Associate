@@ -1,5 +1,7 @@
 package com.apinanyogaratnam;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud;
+
 import java.util.LinkedList;
 
 public class User {
@@ -56,7 +58,7 @@ public class User {
         this.friendsList.add(friend);
         friend.friendsList.add(this);
 
-        sql.addFriend(this, friend);
+        UpdateSQL.addFriend(this, friend);
 
         return true;
     } // tested
@@ -69,7 +71,7 @@ public class User {
         boolean added = this.companiesList.add(company);
         company.addFollower(this);
 
-        sql.addCompany(this, company);
+        UpdateSQL.addCompany(this, company);
 
         return true;
     } // tested
@@ -78,7 +80,7 @@ public class User {
         if (newName == null) return false;
 
         this.firstName = newName;
-        sql.updateFirstName(this, newName);
+        UpdateSQL.updateFirstName(this, newName);
 
         return true;
     } // tested
@@ -87,7 +89,7 @@ public class User {
         if (newName == null) return false;
 
         this.lastName = newName;
-        sql.updateLastName(this, newName);
+        UpdateSQL.updateLastName(this, newName);
 
         return true;
     } // tested
@@ -99,7 +101,7 @@ public class User {
             return false;
         }
 
-        sql.updateUsername(this, newName);
+        UpdateSQL.updateUsername(this, newName);
         this.username = newName;
 
         return true;
@@ -133,7 +135,7 @@ public class User {
         this.friendsList.remove(this.friendsList.indexOf(friend));
         friend.friendsList.remove(friend.friendsList.indexOf(this));
 
-        sql.removeFriend(this, friend);
+        UpdateSQL.removeFriend(this, friend);
 
         return true;
     } // tested
@@ -146,7 +148,7 @@ public class User {
         this.companiesList.remove(this.companiesList.indexOf(company));
         company.getFollowersList().remove(company.getFollowersList().indexOf(this));
 
-        sql.removeCompany(this, company);
+        UpdateSQL.removeCompany(this, company);
 
         return true;
     } // tested
@@ -167,7 +169,7 @@ public class User {
         // remove from allUsers
         allUsers.remove(allUsers.indexOf(this));
 
-        sql.deleteObjectFromDB(this);
+        DeleteSQL.deleteObjectFromDB(this);
 
         return true;
     } // tested

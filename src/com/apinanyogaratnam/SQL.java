@@ -4,8 +4,10 @@ import java.sql.*;
 import java.util.LinkedList;
 
 public class SQL {
-    private static final Secrets secrets = new Secrets();
+    protected static final Secrets secrets = new Secrets();
+}
 
+class CreateSQL extends SQL {
     protected static void loadDB(LinkedList<User> allUsers, LinkedList<Company> allCompanies) {
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
@@ -143,8 +145,10 @@ public class SQL {
             Print.print("Unable to load users into allUsers");
         }
     } // tested
+}
 
-    protected void addObjectToDB(Object obj) {
+class UpdateSQL extends SQL {
+    protected static void addObjectToDB(Object obj) {
         String query;
 
         // set desired query and error message for adding object to db
@@ -162,7 +166,7 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
-    protected void addFriendHelper(User user, User friend) {
+    protected static void addFriendHelper(User user, User friend) {
         String listOfFriendsInStringFormat = "";
         try {
             // get a connection to database
@@ -203,12 +207,12 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
-    protected void addFriend(User user, User friend) {
+    protected static void addFriend(User user, User friend) {
         addFriendHelper(user, friend);
         addFriendHelper(friend, user);
     } // tested
 
-    protected void addCompany(User user, Company company) {
+    protected static void addCompany(User user, Company company) {
         String listOfCompaniesInStringFormat = "";
         try {
             // get a connection to database
@@ -249,7 +253,7 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
-    protected void addNetworksHelper(Company company, Company network) {
+    protected static void addNetworksHelper(Company company, Company network) {
         String listOfNetworksInStringFormat = "";
         try {
             // get a connection to database
@@ -289,12 +293,12 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
-    protected void addNetwork(Company company, Company network) {
+    protected static void addNetwork(Company company, Company network) {
         addNetworksHelper(company, network);
         addNetworksHelper(network, company);
     } // tested
 
-    protected void addFollowers(Company company, User user) {
+    protected static void addFollowers(Company company, User user) {
         String listOfFollowersInStringFormat = "";
         try {
             // get a connection to database
@@ -335,7 +339,7 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
-    protected void updateDBWithQuery(String query) {
+    protected static void updateDBWithQuery(String query) {
         try {
             // get a connection to database
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
@@ -356,17 +360,17 @@ public class SQL {
         }
     } // tested
 
-    protected void updateFirstName(User user, String newFirstName) {
+    protected static void updateFirstName(User user, String newFirstName) {
         String query = String.format("UPDATE users SET first_name=\"%s\" WHERE username=\"%s\"", newFirstName, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
-    protected void updateLastName(User user, String newLastName) {
+    protected static void updateLastName(User user, String newLastName) {
         String query = String.format("UPDATE users SET last_name=\"%s\" WHERE username=\"%s\"", newLastName, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
-    protected void updateUsername(User user, String newUsername) {
+    protected static void updateUsername(User user, String newUsername) {
         // need to also update every friend's list
         // update every friend of user in db
         String friendsString = "{";
@@ -458,7 +462,7 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
-    protected void updateName(Company company, String newName) {
+    protected static void updateName(Company company, String newName) {
         // when updating name, need to also update networks list and all go through
         // all followers and change their companiesList as well
         // need to also check if company name already exists
@@ -538,7 +542,7 @@ public class SQL {
         updateDBWithQuery(query);
     } // tested
 
-    protected void removeFriendHelper(User user, User friend) {
+    protected static void removeFriendHelper(User user, User friend) {
         try {
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
@@ -570,12 +574,12 @@ public class SQL {
         }
     } // tested
 
-    protected  void removeFriend(User user, User friend) {
+    protected  static void removeFriend(User user, User friend) {
         removeFriendHelper(user, friend);
         removeFriendHelper(friend, user);
     } // tested
 
-    protected void removeCompany(User user, Company company) {
+    protected static void removeCompany(User user, Company company) {
         try {
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
@@ -626,7 +630,7 @@ public class SQL {
         }
     } // tested
 
-    protected void removeNetworkHelper(Company company, Company network) {
+    protected static void removeNetworkHelper(Company company, Company network) {
         try {
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
@@ -655,12 +659,14 @@ public class SQL {
         }
     } // tested
 
-    protected void removeNetwork(Company company, Company network) {
+    protected static void removeNetwork(Company company, Company network) {
         removeNetworkHelper(company, network);
         removeNetworkHelper(network, company);
     } // tested
+}
 
-    protected void deleteObjectFromDB(Object obj) {
+class DeleteSQL extends SQL {
+    protected static void deleteObjectFromDB(Object obj) {
         String query = "";
 
         if (obj instanceof User) {
@@ -672,11 +678,6 @@ public class SQL {
             return;
         }
 
-        updateDBWithQuery(query);
+        UpdateSQL.updateDBWithQuery(query);
     } // tested
-
-}
-
-class createSQL extends SQL {
-
 }

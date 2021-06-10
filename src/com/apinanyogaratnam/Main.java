@@ -10,7 +10,7 @@ public class Main {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // load data from db to current data structures
-        SQL.loadDB(allUsers, allCompanies);
+        CreateSQL.loadDB(allUsers, allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
@@ -19,7 +19,7 @@ public class Main {
         User newUser = new User(firstName, lastName, username, allUsers);
 
         // if user already exists, nothing happens
-        if (withSQL) sql.addObjectToDB(newUser);
+        if (withSQL) UpdateSQL.addObjectToDB(newUser);
 
         return newUser;
     }
@@ -29,7 +29,7 @@ public class Main {
         Company newCompany = new Company(name, allCompanies);
 
         // if company already exists, nothing happens
-        if (withSQL) sql.addObjectToDB(newCompany);
+        if (withSQL) UpdateSQL.addObjectToDB(newCompany);
 
         return newCompany;
     }

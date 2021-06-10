@@ -42,10 +42,10 @@ public class Company {
         this.networksList.add(company);
         company.networksList.add(this);
 
-        sql.addNetwork(this, company);
+        UpdateSQL.addNetwork(this, company);
 
         return true;
-    }
+    } // tested
 
     public boolean addFollower(User follower) {
         if (follower == null) return false;
@@ -53,10 +53,10 @@ public class Company {
 
         this.followersList.add(follower);
 
-        sql.addFollowers(this, follower);
+        UpdateSQL.addFollowers(this, follower);
 
         return true;
-    }
+    } // tested
 
     public void loadNetworks(String listOfNetworksInStringFormat, LinkedList<Company> allCompanies) {
         String csv = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
@@ -85,7 +85,7 @@ public class Company {
             return false;
         }
 
-        sql.updateName(this, newName);
+        UpdateSQL.updateName(this, newName);
         this.name = newName;
 
         return true;
@@ -99,7 +99,7 @@ public class Company {
         this.networksList.remove(company);
         company.networksList.remove(this);
 
-        sql.removeNetwork(this, company);
+        UpdateSQL.removeNetwork(this, company);
 
         return true;
     }
@@ -116,8 +116,8 @@ public class Company {
         }
 
         allCompanies.remove(this);
+        DeleteSQL.deleteObjectFromDB(this);
 
-        sql.deleteObjectFromDB(this);
         return true;
     }
     public Company suggestNetwork(LinkedList<Company> allCompanies) {
