@@ -154,10 +154,10 @@ class UpdateSQL extends SQL {
         // set desired query and error message for adding object to db
         if (obj instanceof User) {
             query = String.format("INSERT INTO users (first_name, last_name, username, friends, companies) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), "{}", "{}");
+                    "('%s', '%s', '%s', '%s', '%s')", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), "{}", "{}");
         } else if (obj instanceof Company) {
             query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).getName(), "{}", "{}");
+                    "('%s', '%s', '%s');", ((Company) obj).getName(), "{}", "{}");
         } else {
             Print.print("Object type not supported to add to db.");
             return;
@@ -203,7 +203,7 @@ class UpdateSQL extends SQL {
         friends = isEmpty ? friends + friend.getUsername() + "}" : friends + "," + friend.getUsername() + "}";
 
         // update user data
-        String query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", friends, user.getUsername());
+        String query = String.format("UPDATE users SET friends='%s' WHERE username='%s'", friends, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
@@ -249,7 +249,7 @@ class UpdateSQL extends SQL {
         companies = isEmpty ? companies + company.getName() + "}" : companies + "," + company.getName() + "}";
 
         // update user data
-        String query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companies, user.getUsername());
+        String query = String.format("UPDATE users SET companies='%s' WHERE username='%s'", companies, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
@@ -289,7 +289,7 @@ class UpdateSQL extends SQL {
         networks = isEmpty ? networks + network.getName() + "}" : networks + "," + network.getName() + "}";
 
         // update user data
-        String query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networks, company.getName());
+        String query = String.format("UPDATE companies SET network_list='%s' WHERE name='%s'", networks, company.getName());
         updateDBWithQuery(query);
     } // tested
 
@@ -335,7 +335,7 @@ class UpdateSQL extends SQL {
         followers = isEmpty ? followers + user.getUsername() + "}" : followers + "," + company.getName() + "}";
 
         // update user data
-        String query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followers, company.getName());
+        String query = String.format("UPDATE companies SET followers_list='%s' WHERE name='%s'", followers, company.getName());
         updateDBWithQuery(query);
     } // tested
 
@@ -361,12 +361,12 @@ class UpdateSQL extends SQL {
     } // tested
 
     protected static void updateFirstName(User user, String newFirstName) {
-        String query = String.format("UPDATE users SET first_name=\"%s\" WHERE username=\"%s\"", newFirstName, user.getUsername());
+        String query = String.format("UPDATE users SET first_name='%s' WHERE username='%s'", newFirstName, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
     protected static void updateLastName(User user, String newLastName) {
-        String query = String.format("UPDATE users SET last_name=\"%s\" WHERE username=\"%s\"", newLastName, user.getUsername());
+        String query = String.format("UPDATE users SET last_name='%s' WHERE username='%s'", newLastName, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
@@ -389,7 +389,7 @@ class UpdateSQL extends SQL {
                 Statement statement = connection.createStatement();
 
                 // execute SQL query
-                String query = String.format("SELECT * FROM users WHERE username=\"%s\"", string);
+                String query = String.format("SELECT * FROM users WHERE username='%s'", string);
                 ResultSet result = statement.executeQuery(query);
 
                 while (result.next()) {
@@ -404,7 +404,7 @@ class UpdateSQL extends SQL {
                         usernameFriends += users[j] + ",";
                     }
                     usernameFriends = usernameFriends.substring(0, usernameFriends.length() - 1) + "}";
-                    query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", usernameFriends, string);
+                    query = String.format("UPDATE users SET friends='%s' WHERE username='%s'", usernameFriends, string);
                     updateDBWithQuery(query);
                 }
 
@@ -432,7 +432,7 @@ class UpdateSQL extends SQL {
                 Statement statement = connection.createStatement();
 
                 // execute SQL query
-                String query = String.format("SELECT * FROM companies WHERE name=\"%s\"", companyName);
+                String query = String.format("SELECT * FROM companies WHERE name='%s'", companyName);
                 ResultSet result = statement.executeQuery(query);
 
                 while (result.next()) {
@@ -446,7 +446,7 @@ class UpdateSQL extends SQL {
                         followersList += users[j] + ",";
                     }
                     followersList = followersList.substring(0, followersList.length()-1) + "}";
-                    query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", followersList, companyName);
+                    query = String.format("UPDATE companies SET followers_list='%s' WHERE name='%s'", followersList, companyName);
                     updateDBWithQuery(query);
 
                 }
@@ -458,7 +458,7 @@ class UpdateSQL extends SQL {
         }
 
         // sql update username query command
-        String query = String.format("UPDATE users SET username=\"%s\" WHERE username=\"%s\"", newUsername, user.getUsername());
+        String query = String.format("UPDATE users SET username='%s' WHERE username='%s'", newUsername, user.getUsername());
         updateDBWithQuery(query);
     } // tested
 
@@ -479,7 +479,7 @@ class UpdateSQL extends SQL {
             try {
                 Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
                 Statement statement = connection.createStatement();
-                String query = String.format("SELECT * FROM users WHERE username=\"%s\"", follower);
+                String query = String.format("SELECT * FROM users WHERE username='%s'", follower);
                 ResultSet result = statement.executeQuery(query);
 
                 while (result.next()) {
@@ -493,7 +493,7 @@ class UpdateSQL extends SQL {
                         companiesList += companies[j] + ",";
                     }
                     companiesList = companiesList.substring(0, companiesList.length()-1) + "}";
-                    query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", companiesList, follower);
+                    query = String.format("UPDATE users SET companies='%s' WHERE username='%s'", companiesList, follower);
                     updateDBWithQuery(query);
                 }
 
@@ -515,7 +515,7 @@ class UpdateSQL extends SQL {
             try {
                 Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
                 Statement statement = connection.createStatement();
-                String query = String.format("SELECT * FROM companies WHERE name=\"%s\"", networkName);
+                String query = String.format("SELECT * FROM companies WHERE name='%s'", networkName);
                 ResultSet result = statement.executeQuery(query);
 
                 while (result.next()) {
@@ -529,7 +529,7 @@ class UpdateSQL extends SQL {
                         networksNetworksList += companies[j] + ",";
                     }
                     networksNetworksList = networksNetworksList.substring(0, networksNetworksList.length()-1) + "}";
-                    query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", networksNetworksList, networkName);
+                    query = String.format("UPDATE companies SET network_list='%s' WHERE name='%s'", networksNetworksList, networkName);
                     updateDBWithQuery(query);
                 }
 
@@ -538,7 +538,7 @@ class UpdateSQL extends SQL {
             }
         }
 
-        String query = String.format("UPDATE companies SET name=\"%s\" WHERE name=\"%s\"", newName, company.getName());
+        String query = String.format("UPDATE companies SET name='%s' WHERE name='%s'", newName, company.getName());
         updateDBWithQuery(query);
     } // tested
 
@@ -546,7 +546,7 @@ class UpdateSQL extends SQL {
         try {
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
-            String query = String.format("SELECT * FROM users WHERE username=\"%s\"", user.getUsername());
+            String query = String.format("SELECT * FROM users WHERE username='%s'", user.getUsername());
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String username = result.getString("friends");
@@ -564,7 +564,7 @@ class UpdateSQL extends SQL {
                     if (usernameIndexed[0].equals(friend.getUsername())) updatedFriendsList += "}";
                 }
 
-                query = String.format("UPDATE users SET friends=\"%s\" WHERE username=\"%s\"", updatedFriendsList, user.getUsername());
+                query = String.format("UPDATE users SET friends='%s' WHERE username='%s'", updatedFriendsList, user.getUsername());
                 updateDBWithQuery(query);
             }
 
@@ -583,7 +583,7 @@ class UpdateSQL extends SQL {
         try {
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
-            String query = String.format("SELECT * FROM users WHERE username=\"%s\"", user.getUsername());
+            String query = String.format("SELECT * FROM users WHERE username='%s'", user.getUsername());
             ResultSet result = statement.executeQuery(query);
 
             // remove company from companies list
@@ -600,12 +600,12 @@ class UpdateSQL extends SQL {
                 if (newCompaniesList.length() == 1) newCompaniesList = "{}";
                 else newCompaniesList = newCompaniesList.substring(0, newCompaniesList.length()-1) + "}";
 
-                query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", newCompaniesList, user.getUsername());
+                query = String.format("UPDATE users SET companies='%s' WHERE username='%s'", newCompaniesList, user.getUsername());
                 updateDBWithQuery(query);
             }
 
             // remove user from followers list
-            query = String.format("SELECT * FROM companies WHERE name=\"%s\"", company.getName());
+            query = String.format("SELECT * FROM companies WHERE name='%s'", company.getName());
             result = statement.executeQuery(query);
 
             while (result.next()) {
@@ -620,7 +620,7 @@ class UpdateSQL extends SQL {
                 if (newFollowersList.length() == 1) newFollowersList = "{}";
                 else newFollowersList = newFollowersList.substring(0, newFollowersList.length()-1) + "}";
 
-                query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", newFollowersList, company.getName());
+                query = String.format("UPDATE companies SET followers_list='%s' WHERE name='%s'", newFollowersList, company.getName());
                 updateDBWithQuery(query);
             }
 
@@ -635,7 +635,7 @@ class UpdateSQL extends SQL {
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
 
-            String query = String.format("SELECT * FROM companies WHERE name=\"%s\"", company.getName());
+            String query = String.format("SELECT * FROM companies WHERE name='%s'", company.getName());
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
@@ -649,7 +649,7 @@ class UpdateSQL extends SQL {
                     newNetworksList += networkFromList + ",";
                 }
                 if (newNetworksList.length() == 1) newNetworksList = "{}";
-                query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", newNetworksList, company.getName());
+                query = String.format("UPDATE companies SET network_list='%s' WHERE name='%s'", newNetworksList, company.getName());
                 updateDBWithQuery(query);
             }
 
@@ -670,9 +670,9 @@ class DeleteSQL extends SQL {
         String query = "";
 
         if (obj instanceof User) {
-            query = String.format("DELETE FROM users WHERE username=\"%s\"", ((User) obj).getUsername());
+            query = String.format("DELETE FROM users WHERE username='%s'", ((User) obj).getUsername());
         } else if (obj instanceof Company) {
-            query = String.format("DELETE FROM companies WHERE name=\"%s\"", ((Company) obj).getName());
+            query = String.format("DELETE FROM companies WHERE name='%s'", ((Company) obj).getName());
         } else {
             Print.print("Object type not supported to remove from db.");
             return;
