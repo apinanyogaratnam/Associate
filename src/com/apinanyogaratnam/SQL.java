@@ -564,23 +564,67 @@ public class SQL {
                 updateDBWithQuery(query);
             }
 
-            // close connection to server
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    } // tested
 
     protected  void removeFriend(User user, User friend) {
         removeFriendHelper(user, friend);
         removeFriendHelper(friend, user);
-    }
+    } // tested
 
-    protected void removeCompany() {
-        // remove company from companies list
-        // remove user from followers_list
-        // check how i did add company as i did add company with another method
-    }
+    protected void removeCompany(User user, Company company) {
+        try {
+            Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
+            Statement statement = connection.createStatement();
+            String query = String.format("SELECT * FROM users WHERE username=\"%s\"", user.getUsername());
+            ResultSet result = statement.executeQuery(query);
+
+            // remove company from companies list
+            while (result.next()) {
+                String companies = result.getString("companies");
+                String [] companiesIndexed = Utils.indexList(companies);
+
+                String newCompaniesList = "{";
+                for (String companyFromList : companiesIndexed) {
+                    if (companyFromList.equals(company.getName())) continue;
+                    newCompaniesList += companyFromList + ",";
+                }
+
+                if (newCompaniesList.length() == 1) newCompaniesList = "{}";
+                else newCompaniesList = newCompaniesList.substring(0, newCompaniesList.length()-1) + "}";
+
+                query = String.format("UPDATE users SET companies=\"%s\" WHERE username=\"%s\"", newCompaniesList, user.getUsername());
+                updateDBWithQuery(query);
+            }
+
+            // remove user from followers list
+            query = String.format("SELECT * FROM companies WHERE name=\"%s\"", company.getName());
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                String followers = result.getString("followers_list");
+                String [] followersIndexed = Utils.indexList(followers);
+
+                String newFollowersList = "{";
+                for (String followerFromList : followersIndexed) {
+                    if (followerFromList.equals(user.getUsername())) continue;
+                    newFollowersList += followerFromList + ",";
+                }
+                if (newFollowersList.length() == 1) newFollowersList = "{}";
+                else newFollowersList = newFollowersList.substring(0, newFollowersList.length()-1) + "}";
+
+                query = String.format("UPDATE companies SET followers_list=\"%s\" WHERE name=\"%s\"", newFollowersList, company.getName());
+                updateDBWithQuery(query);
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    } // tested
 
     protected void removeNetworkHelper(Company company, Company network) {
 
@@ -592,17 +636,15 @@ public class SQL {
     }
 
     // start delete methods here
-    protected void removeObjectFromDB(Object obj) {
+    protected void deleteObjectFromDB(Object obj) {
         String query = "";
 
         if (obj instanceof User) {
-            query = String.format("INSERT INTO users (first_name, last_name, username, friends) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\", \"%s\");", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), "{}");
+            query = String.format("DELETE FROM users WHERE username=\"%s\"", ((User) obj).getUsername());
         } else if (obj instanceof Company) {
-            query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "(\"%s\", \"%s\", \"%s\");", ((Company) obj).getName(), "{}", "{}");
+            query = String.format("DELETE FROM companies WHERE name=\"%s\"", ((Company) obj).getName());
         } else {
-            Print.print("Object type not supported to add to db.");
+            Print.print("Object type not supported to remove from db.");
         }
 
         // complete method

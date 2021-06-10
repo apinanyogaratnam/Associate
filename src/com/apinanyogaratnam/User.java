@@ -3,7 +3,7 @@ package com.apinanyogaratnam;
 import java.util.LinkedList;
 
 public class User {
-    SQL sql = new SQL();
+    private static final SQL sql = new SQL();
     private String firstName;
     private String lastName;
     private String username;
@@ -136,7 +136,7 @@ public class User {
         sql.removeFriend(this, friend);
 
         return true;
-    }
+    } // tested
 
     public boolean removeCompany(Company company, LinkedList<Company> allCompanies) {
         if (company == null) return false;
@@ -146,20 +146,28 @@ public class User {
         this.companiesList.remove(this.companiesList.indexOf(company));
         company.getFollowersList().remove(company.getFollowersList().indexOf(this));
 
+        sql.removeCompany(this, company);
+
         return true;
-    }
+    } // tested
 
-    public boolean deleteUser(LinkedList<User> allUsers) {
-        int indexOfUser = allUsers.indexOf(this);
-        if (indexOfUser == -1) return false;
+    public boolean deleteUser(LinkedList<User> allUsers, LinkedList<Company> allCompanies) {
+        if (!allUsers.contains(this)) return false;
 
-        // remove from everyone friends with 'this'
+        // remove all user's friends
         for (User friend : this.friendsList) {
             this.removeFriend(friend, allUsers);
         }
 
+        // remove every company user is following
+        for (Company company : this.companiesList) {
+            this.removeCompany(company, allCompanies);
+        }
+
         // remove from allUsers
-        allUsers.remove(indexOfUser);
+        allUsers.remove(allUsers.indexOf(this));
+
+        sql.deleteObjectFromDB(this);
 
         return true;
     }

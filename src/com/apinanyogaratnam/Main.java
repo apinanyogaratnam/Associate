@@ -11,10 +11,9 @@ public class Main {
 
         // load data from db to current data structures
         SQL.loadDB(allUsers, allCompanies);
-
         User stewie = MainHelper.getUser("stewietheangel", allUsers);
-        User walter = MainHelper.getUser("heisenborg", allUsers);
-        stewie.removeFriend(walter, allUsers);
+        Company mcd = MainHelper.getCompany("McDonald's", allCompanies);
+        stewie.removeCompany(mcd, allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {

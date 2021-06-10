@@ -27,7 +27,7 @@ public class Company {
     }
 
     public boolean hasNetwork(Company company) {
-        return this.networksList.indexOf(company) != -1;
+        return this.networksList.contains(company);
     }
 
     public boolean hasFollower(User user) {
@@ -66,7 +66,7 @@ public class Company {
             Company network = MainHelper.getCompany(strings[i], allCompanies);
             if (network != null) this.networksList.add(network);
         }
-    }
+    } // tested
 
     public void loadFollowers(String listOfFollowersInStringFormat, LinkedList<User> allUsers) {
         String csv = listOfFollowersInStringFormat.substring(1, listOfFollowersInStringFormat.length()-1);
@@ -76,7 +76,7 @@ public class Company {
             User follower = MainHelper.getUser(strings[i], allUsers);
             if (follower != null) this.followersList.add(follower);
         }
-    }
+    } // tested
 
     public boolean updateName(String newName, LinkedList<Company> allCompanies) {
         if (newName == null) return false;
@@ -87,6 +87,18 @@ public class Company {
 
         sql.updateName(this, newName);
         this.name = newName;
+
+        return true;
+    } // tested
+
+    public boolean removeNetwork(Company company, LinkedList<Company> allCompanies) {
+        if (company == null) return false;
+        if (!hasNetwork(company)) return false;
+        if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
+
+        this.networksList.remove(company);
+
+        sql.removeNetwork(this, company);
 
         return true;
     }

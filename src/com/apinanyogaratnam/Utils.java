@@ -14,4 +14,8 @@ public class Utils {
     public static String [] splitCommas(String string) {
         return string.split(",");
     }
+
+    public static String [] indexList(String string) {
+        return splitCommas(removeCurlyBraces(string));
+    }
 }

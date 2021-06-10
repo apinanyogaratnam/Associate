@@ -5,7 +5,13 @@ Associate is a java application that allows users to follow other
 users and companies like a social media platform. This project was
 made using java, MySQL, and Git. 
 
+Concepts and tools used:
 - Undirected Graphs
+- relational database
+- object-oriented programming
+- Unit testing
+
+Notes:
 - users identified with username
 - company identified with company name
 
@@ -24,11 +30,20 @@ TODO:
 - shorten uses of code (make it more modular)
 - add return; after catch statements for loading methods
 
-SQL ready:
-- create new user - tested
-- create new company - tested
-- add friend - tested
-- add company (company also adds follower) - tested
-- add network (both networks are added) - tested
-- rename first, last, username (also updates friends and company followers) - tested
-- rename company name (everything updates across db) - tested
+SQL ready: <br />
+
+    CREATE: <br />
+        - create new user - tested <br />
+        - create new company - tested <br />
+
+    READ: <br />
+        - most methods use read to get data <br />
+
+    UPDATE: <br />
+        - user: add friend (everything updates across db) - tested <br />
+        - user: add company (everything updates across db) - tested <br />
+        - user: rename first, last, username (everything updates across db) - tested <br />
+        - user: remove friend (everything updates across db) - tested <br />
+        - user: remove company (everything updates across db) - tested <br />
+        - company: add network (everything updates across db) - tested <br />
+        - company: rename company name (everything updates across db) - tested <br />
