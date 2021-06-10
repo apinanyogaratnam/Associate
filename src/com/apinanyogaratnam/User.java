@@ -1,7 +1,5 @@
 package com.apinanyogaratnam;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
-
 import java.util.LinkedList;
 
 public class User {
@@ -207,6 +205,18 @@ public class User {
         return degree;
     }
 
+    public LinkedList<User> getListOfPossiblyNewFriends(LinkedList<User> allUsers) {
+        LinkedList<User> possiblyNewFriends = new LinkedList<>();
+
+        for (User user : allUsers) {
+            if (!isFollowingUser(user)) {
+                possiblyNewFriends.add(user);
+            }
+        }
+
+        return possiblyNewFriends;
+    }
+
     public User suggestUser(LinkedList<User> allUsers) { // suggest based on mutual friends?
         int getDegreeMin = 2;
         User userMin = null;
@@ -226,8 +236,10 @@ public class User {
         return userMin;
     }
 
+
     public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
         LinkedList<User> suggestedUsersList = new LinkedList<>();
+
 
         return suggestedUsersList;
     }
