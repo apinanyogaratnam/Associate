@@ -205,7 +205,7 @@ public class User {
         return degree;
     }
 
-    public User suggestUser(LinkedList<User> allUsers) {
+    public User suggestUser(LinkedList<User> allUsers) { // suggest based on mutual friends?
         int getDegreeMin = 2;
         User userMin = null;
 
