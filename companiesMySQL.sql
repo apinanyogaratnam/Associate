@@ -42,7 +42,7 @@ VALUES ('walter', 'white', 'heisenborg', '{stewietheangel}', '{}');
 
 
 -- update user info
-UPDATE users set username="heisenborg" where name="vai9er"
+UPDATE users set username='heisenborg' where name='vai9er'
 
 -- show users table data
 SELECT * FROM users;

@@ -11,7 +11,7 @@ INSERT INTO companies (
     network_list,
     followers_list
 )
-VALUES ("McDonald's", "{}", "{}");
+VALUES ('McDonald''s', '{}', '{}');
 
 -- insert a company into table
 INSERT INTO companies (
@@ -19,13 +19,13 @@ INSERT INTO companies (
     network_list,
     followers_list
 )
-VALUES ("Tim Hortons", "{}", "{}");
+VALUES ('Tim Hortons', '{}', '{}');
 
-UPDATE companies SET name="" WHERE name="";
+UPDATE companies SET name='' WHERE name='';
 
 
 
 -- update company info
-UPDATE companies set name="McDonald" where name="MdDonald's";
+UPDATE companies set name='McDonald' where name='MdDonald''s';
 
 SELECT * FROM companies;
