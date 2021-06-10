@@ -645,9 +645,10 @@ public class SQL {
             query = String.format("DELETE FROM companies WHERE name=\"%s\"", ((Company) obj).getName());
         } else {
             Print.print("Object type not supported to remove from db.");
+            return;
         }
 
-        // complete method
+        updateDBWithQuery(query);
     }
 
 }
