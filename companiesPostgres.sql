@@ -1,8 +1,8 @@
 -- create companies table
 CREATE TABLE companies(
   	name VARCHAR(50) NOT NULL PRIMARY KEY,
-  	network_list LONGTEXT,
-  	followers_list LONGTEXT
+  	network_list TEXT,
+  	followers_list TEXT
 );
 
 -- insert a company into table
