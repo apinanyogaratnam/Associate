@@ -33,8 +33,8 @@ TODO:
 SQL ready: <br />
 
     CREATE: <br />
-        - create new user - tested <br />
-        - create new company - tested <br />
+        - user: create new user - tested <br />
+        - company: create new company - tested <br />
 
     READ: <br />
         - most methods use read to get data <br />
@@ -47,3 +47,5 @@ SQL ready: <br />
         - user: remove company (everything updates across db) - tested <br />
         - company: add network (everything updates across db) - tested <br />
         - company: rename company name (everything updates across db) - tested <br />
+    DELETE: <BR />
+        - user: delete user (everything updates across db) - tested <br />

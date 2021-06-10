@@ -42,11 +42,11 @@ public class User {
     public boolean isFollowingUser(User possiblyFollowingFriend) {
     //  return this.friendsList.indexOf(possiblyFollowingFriend) != -1;
         return this.friendsList.contains(possiblyFollowingFriend);
-    }
+    } // tested
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
         return this.companiesList.indexOf(possiblyFollowingCompany) != -1;
-    }
+    } // tested
 
     public boolean addFriend(User friend, LinkedList<User> allUsers) {
         if (friend == null) return false;
@@ -170,7 +170,7 @@ public class User {
         sql.deleteObjectFromDB(this);
 
         return true;
-    }
+    } // tested
 
     public int getCountOfMutualFriends(User user, LinkedList<User> allUsers) {
         return getListOfMutualFriends(user, allUsers).size();
