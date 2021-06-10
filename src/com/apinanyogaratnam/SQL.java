@@ -676,3 +676,7 @@ public class SQL {
     } // tested
 
 }
+
+class createSQL extends SQL {
+
+}
