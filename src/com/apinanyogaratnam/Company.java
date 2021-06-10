@@ -97,12 +97,29 @@ public class Company {
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
 
         this.networksList.remove(company);
+        company.networksList.remove(this);
 
         sql.removeNetwork(this, company);
 
         return true;
     }
 
+    public boolean deleteCompany(LinkedList<Company> allCompanies) {
+        if (!allCompanies.contains(this)) return false;
+
+        for (Company network: this.networksList) {
+            this.removeNetwork(network, allCompanies);
+        }
+
+        for (User follower: this.followersList) {
+            follower.removeCompany(this, allCompanies);
+        }
+
+        allCompanies.remove(this);
+
+        sql.deleteObjectFromDB(this);
+        return true;
+    }
     public Company suggestNetwork(LinkedList<Company> allCompanies) {
         Company suggestedNetwork = null;
 

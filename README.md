@@ -47,5 +47,8 @@ SQL ready: <br />
         - user: remove company (everything updates across db) - tested <br />
         - company: add network (everything updates across db) - tested <br />
         - company: rename company name (everything updates across db) - tested <br />
+        - company: remove network (everything udpates across db) - tested <br />
+
     DELETE: <BR />
         - user: delete user (everything updates across db) - tested <br />
+        - company: delete company (everythin updates across db) -tested <br />

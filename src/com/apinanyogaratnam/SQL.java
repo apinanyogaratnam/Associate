@@ -627,15 +627,39 @@ public class SQL {
     } // tested
 
     protected void removeNetworkHelper(Company company, Company network) {
+        try {
+            Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
+            Statement statement = connection.createStatement();
 
-    }
+            String query = String.format("SELECT * FROM companies WHERE name=\"%s\"", company.getName());
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                String networksList = result.getString("network_list");
+                String [] networksIndexed = Utils.indexList(networksList);
+
+                String newNetworksList = "{";
+                for (String networkFromList : networksIndexed) {
+                    if (networkFromList.equals(network.getName())) continue;
+
+                    newNetworksList += networkFromList + ",";
+                }
+                if (newNetworksList.length() == 1) newNetworksList = "{}";
+                query = String.format("UPDATE companies SET network_list=\"%s\" WHERE name=\"%s\"", newNetworksList, company.getName());
+                updateDBWithQuery(query);
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    } // tested
 
     protected void removeNetwork(Company company, Company network) {
         removeNetworkHelper(company, network);
         removeNetworkHelper(network, company);
-    }
+    } // tested
 
-    // start delete methods here
     protected void deleteObjectFromDB(Object obj) {
         String query = "";
 
@@ -649,6 +673,6 @@ public class SQL {
         }
 
         updateDBWithQuery(query);
-    }
+    } // tested
 
 }
