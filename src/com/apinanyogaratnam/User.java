@@ -3,7 +3,6 @@ package com.apinanyogaratnam;
 import java.util.LinkedList;
 
 public class User {
-    private static final SQL sql = new SQL();
     private String firstName;
     private String lastName;
     private String username;
@@ -205,7 +204,7 @@ public class User {
         return degree;
     }
 
-    public LinkedList<User> getListOfPossiblyNewFriends(LinkedList<User> allUsers) {
+    private LinkedList<User> getListOfPossiblyNewFriends(LinkedList<User> allUsers) {
         LinkedList<User> possiblyNewFriends = new LinkedList<>();
 
         for (User user : allUsers) {
@@ -218,7 +217,7 @@ public class User {
         return possiblyNewFriends;
     }
 
-    public void swap(LinkedList<User> listOfObjects, int i, int j) { // make this usable for different linkedlist object
+    private void swapUsers(LinkedList<User> listOfObjects, int i, int j) { // make this usable for different linkedlist object
         User obj1 = listOfObjects.get(i);
         User obj2 = listOfObjects.get(j);
 
@@ -227,25 +226,60 @@ public class User {
     }
 
     public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
-        LinkedList<User> listOfPossiblyNewFriends = getListOfPossiblyNewFriends(allUsers);
-        for (int i=1; i<listOfPossiblyNewFriends.size(); i++) {
-            User currentUser = listOfPossiblyNewFriends.get(i);
+        LinkedList<User> suggestedUsers = getListOfPossiblyNewFriends(allUsers);
+        for (int i=1; i<suggestedUsers.size(); i++) {
+            User currentUser = suggestedUsers.get(i);
             int j = i;
 
             int numberOfMutualFriends = this.getCountOfMutualFriends(currentUser, allUsers);
-            while (j > 0 && numberOfMutualFriends > this.getCountOfMutualFriends(listOfPossiblyNewFriends.get(j-1), allUsers)) {
-                swap(listOfPossiblyNewFriends, j, j-1);
+            while (j > 0 && numberOfMutualFriends > this.getCountOfMutualFriends(suggestedUsers.get(j-1), allUsers)) {
+                swapUsers(suggestedUsers, j, j-1);
                 j--;
             }
         }
 
-        return listOfPossiblyNewFriends;
+        return suggestedUsers;
     }
 
-    public LinkedList<Company> suggestCompanies(LinkedList<User> allCompanies) {
+    private void swapCompanies(LinkedList<Company> listOfObjects, int i, int j) { // make this usable for different linkedlist object
+        Company obj1 = listOfObjects.get(i);
+        Company obj2 = listOfObjects.get(j);
+
+        listOfObjects.set(i, obj2);
+        listOfObjects.set(j, obj1);
+    }
+
+    private LinkedList<Company> getListOfPossiblyNewCompanies(LinkedList<Company> allCompanies) {
+        LinkedList<Company> possiblyNewCompanies = new LinkedList<>();
+
+        for (Company company : allCompanies) {
+            // checking if user is not itself or not already a friend
+            if (!isFollowingCompany(company)) {
+                possiblyNewCompanies.add(company);
+            }
+        }
+
+        return possiblyNewCompanies;
+    }
+
+    public LinkedList<Company> suggestCompanies(LinkedList<Company> allCompanies) {
+        LinkedList<Company> listOfPossiblyNewCompanies = getListOfPossiblyNewCompanies(allCompanies);
         LinkedList<Company> suggestedCompanies = new LinkedList<>();
+
+        for (Company company : this.companiesList) {
+            for (Company network : company.getNetworksList()) {
+                if (listOfPossiblyNewCompanies.contains(network) && !suggestedCompanies.contains(network)) {
+                    suggestedCompanies.add(network);
+                }
+            }
+        }
+
+        for (Company company : listOfPossiblyNewCompanies) {
+            if (!suggestedCompanies.contains(company)) {
+                suggestedCompanies.add(company);
+            }
+        }
 
         return suggestedCompanies;
     }
-
 }
