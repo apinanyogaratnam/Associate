@@ -233,7 +233,7 @@ public class User {
 
             int numberOfMutualFriends = this.getCountOfMutualFriends(currentUser, allUsers);
             while (j > 0 && numberOfMutualFriends > this.getCountOfMutualFriends(suggestedUsers.get(j-1), allUsers)) {
-                swapUsers(suggestedUsers, j, j-1);
+                swap(suggestedUsers, j, j-1);
                 j--;
             }
         }
