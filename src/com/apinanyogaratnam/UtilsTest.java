@@ -41,17 +41,11 @@ class UtilsTest {
 
         string = ",";
         String [] emptyStrings = Utils.splitCommas(string);
-
-        // checking if split also includes empty string
-        assertEquals("", emptyStrings[0]);
-        assertEquals("", emptyStrings[1]);
-        assertEquals(2, emptyStrings.length);
-
     }
 
     @Test
     void indexListTest() {
-        String string = "{mcdonalds, tim hortons, nike, adidas}";
+        String string = "{mcdonalds,tim hortons,nike,adidas}";
         String [] indexed = Utils.indexList(string);
 
         // checking if indexed gives correct elements

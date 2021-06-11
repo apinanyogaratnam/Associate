@@ -11,8 +11,6 @@ public class Main {
 
         // load data from db to current data structures
         CreateSQL.loadDB(allUsers, allCompanies);
-        Company mcd = MainHelper.getCompany("McDonald", allCompanies);
-        mcd.updateName("McDonald's", allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
