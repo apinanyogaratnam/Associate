@@ -218,25 +218,6 @@ public class User {
         return possiblyNewFriends;
     }
 
-    public User suggestUser(LinkedList<User> allUsers) { // suggest based on mutual friends?
-        int getDegreeMin = 2;
-        User userMin = null;
-
-        for (User user : allUsers) {
-            if (user.username.equals(this.username)) continue;
-            if (this.isFollowingUser(user)) continue;
-
-            // finding close users with nearby degrees
-            int currentDegree = getDegree(this, user, allUsers);
-            if (currentDegree != -1 && currentDegree != 1 && currentDegree <= getDegreeMin) {
-                getDegreeMin = currentDegree;
-                userMin = user;
-            }
-        }
-
-        return userMin;
-    }
-
     public void swap(LinkedList<User> listOfObjects, int i, int j) { // make this usable for different linkedlist object
         User obj1 = listOfObjects.get(i);
         User obj2 = listOfObjects.get(j);
