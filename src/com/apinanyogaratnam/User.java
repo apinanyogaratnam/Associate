@@ -217,7 +217,7 @@ public class User {
         return possiblyNewFriends;
     }
 
-    private void swap(LinkedList<User> listOfObjects, int i, int j) { // make this usable for different linkedlist object
+    private void swap(LinkedList<User> listOfObjects, int i, int j) {
         User obj1 = listOfObjects.get(i);
         User obj2 = listOfObjects.get(j);
 

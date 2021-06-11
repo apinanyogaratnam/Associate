@@ -139,14 +139,33 @@ public class Company {
         LinkedList<Company> listOfPossiblyNewNetwork = new LinkedList<>();
 
         for (Company company : allCompanies) {
-            if (!hasNetwork(company)) listOfPossiblyNewNetwork.add(company);
+            if (!hasNetwork(company) && this != company) listOfPossiblyNewNetwork.add(company);
         }
 
         return listOfPossiblyNewNetwork;
     }
 
+    private void swap(LinkedList<Company> listOfObjects, int i, int j) {
+        Company obj1 = listOfObjects.get(i);
+        Company obj2 = listOfObjects.get(j);
+
+        listOfObjects.set(i, obj2);
+        listOfObjects.set(j, obj1);
+    }
+
     public LinkedList<Company> suggestNetworks(LinkedList<Company> allCompanies) {
-        LinkedList<Company> suggestedNetworksList = new LinkedList<>();
+        LinkedList<Company> suggestedNetworksList = getListOfPossiblyNewNetwork(allCompanies);
+
+        for (int i=1; i<suggestedNetworksList.size(); i++) {
+            Company currentNetwork = suggestedNetworksList.get(i);
+            int j = i;
+
+            int numberOfMutualFriends = this.getCountOfMutualNetworks(currentNetwork, allCompanies);
+            while (j > 0 && numberOfMutualFriends > this.getCountOfMutualNetworks(suggestedNetworksList.get(j-1), allCompanies)) {
+                swap(suggestedNetworksList, j, j-1);
+                j--;
+            }
+        }
 
         return suggestedNetworksList;
     }
