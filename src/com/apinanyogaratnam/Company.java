@@ -102,7 +102,7 @@ public class Company {
         UpdateSQL.removeNetwork(this, company);
 
         return true;
-    }
+    } // tested
 
     public boolean deleteCompany(LinkedList<Company> allCompanies) {
         if (!allCompanies.contains(this)) return false;
@@ -119,14 +119,31 @@ public class Company {
         DeleteSQL.deleteObjectFromDB(this);
 
         return true;
+    } // tested
+
+    private LinkedList<Company> getListOfMutualNetworks(Company company, LinkedList<Company> allCompanies) {
+        LinkedList<Company> listOfMutualNetworks = new LinkedList<>();
+
+        for (Company possibleMutualNetwork : company.networksList) {
+            if (this.hasNetwork(possibleMutualNetwork)) listOfMutualNetworks.add(company);
+        }
+
+        return listOfMutualNetworks;
     }
 
-    public Company suggestNetwork(LinkedList<Company> allCompanies) {
-        Company suggestedNetwork = null;
-
-        return suggestedNetwork;
+    private int getCountOfMutualNetworks(Company company, LinkedList<Company> allCompanies) {
+        return getListOfMutualNetworks(company, allCompanies).size();
     }
 
+    private LinkedList<Company> getListOfPossiblyNewNetwork(LinkedList<Company> allCompanies) {
+        LinkedList<Company> listOfPossiblyNewNetwork = new LinkedList<>();
+
+        for (Company company : allCompanies) {
+            if (!hasNetwork(company)) listOfPossiblyNewNetwork.add(company);
+        }
+
+        return listOfPossiblyNewNetwork;
+    }
 
     public LinkedList<Company> suggestNetworks(LinkedList<Company> allCompanies) {
         LinkedList<Company> suggestedNetworksList = new LinkedList<>();
