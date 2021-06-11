@@ -236,10 +236,28 @@ public class User {
         return userMin;
     }
 
+    public void swap(LinkedList<User> listOfObjects, int i, int j) { // make this usable for different linkedlist object
+        User obj1 = listOfObjects.get(i);
+        User obj2 = listOfObjects.get(j);
+
+        listOfObjects.set(i, obj2);
+        listOfObjects.set(j, obj1);
+    }
 
     public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
         LinkedList<User> suggestedUsersList = new LinkedList<>();
 
+        LinkedList<User> listOfPossiblyNewFriends = getListOfPossiblyNewFriends(allUsers);
+        for (int i=1; i<listOfPossiblyNewFriends.size(); i++) {
+            User currentUser = listOfPossiblyNewFriends.get(i);
+            int j = i;
+
+            int numberOfMutualFriends = this.getCountOfMutualFriends(currentUser, allUsers);
+            while (j > 0 && numberOfMutualFriends > this.getCountOfMutualFriends(listOfPossiblyNewFriends.get(j-1), allUsers)) {
+                swap(listOfPossiblyNewFriends, j, j-1);
+                j--;
+            }
+        }
 
         return suggestedUsersList;
     }
