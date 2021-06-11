@@ -18,6 +18,10 @@ public class Main {
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
         if (MainHelper.isValidUser(username, allUsers)) return null;
         if (firstName == null || lastName == null) return null;
+
+        firstName = Utils.parseString(firstName);
+        lastName = Utils.parseString(lastName);
+        username = Utils.parseString(username);
         User newUser = new User(firstName, lastName, username, allUsers);
 
         // if user already exists, nothing happens
@@ -28,6 +32,8 @@ public class Main {
 
     public static Company createNewCompany(String name, LinkedList<Company> allCompanies, boolean withSQL) {
         if (MainHelper.isValidCompany(name, allCompanies)) return null;
+
+        name = Utils.parseString(name);
         Company newCompany = new Company(name, allCompanies);
 
         // if company already exists, nothing happens
