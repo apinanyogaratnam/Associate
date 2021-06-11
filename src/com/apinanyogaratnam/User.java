@@ -76,6 +76,7 @@ public class User {
     public boolean updateFirstName(String newName) {
         if (newName == null) return false;
 
+        newName = Utils.parseString(newName);
         this.firstName = newName;
         UpdateSQL.updateFirstName(this, newName);
 
@@ -85,6 +86,7 @@ public class User {
     public boolean updateLastName(String newName) {
         if (newName == null) return false;
 
+        newName = Utils.parseString(newName);
         this.lastName = newName;
         UpdateSQL.updateLastName(this, newName);
 
@@ -98,6 +100,7 @@ public class User {
             return false;
         }
 
+        newName = Utils.parseString(newName);
         UpdateSQL.updateUsername(this, newName);
         this.username = newName;
 
