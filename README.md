@@ -17,7 +17,8 @@ Notes:
 
 TODO:
 - place test methods into separate files
-- unit tests for all methods
+- unit tests for all methods (check how to do unit tests without interrupting sql server) just add another parameter
+  
   Main
   Company
   User
