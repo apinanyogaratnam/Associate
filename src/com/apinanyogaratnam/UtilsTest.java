@@ -60,4 +60,13 @@ class UtilsTest {
         assertEquals("nike", indexed[2]);
         assertEquals("adidas", indexed[3]);
     }
+
+    @Test
+    void parseStringTest() {
+        String string = "McDonald's";
+        string = Utils.parseString(string);
+
+        // checking if the extra ' is added
+        assertEquals("McDonald''s", string);
+    }
 }

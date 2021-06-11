@@ -25,7 +25,7 @@ public class Utils {
         String newString = "";
         for (int i=0; i<string.length(); i++) {
             Character c = string.charAt(i);
-            if (c.equals("'")) {
+            if (c.equals('\'')) {
                 newString += "''";
                 continue;
             }
