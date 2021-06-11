@@ -32,6 +32,6 @@ public class Utils {
             newString += c;
         }
 
-        return newString
+        return newString;
      }
 }
