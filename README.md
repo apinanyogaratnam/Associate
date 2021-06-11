@@ -17,18 +17,12 @@ Notes:
 
 TODO:
 - place test methods into separate files
-- sql CRUD methods
-- finish user methods
-- make company methods
 - unit tests for all methods
-- for sql methods, migrate methods to User and Company classes
-- make sql methods concurrent with user methods
 - add comments to all code
 - make getDegree in another way
-- possibly make SQL class with polymorphism CRUD with extends SQL
-- rename methods in sql from update to add
 - shorten uses of code (make it more modular)
 - add return; after catch statements for loading methods
+- make sql super class abstract
 
 SQL ready: (COMPLETED)<br />
 
