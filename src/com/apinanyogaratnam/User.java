@@ -175,7 +175,7 @@ public class User {
         return getListOfMutualFriends(user, allUsers).size();
     }
 
-    public LinkedList<User> getListOfMutualFriends(User user, LinkedList<User> allUsers) {
+    private LinkedList<User> getListOfMutualFriends(User user, LinkedList<User> allUsers) {
         LinkedList<User> mutualFriends = new LinkedList<>();
 
         for (User friendOfUser : user.friendsList) {

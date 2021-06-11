@@ -26,11 +26,11 @@ public class Company {
         return this.followersList;
     }
 
-    public boolean hasNetwork(Company company) {
+    private boolean hasNetwork(Company company) {
         return this.networksList.contains(company);
     }
 
-    public boolean hasFollower(User user) {
+    private boolean hasFollower(User user) {
         return this.followersList.indexOf(user) != -1;
     }
 
@@ -120,11 +120,13 @@ public class Company {
 
         return true;
     }
+
     public Company suggestNetwork(LinkedList<Company> allCompanies) {
         Company suggestedNetwork = null;
 
         return suggestedNetwork;
     }
+
 
     public LinkedList<Company> suggestNetworks(LinkedList<Company> allCompanies) {
         LinkedList<Company> suggestedNetworksList = new LinkedList<>();
