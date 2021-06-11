@@ -90,6 +90,23 @@ class MainHelperTest {
 
     @Test
     void getCompanyTest() {
+        LinkedList<Company> allCompanies = new LinkedList<>();
 
+        // creating and getting companies
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company receivedTims = MainHelper.getCompany("Tim Hortons", allCompanies);
+        Company receivedMcd = MainHelper.getCompany(mcd.getName(), allCompanies);
+
+        // checking if tims exists
+        assertEquals(null, receivedTims);
+
+        // checking if mcd exists
+        assertEquals(mcd, receivedMcd);
+
+        // creating null company
+        Company nullCompany = MainHelper.getCompany(null, allCompanies);
+
+        // checking if recieved null company
+        assertEquals(null, nullCompany);
     }
 }
