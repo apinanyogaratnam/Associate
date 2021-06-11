@@ -68,6 +68,18 @@ class MainHelperTest {
 
     @Test
     void getUserTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+
+        // creating and getting users
+        User apinan = Main.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers, false);
+        User receivedStewie = MainHelper.getUser("stewietheangel", allUsers);
+        User receivedApinan = MainHelper.getUser("apinanyogaratnam", allUsers);
+
+        // checking if there exists a stewie user
+        assertEquals(null, receivedStewie);
+
+        // checking if apinan exists
+        assertEquals(apinan, receivedApinan);
 
     }
 }
