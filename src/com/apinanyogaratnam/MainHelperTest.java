@@ -111,5 +111,15 @@ class MainHelperTest {
     }
 
     @Test
-    void nameI
+    void nameInListTest() {
+        String string = "apinan,stewietheangel,walter";
+
+        // checking if apinan in list
+        boolean apinanInList = MainHelper.nameInList("apinan", string);
+        assertEquals(true, apinanInList);
+
+        // checking if unknown is in list
+        boolean unknownInList = MainHelper.nameInList("Unknown", string);
+        assertEquals(false, unknownInList);
+    }
 }

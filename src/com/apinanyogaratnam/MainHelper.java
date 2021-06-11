@@ -48,7 +48,7 @@ public class MainHelper {
     } // tested
 
     public static boolean nameInList(String friendUsername, String listOfFriendsInStringFormat) {
-        String [] strings = listOfFriendsInStringFormat.split(",");
+        String [] strings = Utils.splitCommas(listOfFriendsInStringFormat);
 
         for (String string : strings) {
             if (string.equals(friendUsername)) return true;
