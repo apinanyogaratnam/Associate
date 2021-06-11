@@ -109,4 +109,7 @@ class MainHelperTest {
         // checking if recieved null company
         assertEquals(null, nullCompany);
     }
+
+    @Test
+    void nameI
 }
