@@ -11,8 +11,6 @@ public class Main {
 
         // load data from db to current data structures
         CreateSQL.loadDB(allUsers, allCompanies);
-        User stewie = MainHelper.getUser("stewietheangel", allUsers);
-        Print.print(stewie.suggestCompanies(allCompanies));
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
