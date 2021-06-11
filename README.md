@@ -23,6 +23,7 @@ TODO:
 - shorten uses of code (make it more modular)
 - add return; after catch statements for loading methods
 - make sql super class abstract
+- make main class interactive
 
 SQL ready: (COMPLETED)<br />
 
