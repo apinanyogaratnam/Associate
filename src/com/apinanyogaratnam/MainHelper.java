@@ -55,8 +55,5 @@ public class MainHelper {
         }
 
         return false;
-    }
-
-
-
+    } // tested
 }
