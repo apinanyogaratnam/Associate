@@ -8,9 +8,9 @@ public class Utils {
             return string.substring(1, string.length() - 1);
         } catch (Exception e) {
             Print.print("Cannot remove start and end chars on empty string.");
-        } finally {
-            return "";
         }
+
+        return "";
     } // tested
 
     public static String removeEndChar(String string) {
@@ -18,9 +18,9 @@ public class Utils {
             return string.substring(0, string.length()-1);
         } catch (Exception e) {
             Print.print("Cannot remove end char on empty string");
-        } finally {
-            return "";
         }
+
+        return "";
     }
 
     public static String [] splitCommas(String string) {

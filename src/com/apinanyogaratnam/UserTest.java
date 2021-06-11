@@ -30,7 +30,7 @@ class UserTest {
     }
 
     @Test
-    void isFollowingCompanyTest() { // check add company is adding correctly, UPDATE PSQL
+    void isFollowingCompanyTest() {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 

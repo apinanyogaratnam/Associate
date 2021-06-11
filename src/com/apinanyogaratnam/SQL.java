@@ -242,7 +242,6 @@ class UpdateSQL extends SQL {
 
         String companies = listOfCompaniesInStringFormat;
         boolean isEmpty = companies.equals("{}");
-
         // format string
         companies = Utils.removeEndChar(companies);
         companies = isEmpty ? companies + company.getName() + "}" : companies + "," + company.getName() + "}";
