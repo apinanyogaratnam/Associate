@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UtilsTest {
-
     @Test
     void removeStartEndCharsTest() {
         String string = "{mcdonalds, tim hortons, nike, adidas}";
@@ -52,5 +51,13 @@ class UtilsTest {
 
     @Test
     void indexList() {
+        String string = "{mcdonalds, tim hortons, nike, adidas}";
+        String [] indexed = Utils.indexList(string);
+
+        // checking if indexed gives correct elements
+        assertEquals("mcdonalds", indexed[0]);
+        assertEquals("tim hortons", indexed[1]);
+        assertEquals("nike", indexed[2]);
+        assertEquals("adidas", indexed[3]);
     }
 }
