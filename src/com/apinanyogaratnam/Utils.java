@@ -51,5 +51,5 @@ public class Utils {
         }
 
         return newString.toString();
-    }
+    } // tested
 }
