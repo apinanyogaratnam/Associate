@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
-    Print printClass = new Print();
-
     @Test
     void isFollowingUserTest() {
         LinkedList<User> allUsers = new LinkedList<>();
