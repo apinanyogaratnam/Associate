@@ -22,6 +22,8 @@ public class Utils {
     } // tested
 
     public static String parseString(String string) {
+        if (!string.contains("'")) return string;
+
         String newString = "";
         for (int i=0; i<string.length(); i++) {
             Character c = string.charAt(i);
@@ -34,4 +36,20 @@ public class Utils {
 
         return newString;
      } // tested
+
+    public static String unParseString(String string) {
+        if (!string.contains("''")) return string;
+
+        StringBuilder newString = new StringBuilder();
+        newString.append(string);
+
+        int index = string.indexOf("''");
+        while (index != -1) {
+            newString.delete(index, index+1);
+
+            index = string.indexOf("''", index+1);
+        }
+
+        return newString.toString();
+    }
 }

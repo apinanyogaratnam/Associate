@@ -69,4 +69,13 @@ class UtilsTest {
         // checking if the extra ' is added
         assertEquals("McDonald''s", string);
     }
+
+    @Test
+    void unParseStringTest() {
+        String string = "McDonald''s";
+        string = Utils.unParseString(string);
+
+        // check if string removes duplicate '
+        assertEquals("McDonald's", string);
+    }
 }
