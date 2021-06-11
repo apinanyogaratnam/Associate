@@ -50,7 +50,7 @@ class UtilsTest {
     }
 
     @Test
-    void indexList() {
+    void indexListTest() {
         String string = "{mcdonalds, tim hortons, nike, adidas}";
         String [] indexed = Utils.indexList(string);
 
