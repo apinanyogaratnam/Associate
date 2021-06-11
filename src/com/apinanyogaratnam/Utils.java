@@ -9,13 +9,13 @@ public class Utils {
         }
 
         return "";
-    }
+    } // tested
 
     public static String [] splitCommas(String string) {
         return string.split(",");
-    }
+    } // tested
 
     public static String [] indexList(String string) {
         return splitCommas(removeStartEndChars(string));
-    }
+    } // tested
 }

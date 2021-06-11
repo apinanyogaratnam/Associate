@@ -21,7 +21,6 @@ TODO:
   Main
   Company
   User
-  Utils
 - add comments to all code
 - make getDegree in another way
 - shorten uses of code (make it more modular)
