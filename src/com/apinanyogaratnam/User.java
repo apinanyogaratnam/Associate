@@ -217,7 +217,7 @@ public class User {
         return possiblyNewFriends;
     }
 
-    private void swapUsers(LinkedList<User> listOfObjects, int i, int j) { // make this usable for different linkedlist object
+    private void swap(LinkedList<User> listOfObjects, int i, int j) { // make this usable for different linkedlist object
         User obj1 = listOfObjects.get(i);
         User obj2 = listOfObjects.get(j);
 
@@ -239,14 +239,6 @@ public class User {
         }
 
         return suggestedUsers;
-    }
-
-    private void swapCompanies(LinkedList<Company> listOfObjects, int i, int j) { // make this usable for different linkedlist object
-        Company obj1 = listOfObjects.get(i);
-        Company obj2 = listOfObjects.get(j);
-
-        listOfObjects.set(i, obj2);
-        listOfObjects.set(j, obj1);
     }
 
     private LinkedList<Company> getListOfPossiblyNewCompanies(LinkedList<Company> allCompanies) {
