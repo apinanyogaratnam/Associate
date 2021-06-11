@@ -30,13 +30,13 @@ class UserTest {
     }
 
     @Test
-    void isFollowingCompanyTest() {
+    void isFollowingCompanyTest() { // check add company is adding correctly, UPDATE PSQL
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // create new company and user
         User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        Company mcdonald = Main.createNewCompany("McDonald''s", allCompanies, false);
+        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
 
         // after adding a new company, check if user is following the company
         apinan.addCompany(mcdonald, allCompanies);
@@ -85,7 +85,7 @@ class UserTest {
         // creating new users and companies
         User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
         User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
-        Company mcdonald = Main.createNewCompany("McDonald''s", allCompanies, false);
+        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
         Company toysrus = Main.createNewCompany("ToysRus", unofficialAllCompanies, false);
 
         // check if apinan and stewie are in mcdonald's followers list
@@ -166,7 +166,7 @@ class UserTest {
         // creating new users and companies
         User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
         User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
-        Company mcdonald = Main.createNewCompany("McDonald''s", allCompanies, false);
+        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
         Company toysrus = Main.createNewCompany("ToysRus", unofficialAllCompanies, false);
 
         // check if apinan and stewie are in mcdonald's followers list

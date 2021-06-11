@@ -199,7 +199,7 @@ class UpdateSQL extends SQL {
         boolean isEmpty = friends.equals("{}");
 
         // format string
-        friends = friends.substring(0, friends.length() - 1);
+        friends = Utils.removeEndChar(friends);
         friends = isEmpty ? friends + friend.getUsername() + "}" : friends + "," + friend.getUsername() + "}";
 
         // update user data
@@ -237,14 +237,14 @@ class UpdateSQL extends SQL {
         }
 
         // check if user already is friends with friend
-        String temp = listOfCompaniesInStringFormat.substring(1, listOfCompaniesInStringFormat.length()-1);
+        String temp = Utils.removeStartEndChars(listOfCompaniesInStringFormat);
         if (MainHelper.nameInList(company.getName(), temp)) return;
 
         String companies = listOfCompaniesInStringFormat;
         boolean isEmpty = companies.equals("{}");
 
         // format string
-        companies = companies.substring(0, companies.length() - 1);
+        companies = Utils.removeEndChar(companies);
         companies = isEmpty ? companies + company.getName() + "}" : companies + "," + company.getName() + "}";
 
         // update user data
@@ -277,14 +277,14 @@ class UpdateSQL extends SQL {
         }
 
         // check if user already is friends with friend
-        String temp = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
+        String temp = Utils.removeStartEndChars(listOfNetworksInStringFormat);
         if (MainHelper.nameInList(network.getName(), temp)) return;
 
         String networks = listOfNetworksInStringFormat;
         boolean isEmpty = networks.equals("{}");
 
         // format string
-        networks = networks.substring(0, networks.length() - 1);
+        networks = Utils.removeEndChar(networks);
         networks = isEmpty ? networks + network.getName() + "}" : networks + "," + network.getName() + "}";
 
         // update user data
@@ -401,7 +401,7 @@ class UpdateSQL extends SQL {
                         }
                         usernameFriends += users[j] + ",";
                     }
-                    usernameFriends = usernameFriends.substring(0, usernameFriends.length() - 1) + "}";
+                    usernameFriends = Utils.removeEndChar(usernameFriends) + "}";
                     query = String.format("UPDATE users SET friends='%s' WHERE username='%s'", usernameFriends, string);
                     updateDBWithQuery(query);
                 }
@@ -443,7 +443,7 @@ class UpdateSQL extends SQL {
 
                         followersList += users[j] + ",";
                     }
-                    followersList = followersList.substring(0, followersList.length()-1) + "}";
+                    followersList = Utils.removeEndChar(followersList) + "}";
                     query = String.format("UPDATE companies SET followers_list='%s' WHERE name='%s'", followersList, companyName);
                     updateDBWithQuery(query);
 
@@ -490,7 +490,7 @@ class UpdateSQL extends SQL {
 
                         companiesList += companies[j] + ",";
                     }
-                    companiesList = companiesList.substring(0, companiesList.length()-1) + "}";
+                    companiesList = Utils.removeEndChar(companiesList) + "}";
                     query = String.format("UPDATE users SET companies='%s' WHERE username='%s'", companiesList, follower);
                     updateDBWithQuery(query);
                 }
@@ -526,7 +526,7 @@ class UpdateSQL extends SQL {
 
                         networksNetworksList += companies[j] + ",";
                     }
-                    networksNetworksList = networksNetworksList.substring(0, networksNetworksList.length()-1) + "}";
+                    networksNetworksList = Utils.removeEndChar(networksNetworksList) + "}";
                     query = String.format("UPDATE companies SET network_list='%s' WHERE name='%s'", networksNetworksList, networkName);
                     updateDBWithQuery(query);
                 }
@@ -557,7 +557,7 @@ class UpdateSQL extends SQL {
 
                         updatedFriendsList += s + ",";
                     }
-                    updatedFriendsList = updatedFriendsList.substring(0, updatedFriendsList.length() - 1) + "}";
+                    updatedFriendsList = Utils.removeEndChar(updatedFriendsList) + "}";
                 } else if (usernameIndexed.length == 1) {
                     if (usernameIndexed[0].equals(friend.getUsername())) updatedFriendsList += "}";
                 }
@@ -596,7 +596,7 @@ class UpdateSQL extends SQL {
                 }
 
                 if (newCompaniesList.length() == 1) newCompaniesList = "{}";
-                else newCompaniesList = newCompaniesList.substring(0, newCompaniesList.length()-1) + "}";
+                else newCompaniesList = Utils.removeEndChar(newCompaniesList) + "}";
 
                 query = String.format("UPDATE users SET companies='%s' WHERE username='%s'", newCompaniesList, user.getUsername());
                 updateDBWithQuery(query);
@@ -616,7 +616,7 @@ class UpdateSQL extends SQL {
                     newFollowersList += followerFromList + ",";
                 }
                 if (newFollowersList.length() == 1) newFollowersList = "{}";
-                else newFollowersList = newFollowersList.substring(0, newFollowersList.length()-1) + "}";
+                else newFollowersList = Utils.removeEndChar(newFollowersList) + "}";
 
                 query = String.format("UPDATE companies SET followers_list='%s' WHERE name='%s'", newFollowersList, company.getName());
                 updateDBWithQuery(query);
