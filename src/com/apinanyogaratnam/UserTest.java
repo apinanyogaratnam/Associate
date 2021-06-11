@@ -6,6 +6,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
     @Test
+    void getFirstName() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+
+        // checking if apinan is given
+        String username = apinan.getFirstName();
+        assertEquals("Apinan", username);
+    }
+
+    @Test
     void isFollowingUserTest() {
         LinkedList<User> allUsers = new LinkedList<>();
 
@@ -26,7 +36,7 @@ class UserTest {
 
         // create new company and user
         User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company mcdonald = Main.createNewCompany("McDonald''s", allCompanies, false);
 
         // after adding a new company, check if user is following the company
         apinan.addCompany(mcdonald, allCompanies);
@@ -75,7 +85,7 @@ class UserTest {
         // creating new users and companies
         User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
         User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
-        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company mcdonald = Main.createNewCompany("McDonald''s", allCompanies, false);
         Company toysrus = Main.createNewCompany("ToysRus", unofficialAllCompanies, false);
 
         // check if apinan and stewie are in mcdonald's followers list
@@ -156,7 +166,7 @@ class UserTest {
         // creating new users and companies
         User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
         User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
-        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company mcdonald = Main.createNewCompany("McDonald''s", allCompanies, false);
         Company toysrus = Main.createNewCompany("ToysRus", unofficialAllCompanies, false);
 
         // check if apinan and stewie are in mcdonald's followers list
@@ -207,23 +217,12 @@ class UserTest {
     }
 
     @Test
-    void addFriendsTest() {
-        LinkedList<User> allUsers = new LinkedList<>();
+    void getCountOfMutualFriendsTest() {
 
-        // create new user
-        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-//        apinan.addFriends("{\"apinanyogaratnam\", \"stewietheangel\"}");
-//        assertEquals("\"apinanyogaratnam\", \"stewietheangel\"", );
-        // change test
     }
 
     @Test
     void deleteUserTest() {
-
-    }
-
-    @Test
-    void getCountOfMutualFriendsTest() {
 
     }
 

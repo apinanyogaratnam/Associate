@@ -108,6 +108,7 @@ public class User {
     } // tested
 
     public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
+        listOfFriendsInStringFormat = Utils.parseString(listOfFriendsInStringFormat);
         String csv = Utils.removeStartEndChars(listOfFriendsInStringFormat);
 
         String [] strings = Utils.splitCommas(csv);
@@ -118,6 +119,7 @@ public class User {
     } // tested
 
     public void loadCompanies(String listOfCompaniesInStringFormat, LinkedList<Company> allCompanies) {
+        listOfCompaniesInStringFormat = Utils.parseString(listOfCompaniesInStringFormat);
         String csv = Utils.removeStartEndChars(listOfCompaniesInStringFormat);
 
         String [] strings = Utils.splitCommas(csv);

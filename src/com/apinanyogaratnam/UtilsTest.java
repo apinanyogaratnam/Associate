@@ -20,6 +20,15 @@ class UtilsTest {
     }
 
     @Test
+    void removeEndCharTest() {
+        String string = "Hello;";
+        string = Utils.removeEndChar(string);
+
+        // check if semi colon is removed
+        assertEquals("Hello", string);
+    }
+
+    @Test
     void splitCommasTest() {
         String string = "apinan,angel,stewie,bubs,apinu,api,AP";
         String [] array = Utils.splitCommas(string);

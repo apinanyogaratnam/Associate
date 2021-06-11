@@ -192,7 +192,7 @@ class UpdateSQL extends SQL {
         }
 
         // check if user already is friends with friend
-        String temp = listOfFriendsInStringFormat.substring(1, listOfFriendsInStringFormat.length()-1);
+        String temp = Utils.removeStartEndChars(listOfFriendsInStringFormat);
         if (MainHelper.nameInList(friend.getUsername(), temp)) return;
 
         String friends = listOfFriendsInStringFormat;
@@ -229,7 +229,6 @@ class UpdateSQL extends SQL {
                     listOfCompaniesInStringFormat = result.getString("companies");
                 }
             }
-
 
             // close connection to server
             connection.close();
@@ -316,7 +315,6 @@ class UpdateSQL extends SQL {
                 }
             }
 
-
             // close connection to server
             connection.close();
         } catch (Exception e) {
@@ -324,14 +322,14 @@ class UpdateSQL extends SQL {
         }
 
         // check if user already is friends with friend
-        String temp = listOfFollowersInStringFormat.substring(1, listOfFollowersInStringFormat.length()-1);
+        String temp = Utils.removeStartEndChars(listOfFollowersInStringFormat);
         if (MainHelper.nameInList(company.getName(), temp)) return;
 
         String followers = listOfFollowersInStringFormat;
         boolean isEmpty = followers.equals("{}");
 
         // format string
-        followers = followers.substring(0, followers.length() - 1);
+        followers = Utils.removeEndChar(followers);
         followers = isEmpty ? followers + user.getUsername() + "}" : followers + "," + company.getName() + "}";
 
         // update user data

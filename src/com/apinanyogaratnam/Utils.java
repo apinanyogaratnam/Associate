@@ -7,11 +7,21 @@ public class Utils {
         try {
             return string.substring(1, string.length() - 1);
         } catch (Exception e) {
-            Print.print("Cannot remove {} on empty string.");
+            Print.print("Cannot remove start and end chars on empty string.");
+        } finally {
+            return "";
         }
-
-        return "";
     } // tested
+
+    public static String removeEndChar(String string) {
+        try {
+            return string.substring(0, string.length()-1);
+        } catch (Exception e) {
+            Print.print("Cannot remove end char on empty string");
+        } finally {
+            return "";
+        }
+    }
 
     public static String [] splitCommas(String string) {
         return string.split(",");
