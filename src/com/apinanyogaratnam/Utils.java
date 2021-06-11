@@ -33,5 +33,5 @@ public class Utils {
         }
 
         return newString;
-     }
+     } // tested
 }
