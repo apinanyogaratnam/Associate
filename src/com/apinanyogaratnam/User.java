@@ -105,7 +105,7 @@ public class User {
     } // tested
 
     public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
-        String csv = Utils.removeCurlyBraces(listOfFriendsInStringFormat);
+        String csv = Utils.removeStartEndChars(listOfFriendsInStringFormat);
 
         String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {
@@ -115,7 +115,7 @@ public class User {
     } // tested
 
     public void loadCompanies(String listOfCompaniesInStringFormat, LinkedList<Company> allCompanies) {
-        String csv = Utils.removeCurlyBraces(listOfCompaniesInStringFormat);
+        String csv = Utils.removeStartEndChars(listOfCompaniesInStringFormat);
 
         String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {

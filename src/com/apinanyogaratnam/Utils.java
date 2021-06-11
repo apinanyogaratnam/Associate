@@ -1,7 +1,7 @@
 package com.apinanyogaratnam;
 
 public class Utils {
-    public static String removeCurlyBraces(String string) {
+    public static String removeStartEndChars(String string) {
         try {
             return string.substring(1, string.length() - 1);
         } catch (Exception e) {
@@ -16,6 +16,6 @@ public class Utils {
     }
 
     public static String [] indexList(String string) {
-        return splitCommas(removeCurlyBraces(string));
+        return splitCommas(removeStartEndChars(string));
     }
 }

@@ -377,7 +377,7 @@ class UpdateSQL extends SQL {
         for (User friend : user.getFriendsList()) {
             friendsString += friend.getUsername() + ",";
         }
-        friendsString = Utils.removeCurlyBraces(friendsString);
+        friendsString = Utils.removeStartEndChars(friendsString);
         String [] strings = Utils.splitCommas(friendsString);
 
         for (String string : strings) {
@@ -394,7 +394,7 @@ class UpdateSQL extends SQL {
 
                 while (result.next()) {
                     String usernameFriends = result.getString("friends");
-                    String[] users = Utils.splitCommas(Utils.removeCurlyBraces(usernameFriends));
+                    String[] users = Utils.splitCommas(Utils.removeStartEndChars(usernameFriends));
                     usernameFriends = "{";
 
                     for (int j=0; j<users.length; j++) {
@@ -420,7 +420,7 @@ class UpdateSQL extends SQL {
             companiesListString += company.getName() + ",";
         }
 
-        companiesListString = Utils.removeCurlyBraces(companiesListString);
+        companiesListString = Utils.removeStartEndChars(companiesListString);
         String [] arrayOfCompaniesName = Utils.splitCommas(companiesListString);
 
         for (String companyName : arrayOfCompaniesName) {
@@ -437,7 +437,7 @@ class UpdateSQL extends SQL {
 
                 while (result.next()) {
                     String followersList = result.getString("followers_list");
-                    String[] users = Utils.splitCommas(Utils.removeCurlyBraces(followersList));
+                    String[] users = Utils.splitCommas(Utils.removeStartEndChars(followersList));
                     followersList = "{";
 
                     for (int j=0; j<users.length; j++) {
@@ -472,7 +472,7 @@ class UpdateSQL extends SQL {
         for (User follower : company.getFollowersList()) {
             followersString += follower.getUsername() + ",";
         }
-        followersString = Utils.removeCurlyBraces(followersString);
+        followersString = Utils.removeStartEndChars(followersString);
         String [] strings = Utils.splitCommas(followersString);
 
         for (String follower : strings) {
@@ -484,7 +484,7 @@ class UpdateSQL extends SQL {
 
                 while (result.next()) {
                     String companiesList = result.getString("companies");
-                    String [] companies = Utils.splitCommas(Utils.removeCurlyBraces(companiesList));
+                    String [] companies = Utils.splitCommas(Utils.removeStartEndChars(companiesList));
                     companiesList = "{";
 
                     for (int j=0; j<companies.length; j++) {
@@ -508,7 +508,7 @@ class UpdateSQL extends SQL {
             networksList += network.getName() + ",";
         }
 
-        networksList = Utils.removeCurlyBraces(networksList);
+        networksList = Utils.removeStartEndChars(networksList);
         String [] networks = Utils.splitCommas(networksList);
 
         for (String networkName : networks) {
@@ -520,7 +520,7 @@ class UpdateSQL extends SQL {
 
                 while (result.next()) {
                     String networksNetworksList = result.getString("network_list");
-                    String [] companies = Utils.splitCommas(Utils.removeCurlyBraces(networksNetworksList));
+                    String [] companies = Utils.splitCommas(Utils.removeStartEndChars(networksNetworksList));
                     networksNetworksList = "{";
 
                     for (int j=0; j<companies.length; j++) {
@@ -550,7 +550,7 @@ class UpdateSQL extends SQL {
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String username = result.getString("friends");
-                String [] usernameIndexed = Utils.splitCommas(Utils.removeCurlyBraces(username));
+                String [] usernameIndexed = Utils.splitCommas(Utils.removeStartEndChars(username));
 
                 String updatedFriendsList = "{";
                 if (usernameIndexed.length > 1) {
