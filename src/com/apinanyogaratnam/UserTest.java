@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
-    Main mainMethod = new Main();
     Print printClass = new Print();
 
     @Test
@@ -13,8 +12,8 @@ class UserTest {
         LinkedList<User> allUsers = new LinkedList<>();
 
         // create new users
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
 
         // after adding a friend, check if friend is following
         apinan.addFriend(stewie, allUsers);
@@ -28,8 +27,8 @@ class UserTest {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // create new company and user
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies, false);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
 
         // after adding a new company, check if user is following the company
         apinan.addCompany(mcdonald, allCompanies);
@@ -43,9 +42,9 @@ class UserTest {
         LinkedList<User> unofficialAllUsers = new LinkedList<>();
 
         // create new users
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
-        User angel = mainMethod.createNewUser("angel", "angel", "angel", unofficialAllUsers, false);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
+        User angel = Main.createNewUser("angel", "angel", "angel", unofficialAllUsers, false);
 
         // check if apinan is friends with stewie
         apinan.addFriend(stewie, allUsers);
@@ -76,10 +75,10 @@ class UserTest {
         LinkedList<Company> unofficialAllCompanies = new LinkedList<>();
 
         // creating new users and companies
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
-        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies, false);
-        Company toysrus = mainMethod.createNewCompany("ToysRus", unofficialAllCompanies, false);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
+        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company toysrus = Main.createNewCompany("ToysRus", unofficialAllCompanies, false);
 
         // check if apinan and stewie are in mcdonald's followers list
         apinan.addCompany(mcdonald, allCompanies);
@@ -116,9 +115,9 @@ class UserTest {
         LinkedList<User> unofficialAllUsers = new LinkedList<>();
 
         // create new users
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
-        User angel = mainMethod.createNewUser("angel", "angel", "angel", unofficialAllUsers, false);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
+        User angel = Main.createNewUser("angel", "angel", "angel", unofficialAllUsers, false);
 
         // check if apinan is friends with stewie
         apinan.addFriend(stewie, allUsers);
@@ -157,10 +156,10 @@ class UserTest {
         LinkedList<Company> unofficialAllCompanies = new LinkedList<>();
 
         // creating new users and companies
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        User stewie = mainMethod.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
-        Company mcdonald = mainMethod.createNewCompany("McDonald's", allCompanies, false);
-        Company toysrus = mainMethod.createNewCompany("ToysRus", unofficialAllCompanies, false);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
+        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company toysrus = Main.createNewCompany("ToysRus", unofficialAllCompanies, false);
 
         // check if apinan and stewie are in mcdonald's followers list
         apinan.addCompany(mcdonald, allCompanies);
@@ -214,7 +213,7 @@ class UserTest {
         LinkedList<User> allUsers = new LinkedList<>();
 
         // create new user
-        User apinan = mainMethod.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
 //        apinan.addFriends("{\"apinanyogaratnam\", \"stewietheangel\"}");
 //        assertEquals("\"apinanyogaratnam\", \"stewietheangel\"", );
         // change test

@@ -1,5 +1,7 @@
 package com.apinanyogaratnam;
 
+import java.util.Locale;
+
 public class Utils {
     public static String removeStartEndChars(String string) {
         try {
@@ -18,4 +20,18 @@ public class Utils {
     public static String [] indexList(String string) {
         return splitCommas(removeStartEndChars(string));
     } // tested
+
+    public static String parseString(String string) {
+        String newString = "";
+        for (int i=0; i<string.length(); i++) {
+            Character c = string.charAt(i);
+            if (c.equals("'")) {
+                newString += "''";
+                continue;
+            }
+            newString += c;
+        }
+
+        return newString
+     }
 }
