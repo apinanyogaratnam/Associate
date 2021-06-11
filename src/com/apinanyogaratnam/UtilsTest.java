@@ -21,7 +21,7 @@ class UtilsTest {
     }
 
     @Test
-    void splitCommas() {
+    void splitCommasTest() {
         String string = "apinan,angel,stewie,bubs,apinu,api,AP";
         String [] array = Utils.splitCommas(string);
 
