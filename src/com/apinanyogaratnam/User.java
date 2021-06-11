@@ -209,7 +209,8 @@ public class User {
         LinkedList<User> possiblyNewFriends = new LinkedList<>();
 
         for (User user : allUsers) {
-            if (!isFollowingUser(user)) {
+            // checking if user is not itself or not already a friend
+            if (!isFollowingUser(user) && user != this) {
                 possiblyNewFriends.add(user);
             }
         }
@@ -245,8 +246,6 @@ public class User {
     }
 
     public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
-        LinkedList<User> suggestedUsersList = new LinkedList<>();
-
         LinkedList<User> listOfPossiblyNewFriends = getListOfPossiblyNewFriends(allUsers);
         for (int i=1; i<listOfPossiblyNewFriends.size(); i++) {
             User currentUser = listOfPossiblyNewFriends.get(i);
@@ -259,7 +258,7 @@ public class User {
             }
         }
 
-        return suggestedUsersList;
+        return listOfPossiblyNewFriends;
     }
 
     public LinkedList<Company> suggestCompanies(LinkedList<User> allCompanies) {
