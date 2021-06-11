@@ -3,7 +3,7 @@
 ## Description:
 Associate is a java application that allows users to follow other
 users and companies like a social media platform. This project was
-made using java, MySQL, and Git. 
+made using Java, MySQL, Postgres, and Git. 
 
 Concepts and tools used:
 - Undirected Graphs
