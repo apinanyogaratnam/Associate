@@ -12,20 +12,20 @@ class MainHelperTest {
         LinkedList<User> allUsers = new LinkedList<>();
 
         // create new user
-        User apinan = Main.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers, false);
+        Main.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers, false);
 
         // checking if new user is a valid user
-        boolean isUser = MainHelper.isValidUser(apinan.getUsername(), allUsers);
-        assertEquals(true, isUser);
+        boolean isUser = MainHelper.isValidUser("apinanyogaratnam", allUsers);
+        assertTrue(isUser);
 
         // checking if api is a valid user
         isUser = MainHelper.isValidUser("api", allUsers);
-        assertEquals(false, isUser);
+        assertFalse(isUser);
 
         // checking if null is a valid user
         String username = null;
         isUser = MainHelper.isValidUser(username, allUsers);
-        assertEquals(false, isUser);
+        assertFalse(isUser);
     }
 
     @Test
@@ -33,20 +33,20 @@ class MainHelperTest {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         // creating a new company
-        Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
+        Main.createNewCompany("McDonald's", allCompanies, false);
 
         // checking if new company is a new company
-        boolean isCompany = MainHelper.isValidCompany(mcdonald.getName(), allCompanies);
-        assertEquals(true, isCompany);
+        boolean isCompany = MainHelper.isValidCompany("McDonald's", allCompanies);
+        assertTrue(isCompany);
 
         // checking if tim hortons is a valid company
         isCompany = MainHelper.isValidCompany("tim hortons", allCompanies);
-        assertEquals(false, isCompany);
+        assertFalse(isCompany);
 
         // checking if null is a valid company
         String companyName = null;
         isCompany = MainHelper.isValidCompany(companyName, allCompanies);
-        assertEquals(false, isCompany);
+        assertFalse(isCompany);
     }
 
     @Test
@@ -54,10 +54,10 @@ class MainHelperTest {
         LinkedList<User> allUsers = new LinkedList<>();
 
         // create new users
-        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
-        User stewie = Main.createNewUser("stewie", "angel", "stewietheangel", allUsers, false);
-        User walter = Main.createNewUser("walter", "white", "heisenborg", allUsers, false);
-        User local = Main.createNewUser("local", "librarian", "yourlocallibrarian", allUsers, false);
+        Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        Main.createNewUser("stewie", "angel", "stewietheangel", allUsers, false);
+        Main.createNewUser("walter", "white", "heisenborg", allUsers, false);
+        Main.createNewUser("local", "librarian", "yourlocallibrarian", allUsers, false);
 
         int count = MainHelper.getCountOfAllUsers(allUsers);
         assertEquals(4, count);
@@ -73,7 +73,7 @@ class MainHelperTest {
         User receivedApinan = MainHelper.getUser("apinanyogaratnam", allUsers);
 
         // checking if there exists a stewie user
-        assertEquals(null, receivedStewie);
+        assertNull(receivedStewie);
 
         // checking if apinan exists
         assertEquals(apinan, receivedApinan);
@@ -82,7 +82,7 @@ class MainHelperTest {
         User nullUser = MainHelper.getUser(null, allUsers);
 
         // checking if recieved null user
-        assertEquals(null, nullUser);
+        assertNull(nullUser);
     }
 
     @Test
@@ -92,10 +92,10 @@ class MainHelperTest {
         // creating and getting companies
         Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
         Company receivedTims = MainHelper.getCompany("Tim Hortons", allCompanies);
-        Company receivedMcd = MainHelper.getCompany(mcd.getName(), allCompanies);
+        Company receivedMcd = MainHelper.getCompany("McDonald's", allCompanies);
 
         // checking if tims exists
-        assertEquals(null, receivedTims);
+        assertNull(receivedTims);
 
         // checking if mcd exists
         assertEquals(mcd, receivedMcd);
@@ -104,7 +104,7 @@ class MainHelperTest {
         Company nullCompany = MainHelper.getCompany(null, allCompanies);
 
         // checking if recieved null company
-        assertEquals(null, nullCompany);
+        assertNull(nullCompany);
     }
 
     @Test
@@ -113,10 +113,10 @@ class MainHelperTest {
 
         // checking if apinan in list
         boolean apinanInList = MainHelper.nameInList("apinan", string);
-        assertEquals(true, apinanInList);
+        assertTrue(apinanInList);
 
         // checking if unknown is in list
         boolean unknownInList = MainHelper.nameInList("Unknown", string);
-        assertEquals(false, unknownInList);
+        assertFalse(unknownInList);
     }
 }
