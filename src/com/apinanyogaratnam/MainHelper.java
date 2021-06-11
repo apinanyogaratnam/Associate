@@ -35,7 +35,7 @@ public class MainHelper {
         }
 
         return null;
-    }
+    } // tested
 
     public static Company getCompany(String name, LinkedList<Company> allCompanies) {
         if (name == null) return null;

@@ -81,5 +81,15 @@ class MainHelperTest {
         // checking if apinan exists
         assertEquals(apinan, receivedApinan);
 
+        // creating null user
+        User nullUser = MainHelper.getUser(null, allUsers);
+
+        // checking if recieved null user
+        assertEquals(null, nullUser);
+    }
+
+    @Test
+    void getCompanyTest() {
+
     }
 }
