@@ -85,6 +85,7 @@ public class Company {
             return false;
         }
 
+        newName = Utils.parseString(newName);
         UpdateSQL.updateName(this, newName);
         this.name = newName;
 
