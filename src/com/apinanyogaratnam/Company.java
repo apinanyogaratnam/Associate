@@ -89,6 +89,7 @@ public class Company {
         if (newName == null) return false;
         if (MainHelper.isValidCompany(newName, allCompanies)) {
             Print.print("Cannot update company because company already exists.");
+
             return false;
         }
 
