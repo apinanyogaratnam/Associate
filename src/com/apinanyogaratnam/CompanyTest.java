@@ -130,6 +130,18 @@ class CompanyTest {
 
     @Test
     void updateNameTest() {
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company apple = Main.createNewCompany("apple", allCompanies, false);
+        mcd.updateName("McDonalds", allCompanies, false);
+
+        // check if mcd updated its name accordingly
+        assertEquals("McDonalds", mcd.getName());
+
+        // check if can update already existing name
+        mcd.updateName("apple", allCompanies, false);
+        assertEquals("McDonalds", mcd.getName());
     }
 
     @Test
