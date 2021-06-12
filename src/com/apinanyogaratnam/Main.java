@@ -3,8 +3,6 @@ package com.apinanyogaratnam;
 import java.util.LinkedList;
 
 public class Main {
-    private static final SQL sql = new SQL();
-
     public static void main(String[] args) {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<Company> allCompanies = new LinkedList<>();

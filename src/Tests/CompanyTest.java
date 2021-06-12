@@ -1,5 +1,8 @@
-package com.apinanyogaratnam;
+package Tests;
 
+import com.apinanyogaratnam.Company;
+import com.apinanyogaratnam.Main;
+import com.apinanyogaratnam.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;

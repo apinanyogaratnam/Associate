@@ -1,5 +1,6 @@
-package com.apinanyogaratnam;
+package Tests;
 
+import com.apinanyogaratnam.Utils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
