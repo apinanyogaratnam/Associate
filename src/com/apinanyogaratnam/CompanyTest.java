@@ -146,6 +146,21 @@ class CompanyTest {
 
     @Test
     void removeNetworkTest() {
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company apple = Main.createNewCompany("apple", allCompanies, false);
+        Company random = Main.createNewCompany("random", allCompanies, false);
+
+        mcd.addNetwork(apple, allCompanies, false);
+        boolean removed = mcd.removeNetwork(apple, allCompanies, false);
+
+        // check if apple is still in mcd networks
+        assertFalse(mcd.hasNetwork(apple));
+        assertTrue(removed);
+
+        // check if mcd and remove a non-existing netowrk
+        assertFalse(mcd.removeNetwork(random, allCompanies, false));
     }
 
     @Test
