@@ -113,6 +113,19 @@ class CompanyTest {
 
     @Test
     void loadFollowersTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+        String list = "{apinanyogaratnam,stewietheangel,not a real user}";
+
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        User api = Main.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("stewie", "angel", "stewietheangel", allUsers, false);
+
+        // check if api and stewie are added as followers
+        mcd.loadFollowers(list, allUsers);
+        assertTrue(mcd.hasFollower(api));
+        assertTrue(mcd.hasFollower(stewie));
+        assertEquals(2, mcd.getFollowersList().size());
     }
 
     @Test
