@@ -165,6 +165,18 @@ class CompanyTest {
 
     @Test
     void deleteCompanyTest() {
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company apple = Main.createNewCompany("apple", allCompanies, false);
+        mcd.addNetwork(apple, allCompanies, false);
+        mcd.deleteCompany(allCompanies, false);
+
+        // check if deleted from allCompanies
+        assertFalse(allCompanies.contains(mcd));
+
+        // check if apple is still netowrking with mcd
+        assertFalse(apple.hasNetwork(mcd));
     }
 
     @Test
