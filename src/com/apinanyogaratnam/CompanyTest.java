@@ -192,5 +192,10 @@ class CompanyTest {
         tims.addNetwork(burgerKing, allCompanies, false);
 
         LinkedList<Company> suggestedCompanies = mcd.suggestNetworks(allCompanies);
+
+        // check if networks suggested in the correct order
+        assertEquals(burgerKing, suggestedCompanies.get(0));
+        assertEquals(apple, suggestedCompanies.get(1));
+        assertEquals(2, suggestedCompanies.size());
     }
 }
