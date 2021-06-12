@@ -27,8 +27,11 @@ class CreateSQL extends SQL {
 
             while (result.next()) {
                 String firstName = result.getString("first_name");
+                firstName = Utils.parseString(firstName);
                 String lastName = result.getString("last_name");
+                lastName = Utils.parseString(lastName);
                 String username = result.getString("username");
+                username = Utils.parseString(username);
                 Main.createNewUser(firstName, lastName, username, allUsers, false);
             }
 
@@ -52,7 +55,9 @@ class CreateSQL extends SQL {
 
             while (result.next()) {
                 String username = result.getString("username");
+                username = Utils.parseString(username);
                 String friends = result.getString("friends");
+                friends = Utils.parseString(friends);
                 User user = MainHelper.getUser(username, allUsers);
 
                 if (user != null) user.loadFriends(friends, allUsers);
@@ -79,6 +84,7 @@ class CreateSQL extends SQL {
 
             while (result.next()) {
                 String name = result.getString("name");
+                name = Utils.parseString(name);
                 Main.createNewCompany(name, allCompanies, false);
             }
 
@@ -102,8 +108,11 @@ class CreateSQL extends SQL {
 
             while (result.next()) {
                 String name = result.getString("name");
+                name = Utils.parseString(name);
                 String networkList = result.getString("network_list");
+                networkList = Utils.parseString(networkList);
                 String followersList = result.getString("followers_list");
+                followersList = Utils.parseString(followersList);
                 Company company = MainHelper.getCompany(name, allCompanies);
 
                 if (company != null) {
@@ -131,7 +140,9 @@ class CreateSQL extends SQL {
 
             while (result.next()) {
                 String username = result.getString("username");
+                username = Utils.parseString(username);
                 String companies = result.getString("companies");
+                companies = Utils.parseString(companies);
 
                 User user = MainHelper.getUser(username, allUsers);
                 if (user != null) {
@@ -179,8 +190,10 @@ class UpdateSQL extends SQL {
             ResultSet result = statement.executeQuery("SELECT * FROM users");
             while (result.next()) {
                 String username = result.getString("username");
+                username = Utils.parseString(username);
                 if (username.equals(user.getUsername())) {
                     listOfFriendsInStringFormat = result.getString("friends");
+                    listOfFriendsInStringFormat = Utils.parseString(listOfFriendsInStringFormat);
                 }
             }
 
@@ -225,8 +238,10 @@ class UpdateSQL extends SQL {
             ResultSet result = statement.executeQuery("SELECT * FROM users");
             while (result.next()) {
                 String username = result.getString("username");
+                username = Utils.parseString(username);
                 if (username.equals(user.getUsername())) {
                     listOfCompaniesInStringFormat = result.getString("companies");
+                    listOfCompaniesInStringFormat = Utils.parseString(listOfCompaniesInStringFormat);
                 }
             }
 
@@ -264,8 +279,10 @@ class UpdateSQL extends SQL {
             ResultSet result = statement.executeQuery("SELECT * FROM companies");
             while (result.next()) {
                 String username = result.getString("name");
+                username = Utils.parseString(username);
                 if (username.equals(company.getName())) {
                     listOfNetworksInStringFormat = result.getString("network_list");
+                    listOfNetworksInStringFormat = Utils.parseString(listOfNetworksInStringFormat);
                 }
             }
 
@@ -309,8 +326,10 @@ class UpdateSQL extends SQL {
             ResultSet result = statement.executeQuery("SELECT * FROM companies");
             while (result.next()) {
                 String companyName = result.getString("name");
+                companyName = Utils.parseString(companyName);
                 if (companyName.equals(company.getName())) {
                     listOfFollowersInStringFormat = result.getString("followers_list");
+                    listOfFollowersInStringFormat = Utils.parseString(listOfFollowersInStringFormat);
                 }
             }
 
@@ -346,7 +365,6 @@ class UpdateSQL extends SQL {
 
             // insert data into database
             statement.executeUpdate(query);
-
 
             // close connection to server
             connection.close();
@@ -391,6 +409,7 @@ class UpdateSQL extends SQL {
 
                 while (result.next()) {
                     String usernameFriends = result.getString("friends");
+                    usernameFriends = Utils.parseString(usernameFriends);
                     String[] users = Utils.splitCommas(Utils.removeStartEndChars(usernameFriends));
                     usernameFriends = "{";
 
@@ -434,6 +453,7 @@ class UpdateSQL extends SQL {
 
                 while (result.next()) {
                     String followersList = result.getString("followers_list");
+                    followersList = Utils.parseString(followersList);
                     String[] users = Utils.splitCommas(Utils.removeStartEndChars(followersList));
                     followersList = "{";
 
@@ -481,6 +501,7 @@ class UpdateSQL extends SQL {
 
                 while (result.next()) {
                     String companiesList = result.getString("companies");
+                    companiesList = Utils.parseString(companiesList);
                     String [] companies = Utils.splitCommas(Utils.removeStartEndChars(companiesList));
                     companiesList = "{";
 
@@ -517,6 +538,7 @@ class UpdateSQL extends SQL {
 
                 while (result.next()) {
                     String networksNetworksList = result.getString("network_list");
+                    networksNetworksList = Utils.parseString(networksNetworksList);
                     String [] companies = Utils.splitCommas(Utils.removeStartEndChars(networksNetworksList));
                     networksNetworksList = "{";
 
@@ -547,6 +569,7 @@ class UpdateSQL extends SQL {
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 String username = result.getString("friends");
+                username = Utils.parseString(username);
                 String [] usernameIndexed = Utils.splitCommas(Utils.removeStartEndChars(username));
 
                 String updatedFriendsList = "{";
@@ -586,6 +609,7 @@ class UpdateSQL extends SQL {
             // remove company from companies list
             while (result.next()) {
                 String companies = result.getString("companies");
+                companies = Utils.parseString(companies);
                 String [] companiesIndexed = Utils.indexList(companies);
 
                 String newCompaniesList = "{";
@@ -607,6 +631,7 @@ class UpdateSQL extends SQL {
 
             while (result.next()) {
                 String followers = result.getString("followers_list");
+                followers = Utils.parseString(followers);
                 String [] followersIndexed = Utils.indexList(followers);
 
                 String newFollowersList = "{";
@@ -637,6 +662,7 @@ class UpdateSQL extends SQL {
 
             while (result.next()) {
                 String networksList = result.getString("network_list");
+                networksList = Utils.parseString(networksList);
                 String [] networksIndexed = Utils.indexList(networksList);
 
                 String newNetworksList = "{";

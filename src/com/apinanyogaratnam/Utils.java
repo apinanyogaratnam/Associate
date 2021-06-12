@@ -44,6 +44,9 @@ public class Utils {
                 if (c.equals('\'') && !d.equals('\'')) {
                     newString += "''";
                     continue;
+                } else if (c.equals('\'') && d.equals('\'')) {
+                    newString += "'";
+                    i++;
                 }
                 newString += c;
             } catch (Exception e) {

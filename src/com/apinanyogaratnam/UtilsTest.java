@@ -77,6 +77,12 @@ class UtilsTest {
 
         // check if string is not modified
         assertEquals("hello", string);
+
+        string = "McDonald''s";
+        string = Utils.parseString(string);
+
+        // checking if already parsed string will be parsed again
+        assertEquals("McDonald''s", string);
     }
 
     @Test

@@ -170,5 +170,4 @@ public class Company {
 
         return suggestedNetworksList;
     }
-
 }

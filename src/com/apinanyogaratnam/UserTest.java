@@ -245,7 +245,4 @@ class UserTest {
     void suggestCompanies() {
 
     }
-
-
-
 }
