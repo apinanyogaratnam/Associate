@@ -365,7 +365,7 @@ class UserTest {
         apinan.addFriend(yerrrr, allUsers, false);
 
         walter.addFriend(lilii, allUsers, false);
-        walter.addFriend(walter, allUsers, false);
+        walter.addFriend(apinan, allUsers, false);
         walter.addFriend(baljeet, allUsers, false);
         walter.addFriend(yerrrr, allUsers, false);
 
@@ -375,22 +375,79 @@ class UserTest {
     }
 
     @Test
-    void getListOfMutualFriendsTest() {
-
-    }
-
-    @Test
     void getDegreeTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User lilii = Main.createNewUser("Alligator", "kiwii", "lilii", allUsers, false);
+        User walter = Main.createNewUser("walter", "white", "heisenborg", allUsers, false);
+        User baljeet = Main.createNewUser("bal", "jeet", "baljeet", allUsers, false);
+        User yerrrr = Main.createNewUser("maple", "leafsfan", "yerrrr", allUsers, false);
 
+        apinan.addFriend(lilii, allUsers, false);
+        apinan.addFriend(walter, allUsers, false);
+        apinan.addFriend(baljeet, allUsers, false);
+        apinan.addFriend(yerrrr, allUsers, false);
+
+        walter.addFriend(lilii, allUsers, false);
+        walter.addFriend(apinan, allUsers, false);
+        walter.addFriend(baljeet, allUsers, false);
+        walter.addFriend(yerrrr, allUsers, false);
+
+        // check lilii's degree with baljeet
+        int degree = lilii.getDegree(lilii, baljeet, allUsers);
+        assertEquals(2, degree);
     }
 
     @Test
     void suggestUsersTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
 
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User lilii = Main.createNewUser("Alligator", "kiwii", "lilii", allUsers, false);
+        User walter = Main.createNewUser("walter", "white", "heisenborg", allUsers, false);
+        User baljeet = Main.createNewUser("bal", "jeet", "baljeet", allUsers, false);
+        User yerrrr = Main.createNewUser("maple", "leafsfan", "yerrrr", allUsers, false);
+        User rando = Main.createNewUser("random", "user", "rando", allUsers, false);
+
+        apinan.addFriend(lilii, allUsers, false);
+        apinan.addFriend(walter, allUsers, false);
+        apinan.addFriend(baljeet, allUsers, false);
+        apinan.addFriend(yerrrr, allUsers, false);
+
+        walter.addFriend(lilii, allUsers, false);
+        walter.addFriend(apinan, allUsers, false);
+        walter.addFriend(baljeet, allUsers, false);
+        walter.addFriend(yerrrr, allUsers, false);
+
+        LinkedList<User> suggestedFriends = lilii.suggestUsers(allUsers);
+
+        // check if suggesting order is correct
+        assertFalse(suggestedFriends.contains(walter));
+        assertFalse(suggestedFriends.contains(apinan));
+        assertEquals(baljeet, suggestedFriends.get(0));
+        assertEquals(yerrrr, suggestedFriends.get(1));
+        assertEquals(rando, suggestedFriends.get(2));
     }
 
     @Test
     void suggestCompanies() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
 
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company tims = Main.createNewCompany("Tims Hortons", allCompanies, false);
+        Company apple = Main.createNewCompany("Apple", allCompanies, false);
+
+        apinan.addCompany(mcd, allCompanies, false);
+        mcd.addNetwork(tims, allCompanies, false);
+
+        LinkedList<Company> suggestedCompanies = apinan.suggestCompanies(allCompanies);
+
+        // check if suggestedCompanies were suggested in the right order
+        assertFalse(suggestedCompanies.contains(mcd));
+        assertEquals(tims, suggestedCompanies.get(0));
+        assertEquals(apple, suggestedCompanies.get(1));
+        assertEquals(2, suggestedCompanies.size());
     }
 }
