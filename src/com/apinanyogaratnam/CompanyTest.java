@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CompanyTest {
 
     @Test
-    void getName() {
+    void getNameTest() {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
@@ -19,7 +19,7 @@ class CompanyTest {
     }
 
     @Test
-    void getNetworksList() {
+    void getNetworksListTest() {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
@@ -33,7 +33,7 @@ class CompanyTest {
     }
 
     @Test
-    void getFollowersList() {
+    void getFollowersListTest() {
         LinkedList<Company> allCompanies = new LinkedList<>();
         LinkedList<User> allUsers = new LinkedList<>();
 
@@ -47,38 +47,87 @@ class CompanyTest {
     }
 
     @Test
-    void hasFollower() {
+    void hasFollowerTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        User api = Main.createNewUser("api", "yoga", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("stewie", "griffin", "stewiethenangel", allUsers, false);
+
+        api.addCompany(mcd, allCompanies, false);
+
+        // check if mcd has api as a follower
+        assertTrue(mcd.hasFollower(api));
+
+        // check if stewie a follower of mcd
+        assertFalse(mcd.hasFollower(stewie));
     }
 
     @Test
-    void addNetwork() {
+    void addNetworkTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company tims = Main.createNewCompany("Tim Hortons", allCompanies, false);
+        Company apple = Main.createNewCompany("apple", allCompanies, false);
+
+        mcd.addNetwork(tims, allCompanies, false);
+
+        // check if mcd is networking with tims
+        assertTrue(mcd.hasNetwork(tims));
+
+        // check if apple is networking with mcd
+        assertFalse(mcd.hasNetwork(apple));
     }
 
     @Test
-    void addFollower() {
+    void addFollowerTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        User api = Main.createNewUser("api", "yoga", "apinanyogaratnam", allUsers, false);
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+
+        mcd.addFollower(api, false);
+
+        // check if mcd has follower api
+        assertTrue(mcd.hasFollower(api));
     }
 
     @Test
-    void loadNetworks() {
+    void loadNetworksTest() {
+        LinkedList<Company> allCompanies = new LinkedList<>();
+        String list = "{McDonald''s,Tim Hortons}";
+
+        Company tims = Main.createNewCompany("Tim Hortons", allCompanies, false);
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company apple = Main.createNewCompany("apple", allCompanies, false);
+        apple.loadNetworks(list, allCompanies);
+
+        // check if apple is networking with mcd and tims
+        assertTrue(apple.hasNetwork(tims));
+        assertTrue(apple.hasNetwork(mcd));
     }
 
     @Test
-    void loadFollowers() {
+    void loadFollowersTest() {
     }
 
     @Test
-    void updateName() {
+    void updateNameTest() {
     }
 
     @Test
-    void removeNetwork() {
+    void removeNetworkTest() {
     }
 
     @Test
-    void deleteCompany() {
+    void deleteCompanyTest() {
     }
 
     @Test
-    void suggestNetworks() {
+    void suggestNetworksTest() {
     }
 }

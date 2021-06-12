@@ -26,7 +26,7 @@ public class Company {
         return this.followersList;
     }
 
-    private boolean hasNetwork(Company company) {
+    public boolean hasNetwork(Company company) {
         return this.networksList.contains(company);
     }
 
