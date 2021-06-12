@@ -3,7 +3,6 @@ package com.apinanyogaratnam;
 import java.util.LinkedList;
 
 public class Company {
-    SQL sql = new SQL();
     private String name;
     private LinkedList<Company> networksList = new LinkedList<>();
     private LinkedList<User> followersList = new LinkedList<>();
@@ -35,6 +34,7 @@ public class Company {
     }
 
     public boolean addNetwork(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
+        // conditions to pass for adding to network
         if (company == null) return false;
         if (company == this) return false;
         if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
@@ -43,57 +43,67 @@ public class Company {
         this.networksList.add(company);
         company.networksList.add(this);
 
+        // db updates
         if (withSQL) UpdateSQL.addNetwork(this, company);
 
         return true;
-    } // tested
+    }
 
     public boolean addFollower(User follower, boolean withSQL) {
+        // conditions to pass for adding follower
         if (follower == null) return false;
         if (hasFollower(follower)) return false;
 
         this.followersList.add(follower);
 
+        // db updates
         if (withSQL) UpdateSQL.addFollowers(this, follower);
 
         return true;
-    } // tested
+    }
 
     public void loadNetworks(String listOfNetworksInStringFormat, LinkedList<Company> allCompanies) {
         String csv = listOfNetworksInStringFormat.substring(1, listOfNetworksInStringFormat.length()-1);
 
-        String [] strings = csv.split(",");
+        // adding validated networks to company's networks list
+        String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {
             Company network = MainHelper.getCompany(strings[i], allCompanies);
             if (network != null) addNetwork(network, allCompanies, false);
         }
-    } // tested
+    }
 
     public void loadFollowers(String listOfFollowersInStringFormat, LinkedList<User> allUsers) {
         String csv = listOfFollowersInStringFormat.substring(1, listOfFollowersInStringFormat.length()-1);
 
-        String [] strings = csv.split(",");
+        // adding validated followers to company's followers list
+        String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {
             User follower = MainHelper.getUser(strings[i], allUsers);
             if (follower != null) addFollower(follower, false);
         }
-    } // tested
+    }
 
     public boolean updateName(String newName, LinkedList<Company> allCompanies, boolean withSQL) {
+        // conditions to pass to update company name
         if (newName == null) return false;
         if (MainHelper.isValidCompany(newName, allCompanies)) {
             Print.print("Cannot update company because company already exists.");
             return false;
         }
 
+        // parsing string for quote issues
         newName = Utils.parseString(newName);
+
+        // db updates
         if (withSQL) UpdateSQL.updateName(this, newName);
         this.name = newName;
 
         return true;
-    } // tested
+    }
 
     public boolean removeNetwork(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
+        // conditions to pass to remove netowrk
         if (company == null) return false;
         if (!hasNetwork(company)) return false;
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
@@ -101,10 +111,11 @@ public class Company {
         this.networksList.remove(company);
         company.networksList.remove(this);
 
+        // db updates
         if (withSQL) UpdateSQL.removeNetwork(this, company);
 
         return true;
-    } // tested
+    }
 
     public boolean deleteCompany(LinkedList<Company> allCompanies, boolean withSQL) {
         if (!allCompanies.contains(this)) return false;
@@ -118,14 +129,17 @@ public class Company {
         }
 
         allCompanies.remove(this);
+
+        // db updates
         if (withSQL) DeleteSQL.deleteObjectFromDB(this);
 
         return true;
-    } // tested
+    }
 
     private LinkedList<Company> getListOfMutualNetworks(Company company, LinkedList<Company> allCompanies) {
         LinkedList<Company> listOfMutualNetworks = new LinkedList<>();
 
+        // comparing and appending mutual networks
         for (Company possibleMutualNetwork : company.networksList) {
             if (this.hasNetwork(possibleMutualNetwork)) listOfMutualNetworks.add(company);
         }
@@ -140,6 +154,7 @@ public class Company {
     private LinkedList<Company> getListOfPossiblyNewNetwork(LinkedList<Company> allCompanies) {
         LinkedList<Company> listOfPossiblyNewNetwork = new LinkedList<>();
 
+        // appending all possible networks this can follow
         for (Company company : allCompanies) {
             if (!hasNetwork(company) && this != company) listOfPossiblyNewNetwork.add(company);
         }
@@ -151,6 +166,7 @@ public class Company {
         Company obj1 = listOfObjects.get(i);
         Company obj2 = listOfObjects.get(j);
 
+        // swapping obj1 and obj2
         listOfObjects.set(i, obj2);
         listOfObjects.set(j, obj1);
     }
@@ -158,6 +174,7 @@ public class Company {
     public LinkedList<Company> suggestNetworks(LinkedList<Company> allCompanies) {
         LinkedList<Company> suggestedNetworksList = getListOfPossiblyNewNetwork(allCompanies);
 
+        // using insertion sort to sort out companies from most closest degree to farthest degree
         for (int i=1; i<suggestedNetworksList.size(); i++) {
             Company currentNetwork = suggestedNetworksList.get(i);
             int j = i;

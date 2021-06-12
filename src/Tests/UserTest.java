@@ -10,7 +10,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserTest {
+class  UserTest {
     @Test
     void getFirstNameTest() {
         LinkedList<User> allUsers = new LinkedList<>();
