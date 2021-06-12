@@ -37,11 +37,19 @@ public class Utils {
         String newString = "";
         for (int i=0; i<string.length(); i++) {
             Character c = string.charAt(i);
-            if (c.equals('\'')) {
-                newString += "''";
-                continue;
+
+            // if out of bounds, add last string and return
+            try {
+                Character d = string.charAt(i + 1);
+                if (c.equals('\'') && !d.equals('\'')) {
+                    newString += "''";
+                    continue;
+                }
+                newString += c;
+            } catch (Exception e) {
+                newString += c;
+                break;
             }
-            newString += c;
         }
 
         return newString;

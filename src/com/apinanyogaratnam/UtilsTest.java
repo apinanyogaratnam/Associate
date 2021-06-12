@@ -71,6 +71,12 @@ class UtilsTest {
 
         // checking if the extra ' is added
         assertEquals("McDonald''s", string);
+
+        string = "hello";
+        string = Utils.parseString(string);
+
+        // check if string is not modified
+        assertEquals("hello", string);
     }
 
     @Test
