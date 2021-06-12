@@ -163,6 +163,36 @@ class UserTest {
     }
 
     @Test
+    void updateFirstNameTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+
+        // updating apinan's first name and checking if updated correctly
+        apinan.updateFirstName("apinan", false);
+        assertEquals("apinan", apinan.getFirstName());
+    }
+
+    @Test
+    void updateLastNameTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+
+        // updating apinan's first name and checking if updated correctly
+        apinan.updateLastName("yogaratnam", false);
+        assertEquals("yogaratnam", apinan.getLastName());
+    }
+
+    @Test
+    void updateUsernameTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+
+        // updating apinan's first name and checking if updated correctly
+        apinan.updateUsername("api", allUsers, false);
+        assertEquals("api", apinan.getUsername());
+    }
+
+    @Test
     void removeFriendTest() {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<User> unofficialAllUsers = new LinkedList<>();
