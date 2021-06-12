@@ -39,7 +39,6 @@ public class User {
     }
 
     public boolean isFollowingUser(User possiblyFollowingFriend) {
-    //  return this.friendsList.indexOf(possiblyFollowingFriend) != -1;
         return this.friendsList.contains(possiblyFollowingFriend);
     } // tested
 
@@ -47,7 +46,7 @@ public class User {
         return this.companiesList.indexOf(possiblyFollowingCompany) != -1;
     } // tested
 
-    public boolean addFriend(User friend, LinkedList<User> allUsers) {
+    public boolean addFriend(User friend, LinkedList<User> allUsers, boolean withSQL) {
         if (friend == null) return false;
         if (!MainHelper.isValidUser(friend.username, allUsers)) return false;
         if (this.isFollowingUser(friend)) return false;
@@ -55,7 +54,7 @@ public class User {
         this.friendsList.add(friend);
         friend.friendsList.add(this);
 
-        UpdateSQL.addFriend(this, friend);
+        if (withSQL) UpdateSQL.addFriend(this, friend);
 
         return true;
     } // tested

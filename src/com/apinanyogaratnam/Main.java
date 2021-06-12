@@ -11,10 +11,6 @@ public class Main {
 
         // load data from db to current data structures
         CreateSQL.loadDB(allUsers, allCompanies);
-        // Company company = MainHelper.getCompany("McDonald''s", allCompanies);
-        // Print.print(company.getName());
-        Print.print(allUsers);
-        Print.print(allCompanies);
     }
 
     public static User createNewUser(String firstName, String lastName, String username, LinkedList<User> allUsers, boolean withSQL) {
