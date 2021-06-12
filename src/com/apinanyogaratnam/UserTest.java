@@ -36,6 +36,31 @@ class UserTest {
     }
 
     @Test
+    void getFriendsListTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("stewie", "angel", "stewietheangel", allUsers, false);
+        apinan.addFriend(stewie, allUsers, false);
+
+        // check if apinan is following stewie only and stewie is only in apinan's friend list
+        assertEquals(1, apinan.getFriendsList().size());
+        assertEquals(stewie, apinan.getFriendsList().get(0));
+    }
+
+    @Test
+    void getCompaniesListTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        Company apple = Main.createNewCompany("apple", allCompanies, false);
+        apinan.addCompany(apple, allCompanies, false);
+
+        // check if apinan is following apple only
+        assertEquals(1, apinan.getCompaniesList().size());
+        assertEquals(apple, apinan.getCompaniesList().get(0));
+    }
+
+    @Test
     void isFollowingUserTest() {
         LinkedList<User> allUsers = new LinkedList<>();
 
