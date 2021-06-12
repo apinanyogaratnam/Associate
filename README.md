@@ -17,9 +17,7 @@ Notes:
 
 TODO:
 - place test methods into separate files
-  Main
   Company
-  User
 - add comments to all code
 - make getDegree in another way
 - shorten uses of code (make it more modular)
