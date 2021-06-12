@@ -2,6 +2,8 @@ package com.apinanyogaratnam;
 
 import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingDeque;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
@@ -372,6 +374,34 @@ class UserTest {
         // check apinan and walter's mutual friends
         int count = apinan.getCountOfMutualFriends(walter, allUsers);
         assertEquals(3, count);
+    }
+
+    @Test
+    void getListOfMutualFriends() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User lilii = Main.createNewUser("Alligator", "kiwii", "lilii", allUsers, false);
+        User walter = Main.createNewUser("walter", "white", "heisenborg", allUsers, false);
+        User baljeet = Main.createNewUser("bal", "jeet", "baljeet", allUsers, false);
+        User yerrrr = Main.createNewUser("maple", "leafsfan", "yerrrr", allUsers, false);
+
+        apinan.addFriend(lilii, allUsers, false);
+        apinan.addFriend(walter, allUsers, false);
+        apinan.addFriend(baljeet, allUsers, false);
+        apinan.addFriend(yerrrr, allUsers, false);
+
+        walter.addFriend(lilii, allUsers, false);
+        walter.addFriend(apinan, allUsers, false);
+        walter.addFriend(baljeet, allUsers, false);
+        walter.addFriend(yerrrr, allUsers, false);
+
+        // check apinan and walter's mutual friends
+        LinkedList<User> mutualFriends = apinan.getListOfMutualFriends(walter, allUsers);
+        assertTrue(mutualFriends.contains(lilii));
+        assertTrue(mutualFriends.contains(baljeet));
+        assertTrue(mutualFriends.contains(yerrrr));
+        assertFalse(mutualFriends.contains(apinan));
+        assertFalse(mutualFriends.contains(walter));
     }
 
     @Test

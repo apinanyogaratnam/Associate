@@ -133,7 +133,7 @@ class CompanyTest {
         LinkedList<Company> allCompanies = new LinkedList<>();
 
         Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
-        Company apple = Main.createNewCompany("apple", allCompanies, false);
+        Main.createNewCompany("apple", allCompanies, false);
         mcd.updateName("McDonalds", allCompanies, false);
 
         // check if mcd updated its name accordingly
@@ -181,5 +181,16 @@ class CompanyTest {
 
     @Test
     void suggestNetworksTest() {
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        Company tims = Main.createNewCompany("Tim Hortons", allCompanies, false);
+        Company burgerKing = Main.createNewCompany("Burger King", allCompanies, false);
+        Company apple = Main.createNewCompany("apple", allCompanies, false);
+
+        mcd.addNetwork(tims, allCompanies, false);
+        tims.addNetwork(burgerKing, allCompanies, false);
+
+        LinkedList<Company> suggestedCompanies = mcd.suggestNetworks(allCompanies);
     }
 }
