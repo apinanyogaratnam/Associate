@@ -34,6 +34,16 @@ class CompanyTest {
 
     @Test
     void getFollowersList() {
+        LinkedList<Company> allCompanies = new LinkedList<>();
+        LinkedList<User> allUsers = new LinkedList<>();
+
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        User api = Main.createNewUser("api", "yoga", "apinanyogaratnam", allUsers, false);
+        api.addCompany(mcd, allCompanies, false);
+
+        // check if api is in followersList
+        assertEquals(1, mcd.getFollowersList().size());
+        assertEquals(api, mcd.getFollowersList().get(0));
     }
 
     @Test
