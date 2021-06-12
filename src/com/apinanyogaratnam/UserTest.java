@@ -24,7 +24,7 @@ class UserTest {
         User stewie = Main.createNewUser("Stewie", "Griffin", "stewietheangel", allUsers, false);
 
         // after adding a friend, check if friend is following
-        apinan.addFriend(stewie, allUsers);
+        apinan.addFriend(stewie, allUsers, false);
         boolean isFollowing = apinan.isFollowingUser(stewie);
         assertEquals(true, isFollowing);
     }
@@ -39,7 +39,7 @@ class UserTest {
         Company mcdonald = Main.createNewCompany("McDonald's", allCompanies, false);
 
         // after adding a new company, check if user is following the company
-        apinan.addCompany(mcdonald, allCompanies);
+        apinan.addCompany(mcdonald, allCompanies, false);
         boolean isFollowing = apinan.isFollowingCompany(mcdonald);
         assertEquals(true, isFollowing);
     }
@@ -55,7 +55,7 @@ class UserTest {
         User angel = Main.createNewUser("angel", "angel", "angel", unofficialAllUsers, false);
 
         // check if apinan is friends with stewie
-        apinan.addFriend(stewie, allUsers);
+        apinan.addFriend(stewie, allUsers, false);
         boolean isFollowing = apinan.isFollowingUser(stewie);
         assertEquals(true, isFollowing);
 
@@ -64,15 +64,15 @@ class UserTest {
         assertEquals(true, isFollowing);
 
         // check if apinan can add stewie again
-        boolean added = apinan.addFriend(stewie, allUsers);
+        boolean added = apinan.addFriend(stewie, allUsers, false);
         assertEquals(false, added);
 
         // check if apinan can add a null friend
-        added = apinan.addFriend(null, allUsers);
+        added = apinan.addFriend(null, allUsers, false);
         assertEquals(false, added);
 
         // check if apinan can add an invalid user
-        added = apinan.addFriend(angel, allUsers);
+        added = apinan.addFriend(angel, allUsers, false);
         assertEquals(false, added);
     }
 
@@ -89,8 +89,8 @@ class UserTest {
         Company toysrus = Main.createNewCompany("ToysRus", unofficialAllCompanies, false);
 
         // check if apinan and stewie are in mcdonald's followers list
-        apinan.addCompany(mcdonald, allCompanies);
-        stewie.addCompany(mcdonald, allCompanies);
+        apinan.addCompany(mcdonald, allCompanies, false);
+        stewie.addCompany(mcdonald, allCompanies, false);
 
         boolean apinanFound = false;
         boolean stewieFound = false;
@@ -105,15 +105,15 @@ class UserTest {
         assertEquals(true, found);
 
         // check if apinan can add a null company
-        boolean added = apinan.addCompany(null, allCompanies);
+        boolean added = apinan.addCompany(null, allCompanies, false);
         assertEquals(false, added);
 
         // check if apinan can follow a company again
-        added = apinan.addCompany(mcdonald, allCompanies);
+        added = apinan.addCompany(mcdonald, allCompanies, false);
         assertEquals(false, added);
 
         // check if apinan can add an invalid company
-        added = apinan.addCompany(toysrus, allCompanies);
+        added = apinan.addCompany(toysrus, allCompanies, false);
         assertEquals(false, added);
     }
 
@@ -128,7 +128,7 @@ class UserTest {
         User angel = Main.createNewUser("angel", "angel", "angel", unofficialAllUsers, false);
 
         // check if apinan is friends with stewie
-        apinan.addFriend(stewie, allUsers);
+        apinan.addFriend(stewie, allUsers, false);
         boolean isFollowing = apinan.isFollowingUser(stewie);
         assertEquals(true, isFollowing);
 
@@ -137,7 +137,7 @@ class UserTest {
         assertEquals(true, isFollowing);
 
         // check if apinan can remove stewie
-        boolean removed = apinan.removeFriend(stewie, allUsers);
+        boolean removed = apinan.removeFriend(stewie, allUsers, false);
         assertEquals(true, removed);
 
         // check if apinan is still friends with stewie
@@ -145,15 +145,15 @@ class UserTest {
         assertEquals(false, isFollowing);
 
         // check if apinan can remove stewie again
-        removed = apinan.removeFriend(stewie, allUsers);
+        removed = apinan.removeFriend(stewie, allUsers, false);
         assertEquals(false, removed);
 
         // check if apinan can remove a null friend
-        removed = apinan.removeFriend(null, allUsers);
+        removed = apinan.removeFriend(null, allUsers, false);
         assertEquals(false, removed);
 
         // check if apinan can remove an invalid user
-        removed = apinan.removeFriend(angel, allUsers);
+        removed = apinan.removeFriend(angel, allUsers, false);
         assertEquals(false, removed);
     }
 
@@ -170,8 +170,8 @@ class UserTest {
         Company toysrus = Main.createNewCompany("ToysRus", unofficialAllCompanies, false);
 
         // check if apinan and stewie are in mcdonald's followers list
-        apinan.addCompany(mcdonald, allCompanies);
-        stewie.addCompany(mcdonald, allCompanies);
+        apinan.addCompany(mcdonald, allCompanies, false);
+        stewie.addCompany(mcdonald, allCompanies, false);
 
         boolean apinanFound = false;
         boolean stewieFound = false;
@@ -186,11 +186,11 @@ class UserTest {
         assertEquals(true, found);
 
         // check if apinan can remove a null company
-        boolean removed = apinan.removeCompany(null, allCompanies);
+        boolean removed = apinan.removeCompany(null, allCompanies, false);
         assertEquals(false, removed);
 
         // check if apinan can remove mcdonald
-        removed = apinan.removeCompany(mcdonald, allCompanies);
+        removed = apinan.removeCompany(mcdonald, allCompanies, false);
         assertEquals(true, removed);
 
         // check if apinan is still following mcdonald
@@ -198,11 +198,11 @@ class UserTest {
         assertEquals(false, isFollowing);
 
         // check if apinan can remove a company again
-        removed = apinan.removeCompany(mcdonald, allCompanies);
+        removed = apinan.removeCompany(mcdonald, allCompanies, false);
         assertEquals(false, removed);
 
         // check if apinan can remove an invalid company
-        removed = apinan.removeCompany(toysrus, allCompanies);
+        removed = apinan.removeCompany(toysrus, allCompanies, false);
         assertEquals(false, removed);
 
         // check if apinan and stewie are still in mcdonald's followers list

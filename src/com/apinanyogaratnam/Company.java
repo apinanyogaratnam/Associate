@@ -47,13 +47,13 @@ public class Company {
         return true;
     } // tested
 
-    public boolean addFollower(User follower) {
+    public boolean addFollower(User follower, boolean withSQL) {
         if (follower == null) return false;
         if (hasFollower(follower)) return false;
 
         this.followersList.add(follower);
 
-        UpdateSQL.addFollowers(this, follower);
+        if (withSQL) UpdateSQL.addFollowers(this, follower);
 
         return true;
     } // tested
@@ -105,7 +105,7 @@ public class Company {
         return true;
     } // tested
 
-    public boolean deleteCompany(LinkedList<Company> allCompanies) {
+    public boolean deleteCompany(LinkedList<Company> allCompanies, boolean withSQL) {
         if (!allCompanies.contains(this)) return false;
 
         for (Company network: this.networksList) {
@@ -113,7 +113,7 @@ public class Company {
         }
 
         for (User follower: this.followersList) {
-            follower.removeCompany(this, allCompanies);
+            follower.removeCompany(this, allCompanies, withSQL);
         }
 
         allCompanies.remove(this);

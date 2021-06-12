@@ -59,40 +59,40 @@ public class User {
         return true;
     } // tested
 
-    public boolean addCompany(Company company, LinkedList<Company> allCompanies) {
+    public boolean addCompany(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
         if (company == null) return false;
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
         if (this.isFollowingCompany(company)) return false;
 
         boolean added = this.companiesList.add(company);
-        company.addFollower(this);
+        company.addFollower(this, withSQL);
 
-        UpdateSQL.addCompany(this, company);
+        if (withSQL) UpdateSQL.addCompany(this, company);
 
         return true;
     } // tested
 
-    public boolean updateFirstName(String newName) {
+    public boolean updateFirstName(String newName, boolean withSQL) {
         if (newName == null) return false;
 
         newName = Utils.parseString(newName);
         this.firstName = newName;
-        UpdateSQL.updateFirstName(this, newName);
+        if (withSQL) UpdateSQL.updateFirstName(this, newName);
 
         return true;
     } // tested
 
-    public boolean updateLastName(String newName) {
+    public boolean updateLastName(String newName, boolean withSQL) {
         if (newName == null) return false;
 
         newName = Utils.parseString(newName);
         this.lastName = newName;
-        UpdateSQL.updateLastName(this, newName);
+        if (withSQL) UpdateSQL.updateLastName(this, newName);
 
         return true;
     } // tested
 
-    public boolean updateUsername(String newName, LinkedList<User> allUsers) {
+    public boolean updateUsername(String newName, LinkedList<User> allUsers, boolean withSQL) {
         if (newName == null) return false;
         if (MainHelper.isValidUser(newName, allUsers)) {
             Print.print("Cannot update username since username already exists.");
@@ -100,7 +100,7 @@ public class User {
         }
 
         newName = Utils.parseString(newName);
-        UpdateSQL.updateUsername(this, newName);
+        if (withSQL) UpdateSQL.updateUsername(this, newName);
         this.username = newName;
 
         return true;
@@ -113,7 +113,7 @@ public class User {
         String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {
             User friend = MainHelper.getUser(strings[i], allUsers);
-            addFriend(friend, allUsers);
+            addFriend(friend, allUsers, true);
         }
     } // tested
 
@@ -124,11 +124,11 @@ public class User {
         String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {
             Company company = MainHelper.getCompany(strings[i], allCompanies);
-            addCompany(company, allCompanies);
+            addCompany(company, allCompanies, true);
         }
     } // tested
 
-    public boolean removeFriend(User friend, LinkedList<User> allUsers) {
+    public boolean removeFriend(User friend, LinkedList<User> allUsers, boolean withSQL) {
         if (friend == null) return false;
         if (!MainHelper.isValidUser(friend.username, allUsers)) return false;
         if (!isFollowingUser(friend)) return false;
@@ -136,12 +136,12 @@ public class User {
         this.friendsList.remove(this.friendsList.indexOf(friend));
         friend.friendsList.remove(friend.friendsList.indexOf(this));
 
-        UpdateSQL.removeFriend(this, friend);
+        if (withSQL) UpdateSQL.removeFriend(this, friend);
 
         return true;
     } // tested
 
-    public boolean removeCompany(Company company, LinkedList<Company> allCompanies) {
+    public boolean removeCompany(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
         if (company == null) return false;
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
         if (!isFollowingCompany(company)) return false;
@@ -149,28 +149,28 @@ public class User {
         this.companiesList.remove(this.companiesList.indexOf(company));
         company.getFollowersList().remove(company.getFollowersList().indexOf(this));
 
-        UpdateSQL.removeCompany(this, company);
+        if (withSQL) UpdateSQL.removeCompany(this, company);
 
         return true;
     } // tested
 
-    public boolean deleteUser(LinkedList<User> allUsers, LinkedList<Company> allCompanies) {
+    public boolean deleteUser(LinkedList<User> allUsers, LinkedList<Company> allCompanies, boolean withSQL) {
         if (!allUsers.contains(this)) return false;
 
         // remove all user's friends
         for (User friend : this.friendsList) {
-            this.removeFriend(friend, allUsers);
+            this.removeFriend(friend, allUsers, false);
         }
 
         // remove every company user is following
         for (Company company : this.companiesList) {
-            this.removeCompany(company, allCompanies);
+            this.removeCompany(company, allCompanies, withSQL);
         }
 
         // remove from allUsers
         allUsers.remove(allUsers.indexOf(this));
 
-        DeleteSQL.deleteObjectFromDB(this);
+        if (withSQL) DeleteSQL.deleteObjectFromDB(this);
 
         return true;
     } // tested
