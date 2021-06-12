@@ -3,7 +3,7 @@ package com.apinanyogaratnam;
 import java.sql.*;
 import java.util.LinkedList;
 
-public class SQL {
+abstract class SQL {
     protected static final Secrets secrets = new Secrets();
 }
 
@@ -74,8 +74,6 @@ class CreateSQL extends SQL {
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
-
-            return;
         }
     }
 
@@ -175,8 +173,6 @@ class CreateSQL extends SQL {
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
-
-            return;
         }
     }
 }
@@ -402,12 +398,8 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch(SQLIntegrityConstraintViolationException e) {
             Print.print("Object already exists in db.");
-
-            return;
         } catch (Exception e) {
             e.printStackTrace();
-
-            return;
         }
     }
 
@@ -634,8 +626,6 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
-
-            return;
         }
     }
 
@@ -698,8 +688,6 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
-
-            return;
         }
     }
 
@@ -732,8 +720,6 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
-
-            return;
         }
     }
 
@@ -745,9 +731,9 @@ class UpdateSQL extends SQL {
 }
 
 class DeleteSQL extends SQL {
-    // made method resuable by taking generic obj as parameter
+    // made method reusable by taking generic obj as parameter
     protected static void deleteObjectFromDB(Object obj) {
-        String query = "";
+        String query;
 
         if (obj instanceof User) {
             query = String.format("DELETE FROM users WHERE username='%s'", ((User) obj).getUsername());
