@@ -193,6 +193,36 @@ class UserTest {
     }
 
     @Test
+    void loadFriendsTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers, false);
+        User stewie = Main.createNewUser("stewie", "griffin", "stewietheangel", allUsers, false);
+        User lilii = Main.createNewUser("rosee", "kiwii", "lilii", allUsers, false);
+        String list = "{lilii,stewietheangel}";
+
+        // checking if apinan is friends with lilii and stewietheangel
+        apinan.loadFriends(list, allUsers);
+        assertEquals(lilii, apinan.getFriendsList().get(0));
+        assertEquals(stewie, apinan.getFriendsList().get(1));
+        assertEquals(2, apinan.getFriendsList().size());
+    }
+
+    @Test
+    void loadCompaniesTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
+
+        User apinan = Main.createNewUser("apinan", "yogaratnam", "apinanyogaratnam", allUsers, false);
+        Company mcd = Main.createNewCompany("McDonald's", allCompanies, false);
+        String list = "{McDonald''s}";
+
+        // checking if apinan is following mcdonalds
+        apinan.loadCompanies(list, allCompanies);
+        assertEquals(1, apinan.getCompaniesList().size());
+        assertEquals(mcd, apinan.getCompaniesList().get(0));
+    }
+
+    @Test
     void removeFriendTest() {
         LinkedList<User> allUsers = new LinkedList<>();
         LinkedList<User> unofficialAllUsers = new LinkedList<>();
