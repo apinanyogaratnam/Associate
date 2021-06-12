@@ -16,7 +16,6 @@ Notes:
 - company identified with company name
 
 TODO:
-- add return; after catch statements for loading methods
 - make sql super class abstract
 - make main class interactive
 

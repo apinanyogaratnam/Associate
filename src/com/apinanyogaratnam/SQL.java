@@ -42,6 +42,8 @@ class CreateSQL extends SQL {
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
+
+            return;
         }
 
         // second time needed for loading before defining a user
@@ -72,6 +74,8 @@ class CreateSQL extends SQL {
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
+
+            return;
         }
     }
 
@@ -99,6 +103,8 @@ class CreateSQL extends SQL {
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
+
+            return;
         }
 
         // needed second time to load all things since companies can be loaded before they are defined
@@ -134,6 +140,8 @@ class CreateSQL extends SQL {
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load companies into allCompanies");
+
+            return;
         }
 
         try {
@@ -167,6 +175,8 @@ class CreateSQL extends SQL {
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
+
+            return;
         }
     }
 }
@@ -215,6 +225,8 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return;
         }
 
         // check if user already is friends with friend
@@ -262,6 +274,8 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return;
         }
 
         // check if user already is friends with friend
@@ -303,6 +317,8 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return;
         }
 
         // check if user already is friends with friend
@@ -351,6 +367,8 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return;
         }
 
         // check if user already is friends with friend
@@ -384,8 +402,12 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch(SQLIntegrityConstraintViolationException e) {
             Print.print("Object already exists in db.");
+
+            return;
         } catch (Exception e) {
             e.printStackTrace();
+
+            return;
         }
     }
 
@@ -440,6 +462,8 @@ class UpdateSQL extends SQL {
                 connection.close();
             } catch (Exception e) {
                 e.printStackTrace();
+
+                return;
             }
         }
 
@@ -484,6 +508,8 @@ class UpdateSQL extends SQL {
                 connection.close();
             } catch (Exception e) {
                 e.printStackTrace();
+
+                return;
             }
         }
 
@@ -528,6 +554,8 @@ class UpdateSQL extends SQL {
                 connection.close();
             } catch (Exception e) {
                 e.printStackTrace();
+
+                return;
             }
         }
 
@@ -564,6 +592,8 @@ class UpdateSQL extends SQL {
 
             } catch (Exception e) {
                 e.printStackTrace();
+
+                return;
             }
         }
 
@@ -604,6 +634,8 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return;
         }
     }
 
@@ -666,6 +698,8 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return;
         }
     }
 
@@ -698,6 +732,8 @@ class UpdateSQL extends SQL {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return;
         }
     }
 
