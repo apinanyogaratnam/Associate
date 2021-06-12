@@ -30,7 +30,7 @@ public class Company {
         return this.networksList.contains(company);
     }
 
-    private boolean hasFollower(User user) {
+    public boolean hasFollower(User user) {
         return this.followersList.contains(user);
     }
 

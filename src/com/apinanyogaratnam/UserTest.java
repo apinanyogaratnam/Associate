@@ -322,12 +322,32 @@ class UserTest {
     }
 
     @Test
-    void getCountOfMutualFriendsTest() {
+    void deleteUserTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        LinkedList<Company> allCompanies = new LinkedList<>();
 
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User lilii = Main.createNewUser("Alligator", "kiwii", "lilii", allUsers, false);
+        Company mcd = Main.createNewCompany("McDonald''s", allCompanies, false);
+        apinan.addFriend(lilii, allUsers, false);
+        apinan.addCompany(mcd, allCompanies, false);
+        apinan.deleteUser(allUsers, allCompanies, false);
+
+        // check if lilii is still following apinan
+        boolean isFollowing = lilii.isFollowingUser(apinan);
+        assertFalse(isFollowing);
+
+        // check if mcd still has apinan as a follower
+        isFollowing = mcd.hasFollower(apinan);
+        assertFalse(isFollowing);
+
+        // check if apinan still exists
+        apinan = MainHelper.getUser("apinanyogaratnam", allUsers);
+        assertNull(apinan);
     }
 
     @Test
-    void deleteUserTest() {
+    void getCountOfMutualFriendsTest() {
 
     }
 
