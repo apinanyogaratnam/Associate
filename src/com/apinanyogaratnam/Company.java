@@ -67,8 +67,8 @@ public class Company {
 
         // adding validated networks to company's networks list
         String [] strings = Utils.splitCommas(csv);
-        for (int i=0; i<strings.length; i++) {
-            Company network = MainHelper.getCompany(strings[i], allCompanies);
+        for (String s : strings) {
+            Company network = MainHelper.getCompany(s, allCompanies);
             if (network != null) addNetwork(network, allCompanies, false);
         }
     }
@@ -78,8 +78,8 @@ public class Company {
 
         // adding validated followers to company's followers list
         String [] strings = Utils.splitCommas(csv);
-        for (int i=0; i<strings.length; i++) {
-            User follower = MainHelper.getUser(strings[i], allUsers);
+        for (String s : strings) {
+            User follower = MainHelper.getUser(s, allUsers);
             if (follower != null) addFollower(follower, false);
         }
     }
@@ -103,7 +103,7 @@ public class Company {
     }
 
     public boolean removeNetwork(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
-        // conditions to pass to remove netowrk
+        // conditions to pass to remove network
         if (company == null) return false;
         if (!hasNetwork(company)) return false;
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
