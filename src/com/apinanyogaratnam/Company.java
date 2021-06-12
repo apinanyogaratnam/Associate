@@ -31,10 +31,10 @@ public class Company {
     }
 
     private boolean hasFollower(User user) {
-        return this.followersList.indexOf(user) != -1;
+        return this.followersList.contains(user);
     }
 
-    public boolean addNetwork(Company company, LinkedList<Company> allCompanies) {
+    public boolean addNetwork(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
         if (company == null) return false;
         if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
         if (hasNetwork(company)) return false;
@@ -42,7 +42,7 @@ public class Company {
         this.networksList.add(company);
         company.networksList.add(this);
 
-        UpdateSQL.addNetwork(this, company);
+        if (withSQL) UpdateSQL.addNetwork(this, company);
 
         return true;
     } // tested
@@ -64,7 +64,7 @@ public class Company {
         String [] strings = csv.split(",");
         for (int i=0; i<strings.length; i++) {
             Company network = MainHelper.getCompany(strings[i], allCompanies);
-            if (network != null) this.networksList.add(network);
+            if (network != null) addNetwork(network, allCompanies, false);
         }
     } // tested
 
@@ -74,11 +74,11 @@ public class Company {
         String [] strings = csv.split(",");
         for (int i=0; i<strings.length; i++) {
             User follower = MainHelper.getUser(strings[i], allUsers);
-            if (follower != null) this.followersList.add(follower);
+            if (follower != null) addFollower(follower, false);
         }
     } // tested
 
-    public boolean updateName(String newName, LinkedList<Company> allCompanies) {
+    public boolean updateName(String newName, LinkedList<Company> allCompanies, boolean withSQL) {
         if (newName == null) return false;
         if (MainHelper.isValidCompany(newName, allCompanies)) {
             Print.print("Cannot update company because company already exists.");
@@ -86,13 +86,13 @@ public class Company {
         }
 
         newName = Utils.parseString(newName);
-        UpdateSQL.updateName(this, newName);
+        if (withSQL) UpdateSQL.updateName(this, newName);
         this.name = newName;
 
         return true;
     } // tested
 
-    public boolean removeNetwork(Company company, LinkedList<Company> allCompanies) {
+    public boolean removeNetwork(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
         if (company == null) return false;
         if (!hasNetwork(company)) return false;
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
@@ -100,7 +100,7 @@ public class Company {
         this.networksList.remove(company);
         company.networksList.remove(this);
 
-        UpdateSQL.removeNetwork(this, company);
+        if (withSQL) UpdateSQL.removeNetwork(this, company);
 
         return true;
     } // tested
@@ -109,7 +109,7 @@ public class Company {
         if (!allCompanies.contains(this)) return false;
 
         for (Company network: this.networksList) {
-            this.removeNetwork(network, allCompanies);
+            this.removeNetwork(network, allCompanies, withSQL);
         }
 
         for (User follower: this.followersList) {
@@ -117,7 +117,7 @@ public class Company {
         }
 
         allCompanies.remove(this);
-        DeleteSQL.deleteObjectFromDB(this);
+        if (withSQL) DeleteSQL.deleteObjectFromDB(this);
 
         return true;
     } // tested

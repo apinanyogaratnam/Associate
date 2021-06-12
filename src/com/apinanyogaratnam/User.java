@@ -113,7 +113,7 @@ public class User {
         String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {
             User friend = MainHelper.getUser(strings[i], allUsers);
-            addFriend(friend, allUsers, true);
+            addFriend(friend, allUsers, false);
         }
     } // tested
 
@@ -124,7 +124,7 @@ public class User {
         String [] strings = Utils.splitCommas(csv);
         for (int i=0; i<strings.length; i++) {
             Company company = MainHelper.getCompany(strings[i], allCompanies);
-            addCompany(company, allCompanies, true);
+            addCompany(company, allCompanies, false);
         }
     } // tested
 
