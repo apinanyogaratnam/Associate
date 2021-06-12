@@ -11,7 +11,7 @@ class CreateSQL extends SQL {
     protected static void loadDB(LinkedList<User> allUsers, LinkedList<Company> allCompanies) {
         loadDBUserData(allUsers);
         loadDBCompanyData(allCompanies, allUsers);
-    } // tested
+    }
 
     protected static void loadDBUserData(LinkedList<User> allUsers) {
         try {
@@ -32,9 +32,12 @@ class CreateSQL extends SQL {
                 lastName = Utils.parseString(lastName);
                 String username = result.getString("username");
                 username = Utils.parseString(username);
+
+                // create new user from sql results
                 Main.createNewUser(firstName, lastName, username, allUsers, false);
             }
 
+            // close connection
             connection.close();
         } catch (Exception e){
             e.printStackTrace();
@@ -60,15 +63,17 @@ class CreateSQL extends SQL {
                 friends = Utils.parseString(friends);
                 User user = MainHelper.getUser(username, allUsers);
 
+                // load friends if user exists
                 if (user != null) user.loadFriends(friends, allUsers);
             }
 
+            // close connection to db
             connection.close();
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
         }
-    } // tested
+    }
 
     protected static void loadDBCompanyData(LinkedList<Company> allCompanies, LinkedList<User> allUsers) {
         try {
@@ -85,6 +90,8 @@ class CreateSQL extends SQL {
             while (result.next()) {
                 String name = result.getString("name");
                 name = Utils.parseString(name);
+
+                // creating new company from db results
                 Main.createNewCompany(name, allCompanies, false);
             }
 
@@ -115,12 +122,14 @@ class CreateSQL extends SQL {
                 followersList = Utils.parseString(followersList);
                 Company company = MainHelper.getCompany(name, allCompanies);
 
+                // loading networks and followers is company exists
                 if (company != null) {
                     company.loadNetworks(networkList, allCompanies);
                     company.loadFollowers(followersList, allUsers);
                 }
             }
 
+            // close connection to db
             connection.close();
         } catch (Exception e){
             e.printStackTrace();
@@ -145,17 +154,21 @@ class CreateSQL extends SQL {
                 companies = Utils.parseString(companies);
 
                 User user = MainHelper.getUser(username, allUsers);
+
+                // loading companies again to avoid issues with loading followers and networks when companies
+                // are not defined yet
                 if (user != null) {
                     user.loadCompanies(companies, allCompanies);
                 }
             }
 
+            // close connection to db
             connection.close();
         } catch (Exception e){
             e.printStackTrace();
             Print.print("Unable to load users into allUsers");
         }
-    } // tested
+    }
 }
 
 class UpdateSQL extends SQL {
@@ -234,7 +247,7 @@ class UpdateSQL extends SQL {
             // create a statement
             Statement statement = connection.createStatement();
 
-            // insert data into database
+            // read data from database
             ResultSet result = statement.executeQuery("SELECT * FROM users");
             while (result.next()) {
                 String username = result.getString("username");
@@ -264,7 +277,7 @@ class UpdateSQL extends SQL {
         // update user data
         String query = String.format("UPDATE users SET companies='%s' WHERE username='%s'", companies, user.getUsername());
         updateDBWithQuery(query);
-    } // tested
+    }
 
     protected static void addNetworksHelper(Company company, Company network) {
         String listOfNetworksInStringFormat = "";
@@ -275,7 +288,7 @@ class UpdateSQL extends SQL {
             // create a statement
             Statement statement = connection.createStatement();
 
-            // insert data into database
+            // read data from database
             ResultSet result = statement.executeQuery("SELECT * FROM companies");
             while (result.next()) {
                 String username = result.getString("name");
@@ -306,12 +319,13 @@ class UpdateSQL extends SQL {
         // update user data
         String query = String.format("UPDATE companies SET network_list='%s' WHERE name='%s'", networks, company.getName());
         updateDBWithQuery(query);
-    } // tested
+    }
 
     protected static void addNetwork(Company company, Company network) {
+        // using undirected graphs hence two way adding connection
         addNetworksHelper(company, network);
         addNetworksHelper(network, company);
-    } // tested
+    }
 
     protected static void addFollowers(Company company, User user) {
         String listOfFollowersInStringFormat = "";
@@ -322,7 +336,7 @@ class UpdateSQL extends SQL {
             // create a statement
             Statement statement = connection.createStatement();
 
-            // insert data into database
+            // read data from database
             ResultSet result = statement.executeQuery("SELECT * FROM companies");
             while (result.next()) {
                 String companyName = result.getString("name");
@@ -353,7 +367,7 @@ class UpdateSQL extends SQL {
         // update user data
         String query = String.format("UPDATE companies SET followers_list='%s' WHERE name='%s'", followers, company.getName());
         updateDBWithQuery(query);
-    } // tested
+    }
 
     protected static void updateDBWithQuery(String query) {
         try {
@@ -373,20 +387,19 @@ class UpdateSQL extends SQL {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } // tested
+    }
 
     protected static void updateFirstName(User user, String newFirstName) {
         String query = String.format("UPDATE users SET first_name='%s' WHERE username='%s'", newFirstName, user.getUsername());
         updateDBWithQuery(query);
-    } // tested
+    }
 
     protected static void updateLastName(User user, String newLastName) {
         String query = String.format("UPDATE users SET last_name='%s' WHERE username='%s'", newLastName, user.getUsername());
         updateDBWithQuery(query);
-    } // tested
+    }
 
     protected static void updateUsername(User user, String newUsername) {
-        // need to also update every friend's list
         // update every friend of user in db
         String friendsString = "{";
         for (User friend : user.getFriendsList()) {
@@ -477,13 +490,9 @@ class UpdateSQL extends SQL {
         // sql update username query command
         String query = String.format("UPDATE users SET username='%s' WHERE username='%s'", newUsername, user.getUsername());
         updateDBWithQuery(query);
-    } // tested
+    }
 
     protected static void updateName(Company company, String newName) {
-        // when updating name, need to also update networks list and all go through
-        // all followers and change their companiesList as well
-        // need to also check if company name already exists
-
         // update every user following company
         String followersString = "{";
         for (User follower : company.getFollowersList()) {
@@ -515,6 +524,7 @@ class UpdateSQL extends SQL {
                     updateDBWithQuery(query);
                 }
 
+                // close connection to db
                 connection.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -559,10 +569,11 @@ class UpdateSQL extends SQL {
 
         String query = String.format("UPDATE companies SET name='%s' WHERE name='%s'", newName, company.getName());
         updateDBWithQuery(query);
-    } // tested
+    }
 
     protected static void removeFriendHelper(User user, User friend) {
         try {
+            // connecting to db and reading data
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
             String query = String.format("SELECT * FROM users WHERE username='%s'", user.getUsername());
@@ -584,23 +595,27 @@ class UpdateSQL extends SQL {
                     if (usernameIndexed[0].equals(friend.getUsername())) updatedFriendsList += "}";
                 }
 
+                // updating data in db
                 query = String.format("UPDATE users SET friends='%s' WHERE username='%s'", updatedFriendsList, user.getUsername());
                 updateDBWithQuery(query);
             }
 
+            // closing connection to db
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } // tested
+    }
 
     protected  static void removeFriend(User user, User friend) {
+        // undirected graphs hence two way connection
         removeFriendHelper(user, friend);
         removeFriendHelper(friend, user);
-    } // tested
+    }
 
     protected static void removeCompany(User user, Company company) {
         try {
+            // connecting to db
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
             String query = String.format("SELECT * FROM users WHERE username='%s'", user.getUsername());
@@ -634,6 +649,7 @@ class UpdateSQL extends SQL {
                 followers = Utils.parseString(followers);
                 String [] followersIndexed = Utils.indexList(followers);
 
+                // parsing string for db query
                 String newFollowersList = "{";
                 for (String followerFromList : followersIndexed) {
                     if (followerFromList.equals(user.getUsername())) continue;
@@ -646,17 +662,18 @@ class UpdateSQL extends SQL {
                 updateDBWithQuery(query);
             }
 
+            // close connection to db
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } // tested
+    }
 
     protected static void removeNetworkHelper(Company company, Company network) {
         try {
+            // connect to db and read data
             Connection connection = DriverManager.getConnection(secrets.getUrl(), secrets.getUsername(), secrets.getPassword());
             Statement statement = connection.createStatement();
-
             String query = String.format("SELECT * FROM companies WHERE name='%s'", company.getName());
             ResultSet result = statement.executeQuery(query);
 
@@ -665,6 +682,7 @@ class UpdateSQL extends SQL {
                 networksList = Utils.parseString(networksList);
                 String [] networksIndexed = Utils.indexList(networksList);
 
+                // parse string for db query
                 String newNetworksList = "{";
                 for (String networkFromList : networksIndexed) {
                     if (networkFromList.equals(network.getName())) continue;
@@ -676,19 +694,22 @@ class UpdateSQL extends SQL {
                 updateDBWithQuery(query);
             }
 
+            // close connection to db
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } // tested
+    }
 
     protected static void removeNetwork(Company company, Company network) {
+        // using undirected graphs hence two way connection
         removeNetworkHelper(company, network);
         removeNetworkHelper(network, company);
-    } // tested
+    }
 }
 
 class DeleteSQL extends SQL {
+    // made method resuable by taking generic obj as parameter
     protected static void deleteObjectFromDB(Object obj) {
         String query = "";
 
@@ -702,5 +723,5 @@ class DeleteSQL extends SQL {
         }
 
         UpdateSQL.updateDBWithQuery(query);
-    } // tested
+    }
 }
