@@ -119,6 +119,10 @@ class UserTest {
         // check if apinan can add an invalid user
         added = apinan.addFriend(angel, allUsers, false);
         assertFalse(added);
+
+        // adding yourself test
+        added = apinan.addFriend(apinan, allUsers, false);
+        assertFalse(added);
     }
 
     @Test
@@ -348,7 +352,26 @@ class UserTest {
 
     @Test
     void getCountOfMutualFriendsTest() {
+        LinkedList<User> allUsers = new LinkedList<>();
+        User apinan = Main.createNewUser("Apinan", "Yogaratnam", "apinanyogaratnam", allUsers, false);
+        User lilii = Main.createNewUser("Alligator", "kiwii", "lilii", allUsers, false);
+        User walter = Main.createNewUser("walter", "white", "heisenborg", allUsers, false);
+        User baljeet = Main.createNewUser("bal", "jeet", "baljeet", allUsers, false);
+        User yerrrr = Main.createNewUser("maple", "leafsfan", "yerrrr", allUsers, false);
 
+        apinan.addFriend(lilii, allUsers, false);
+        apinan.addFriend(walter, allUsers, false);
+        apinan.addFriend(baljeet, allUsers, false);
+        apinan.addFriend(yerrrr, allUsers, false);
+
+        walter.addFriend(lilii, allUsers, false);
+        walter.addFriend(walter, allUsers, false);
+        walter.addFriend(baljeet, allUsers, false);
+        walter.addFriend(yerrrr, allUsers, false);
+
+        // check apinan and walter's mutual friends
+        int count = apinan.getCountOfMutualFriends(walter, allUsers);
+        assertEquals(3, count);
     }
 
     @Test

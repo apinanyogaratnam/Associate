@@ -36,6 +36,7 @@ public class Company {
 
     public boolean addNetwork(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
         if (company == null) return false;
+        if (company == this) return false;
         if (!MainHelper.isValidCompany(company.name, allCompanies)) return false;
         if (hasNetwork(company)) return false;
 

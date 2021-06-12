@@ -48,6 +48,7 @@ public class User {
 
     public boolean addFriend(User friend, LinkedList<User> allUsers, boolean withSQL) {
         if (friend == null) return false;
+        if (friend == this) return false;
         if (!MainHelper.isValidUser(friend.username, allUsers)) return false;
         if (this.isFollowingUser(friend)) return false;
 
@@ -183,7 +184,7 @@ public class User {
         LinkedList<User> mutualFriends = new LinkedList<>();
 
         for (User friendOfUser : user.friendsList) {
-            if (this.isFollowingUser(friendOfUser)) mutualFriends.add(friendOfUser);
+            if (this.isFollowingUser(friendOfUser) && this != friendOfUser) mutualFriends.add(friendOfUser);
         }
 
         return mutualFriends;
