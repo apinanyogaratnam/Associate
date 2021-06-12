@@ -40,13 +40,14 @@ public class User {
 
     public boolean isFollowingUser(User possiblyFollowingFriend) {
         return this.friendsList.contains(possiblyFollowingFriend);
-    } // tested
+    }
 
     public boolean isFollowingCompany(Company possiblyFollowingCompany) {
-        return this.companiesList.indexOf(possiblyFollowingCompany) != -1;
-    } // tested
+        return this.companiesList.contains(possiblyFollowingCompany);
+    }
 
     public boolean addFriend(User friend, LinkedList<User> allUsers, boolean withSQL) {
+        // conditions to pass to add friend
         if (friend == null) return false;
         if (friend == this) return false;
         if (!MainHelper.isValidUser(friend.username, allUsers)) return false;
@@ -55,12 +56,14 @@ public class User {
         this.friendsList.add(friend);
         friend.friendsList.add(this);
 
+        // update db
         if (withSQL) UpdateSQL.addFriend(this, friend);
 
         return true;
-    } // tested
+    }
 
     public boolean addCompany(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
+        // conditions to pass to add company
         if (company == null) return false;
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
         if (this.isFollowingCompany(company)) return false;
@@ -68,32 +71,38 @@ public class User {
         boolean added = this.companiesList.add(company);
         company.addFollower(this, withSQL);
 
+        // update db
         if (withSQL) UpdateSQL.addCompany(this, company);
 
         return true;
-    } // tested
+    }
 
     public boolean updateFirstName(String newName, boolean withSQL) {
         if (newName == null) return false;
 
         newName = Utils.parseString(newName);
         this.firstName = newName;
+
+        // update db
         if (withSQL) UpdateSQL.updateFirstName(this, newName);
 
         return true;
-    } // tested
+    }
 
     public boolean updateLastName(String newName, boolean withSQL) {
         if (newName == null) return false;
 
         newName = Utils.parseString(newName);
         this.lastName = newName;
+
+        // update db
         if (withSQL) UpdateSQL.updateLastName(this, newName);
 
         return true;
-    } // tested
+    }
 
     public boolean updateUsername(String newName, LinkedList<User> allUsers, boolean withSQL) {
+        // conditions to pass to update username
         if (newName == null) return false;
         if (MainHelper.isValidUser(newName, allUsers)) {
             Print.print("Cannot update username since username already exists.");
@@ -101,35 +110,43 @@ public class User {
         }
 
         newName = Utils.parseString(newName);
+
+        // update db
         if (withSQL) UpdateSQL.updateUsername(this, newName);
+
+        // username updated after db update to not cause issues when comparing
+        // previous username
         this.username = newName;
 
         return true;
-    } // tested
+    }
 
     public void loadFriends(String listOfFriendsInStringFormat, LinkedList<User> allUsers) {
         listOfFriendsInStringFormat = Utils.parseString(listOfFriendsInStringFormat);
         String csv = Utils.removeStartEndChars(listOfFriendsInStringFormat);
 
+        // loading friends to user object if user is valid
         String [] strings = Utils.splitCommas(csv);
-        for (int i=0; i<strings.length; i++) {
-            User friend = MainHelper.getUser(strings[i], allUsers);
+        for (String s : strings) {
+            User friend = MainHelper.getUser(s, allUsers);
             addFriend(friend, allUsers, false);
         }
-    } // tested
+    }
 
     public void loadCompanies(String listOfCompaniesInStringFormat, LinkedList<Company> allCompanies) {
         listOfCompaniesInStringFormat = Utils.parseString(listOfCompaniesInStringFormat);
         String csv = Utils.removeStartEndChars(listOfCompaniesInStringFormat);
 
+        // loading companies to user object if company is valid
         String [] strings = Utils.splitCommas(csv);
-        for (int i=0; i<strings.length; i++) {
-            Company company = MainHelper.getCompany(strings[i], allCompanies);
+        for (String s : strings) {
+            Company company = MainHelper.getCompany(s, allCompanies);
             addCompany(company, allCompanies, false);
         }
-    } // tested
+    }
 
     public boolean removeFriend(User friend, LinkedList<User> allUsers, boolean withSQL) {
+        // conditions to pass to remove friend
         if (friend == null) return false;
         if (!MainHelper.isValidUser(friend.username, allUsers)) return false;
         if (!isFollowingUser(friend)) return false;
@@ -137,23 +154,27 @@ public class User {
         this.friendsList.remove(this.friendsList.indexOf(friend));
         friend.friendsList.remove(friend.friendsList.indexOf(this));
 
+        // update db
         if (withSQL) UpdateSQL.removeFriend(this, friend);
 
         return true;
-    } // tested
+    }
 
     public boolean removeCompany(Company company, LinkedList<Company> allCompanies, boolean withSQL) {
+        // conditions to pass to remove company
         if (company == null) return false;
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
         if (!isFollowingCompany(company)) return false;
 
+        // removing edges between user and company
         this.companiesList.remove(this.companiesList.indexOf(company));
         company.getFollowersList().remove(company.getFollowersList().indexOf(this));
 
+        // update db
         if (withSQL) UpdateSQL.removeCompany(this, company);
 
         return true;
-    } // tested
+    }
 
     public boolean deleteUser(LinkedList<User> allUsers, LinkedList<Company> allCompanies, boolean withSQL) {
         if (!allUsers.contains(this)) return false;
@@ -174,7 +195,7 @@ public class User {
         if (withSQL) DeleteSQL.deleteObjectFromDB(this);
 
         return true;
-    } // tested
+    }
 
     public int getCountOfMutualFriends(User user, LinkedList<User> allUsers) {
         return getListOfMutualFriends(user, allUsers).size();
@@ -191,19 +212,30 @@ public class User {
     }
 
     public int getDegree(User a, User b, LinkedList<User> allUsers) {
+        // if a is already following b, return 1
         if (a.isFollowingUser(b)) return 1;
+
+        // marking node as visited
         a.visited = true;
         int degree = 0;
         int temp = 0;
 
+        // looping through a's friends list
         for (User friend : this.friendsList) {
+            // skip if user already visited
             if (friend.visited) continue;
+
+            // recursive call with friend of a's friend list
             temp = 1 + getDegree(friend, b, allUsers);
 
+            // updating degree of connection
             if (degree == 0 || (temp > 0 && temp < degree)) degree = temp;
         }
 
+        // marking node as false for next use
         a.visited = false;
+
+        // no relation between user a and user b
         if (degree == 0) return -1;
 
         return degree;
@@ -226,12 +258,15 @@ public class User {
         User obj1 = listOfObjects.get(i);
         User obj2 = listOfObjects.get(j);
 
+        // swapping obj 1 with obj 2's place and vice versa
         listOfObjects.set(i, obj2);
         listOfObjects.set(j, obj1);
     }
 
     public LinkedList<User> suggestUsers(LinkedList<User> allUsers) {
         LinkedList<User> suggestedUsers = getListOfPossiblyNewFriends(allUsers);
+
+        // using insertion sort to sort suggested users from highest degree to least degree of connectives
         for (int i=1; i<suggestedUsers.size(); i++) {
             User currentUser = suggestedUsers.get(i);
             int j = i;
@@ -263,7 +298,9 @@ public class User {
         LinkedList<Company> listOfPossiblyNewCompanies = getListOfPossiblyNewCompanies(allCompanies);
         LinkedList<Company> suggestedCompanies = new LinkedList<>();
 
+        // loop through companies list
         for (Company company : this.companiesList) {
+            // loop through network of friends list and append companies not already in suggested companies
             for (Company network : company.getNetworksList()) {
                 if (listOfPossiblyNewCompanies.contains(network) && !suggestedCompanies.contains(network)) {
                     suggestedCompanies.add(network);
@@ -271,6 +308,7 @@ public class User {
             }
         }
 
+        // appending the rest of the companies without connections to user
         for (Company company : listOfPossiblyNewCompanies) {
             if (!suggestedCompanies.contains(company)) {
                 suggestedCompanies.add(company);
