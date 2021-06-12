@@ -16,7 +16,6 @@ Notes:
 - company identified with company name
 
 TODO:
-- make sql super class abstract
 - make main class interactive
 
 SQL ready: (COMPLETED) <br />

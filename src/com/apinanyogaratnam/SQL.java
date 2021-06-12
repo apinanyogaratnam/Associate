@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 abstract class SQL {
     protected static final Secrets secrets = new Secrets();
+    protected final String wrapper = "{}";
 }
 
 class CreateSQL extends SQL {
@@ -178,16 +179,18 @@ class CreateSQL extends SQL {
 }
 
 class UpdateSQL extends SQL {
+    private static Object wrapper;
+
     protected static void addObjectToDB(Object obj) {
         String query;
 
         // set desired query and error message for adding object to db
         if (obj instanceof User) {
             query = String.format("INSERT INTO users (first_name, last_name, username, friends, companies) VALUES " +
-                    "('%s', '%s', '%s', '%s', '%s')", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), "{}", "{}");
+                    "('%s', '%s', '%s', '%s', '%s')", ((User) obj).getFirstName(), ((User) obj).getLastName(), ((User) obj).getUsername(), wrapper, wrapper);
         } else if (obj instanceof Company) {
             query = String.format("INSERT INTO companies (name, network_list, followers_list) VALUES " +
-                    "('%s', '%s', '%s');", ((Company) obj).getName(), "{}", "{}");
+                    "('%s', '%s', '%s');", ((Company) obj).getName(), wrapper, wrapper);
         } else {
             Print.print("Object type not supported to add to db.");
             return;
@@ -230,7 +233,7 @@ class UpdateSQL extends SQL {
         if (MainHelper.nameInList(friend.getUsername(), temp)) return;
 
         String friends = listOfFriendsInStringFormat;
-        boolean isEmpty = friends.equals("{}");
+        boolean isEmpty = friends.equals(wrapper);
 
         // format string
         friends = Utils.removeEndChar(friends);
@@ -279,7 +282,7 @@ class UpdateSQL extends SQL {
         if (MainHelper.nameInList(company.getName(), temp)) return;
 
         String companies = listOfCompaniesInStringFormat;
-        boolean isEmpty = companies.equals("{}");
+        boolean isEmpty = companies.equals(wrapper);
         // format string
         companies = Utils.removeEndChar(companies);
         companies = isEmpty ? companies + company.getName() + "}" : companies + "," + company.getName() + "}";
@@ -322,7 +325,7 @@ class UpdateSQL extends SQL {
         if (MainHelper.nameInList(network.getName(), temp)) return;
 
         String networks = listOfNetworksInStringFormat;
-        boolean isEmpty = networks.equals("{}");
+        boolean isEmpty = networks.equals(wrapper);
 
         // format string
         networks = Utils.removeEndChar(networks);
@@ -372,7 +375,7 @@ class UpdateSQL extends SQL {
         if (MainHelper.nameInList(company.getName(), temp)) return;
 
         String followers = listOfFollowersInStringFormat;
-        boolean isEmpty = followers.equals("{}");
+        boolean isEmpty = followers.equals(wrapper);
 
         // format string
         followers = Utils.removeEndChar(followers);
@@ -655,7 +658,7 @@ class UpdateSQL extends SQL {
                     newCompaniesList += companyFromList + ",";
                 }
 
-                if (newCompaniesList.length() == 1) newCompaniesList = "{}";
+                if (newCompaniesList.length() == 1) newCompaniesList = (String)wrapper;
                 else newCompaniesList = Utils.removeEndChar(newCompaniesList) + "}";
 
                 query = String.format("UPDATE users SET companies='%s' WHERE username='%s'", newCompaniesList, user.getUsername());
@@ -677,7 +680,7 @@ class UpdateSQL extends SQL {
                     if (followerFromList.equals(user.getUsername())) continue;
                     newFollowersList += followerFromList + ",";
                 }
-                if (newFollowersList.length() == 1) newFollowersList = "{}";
+                if (newFollowersList.length() == 1) newFollowersList = (String)wrapper;
                 else newFollowersList = Utils.removeEndChar(newFollowersList) + "}";
 
                 query = String.format("UPDATE companies SET followers_list='%s' WHERE name='%s'", newFollowersList, company.getName());
@@ -711,7 +714,7 @@ class UpdateSQL extends SQL {
 
                     newNetworksList += networkFromList + ",";
                 }
-                if (newNetworksList.length() == 1) newNetworksList = "{}";
+                if (newNetworksList.length() == 1) newNetworksList = (String)wrapper;
                 query = String.format("UPDATE companies SET network_list='%s' WHERE name='%s'", newNetworksList, company.getName());
                 updateDBWithQuery(query);
             }
