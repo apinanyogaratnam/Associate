@@ -16,7 +16,7 @@ Notes:
 - company identified with company name
 
 TODO:
-- place test methods into separate files
+- place test methods into separate files (another package)
   Company
 - add comments to all code
 - make getDegree in another way
@@ -25,7 +25,7 @@ TODO:
 - make sql super class abstract
 - make main class interactive
 
-SQL ready: (COMPLETED)<br />
+SQL ready: (COMPLETED) <br />
 
     CREATE: <br />
         - user: create new user - tested <br />
