@@ -12,28 +12,29 @@ public class Main {
         // load data from db to current data structures
         CreateSQL.loadDB(allUsers, allCompanies);
 
-        boolean repeat = false;
+        boolean repeat;
         do {
             // interactive
-            String beginningMenu = "Menu: \n" +
-                    "1. create new user\n" +
-                    "2. create new company\n" +
-                    "3. Add friend\n" +
-                    "4. Remove friend\n" +
-                    "5. Follow company\n" +
-                    "6. Remove company\n" +
-                    "7. Print friends\n" +
-                    "8. Print following companies\n" +
-                    "9. Update first name\n" +
-                    "10. Update last name\n" +
-                    "11. Update username\n" +
-                    "12. Add network\n" +
-                    "13. Remove network\n" +
-                    "14. Print networks\n" +
-                    "15. Print followers\n" +
-                    "16. Update company name\n" +
-                    "17. Exit\n" +
-                    "18. Enter a choice (integer): ";
+            String beginningMenu = """
+                    Menu:\s
+                    1. create new user
+                    2. create new company
+                    3. Add friend
+                    4. Remove friend
+                    5. Follow company
+                    6. Remove company
+                    7. Print friends
+                    8. Print following companies
+                    9. Update first name
+                    10. Update last name
+                    11. Update username
+                    12. Add network
+                    13. Remove network
+                    14. Print networks
+                    15. Print followers
+                    16. Update company name
+                    17. Exit
+                    18. Enter a choice (integer):\s""";
             Print.printSameLine(beginningMenu);
             int option = reader.nextInt();
 
@@ -73,16 +74,36 @@ public class Main {
                         Company newCompany = createNewCompany(name, allCompanies, true);
                         if (newCompany == null) repeatName = true;
                     } while (repeatName);
+
                     Print.print("Company " + name + " was created successfully.");
 
                     repeat = true;
                     break;
                 case 3:
+                    Print.printSameLine("Enter the first user's username: ");
+                    String user1 = reader.nextLine();
+                    Print.printSameLine("Enter the second user's username: ");
+                    String user2 = reader.nextLine();
+
+                    User u1 = MainHelper.getUser(user1, allUsers);
+                    User u2 = MainHelper.getUser(user2, allUsers);
+
+                    // if u1 or u2 is null repeat
+                    u1.addFriend(u2, allUsers, true);
+                    Print.print(user1 + " and " + user2 + " are now friends.");
+
                     repeat = true;
                     break;
-                case 17:
-                    repeat = false;
-                    break;
+//                case 4:
+//                    Print.printSameLine("Enter the first user's username: ");
+//                    String user3 = reader.nextLine();
+//                    Print.printSameLine("Enter the second user's username: ");
+//                    String user4 = reader.nextLine();
+//                    repeat = false;
+//                    break;
+//                case 17:
+//                    repeat = false;
+//                    break;
                 default:
                     Print.print("Invalid option.");
                     repeat = true;
