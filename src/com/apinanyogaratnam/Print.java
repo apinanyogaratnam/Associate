@@ -41,4 +41,8 @@ public class Print {
             // object doesnt exist here
         }
     }
+
+    public static void printSameLine(String string) {
+        System.out.print(string);
+    }
 }
