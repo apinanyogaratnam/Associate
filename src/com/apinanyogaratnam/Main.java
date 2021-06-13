@@ -33,8 +33,9 @@ public class Main {
                     14. Print networks
                     15. Print followers
                     16. Update company name
-                    17. Exit
-                    18. Enter a choice (integer):\s""";
+                    17. Print everything in db
+                    18. Exit
+                    19. Enter a choice (integer):\s""";
             Print.printSameLine(beginningMenu);
             int option = reader.nextInt();
             reader.nextLine();
@@ -107,7 +108,7 @@ public class Main {
 //                    String user4 = reader.nextLine();
 //                    repeat = false;
 //                    break;
-//                case 17:
+//                case 18:
 //                    repeat = false;
 //                    break;
                 default:
