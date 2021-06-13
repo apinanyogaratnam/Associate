@@ -43,6 +43,7 @@ public class Main {
                     // get user's information
                     Print.printSameLine("Enter firstname: ");
                     String firstname = reader.nextLine();
+                    reader.nextLine();
                     Print.printSameLine("Enter lastname: ");
                     String lastname = reader.nextLine();
 
