@@ -44,24 +44,35 @@ public class Main {
                     String firstname = reader.nextLine();
                     Print.printSameLine("Enter lastname: ");
                     String lastname = reader.nextLine();
-                    Print.printSameLine("Enter username: ");
-                    String username = reader.nextLine();
 
-                    // add error check for already existing username
-                    User newUser = createNewUser(firstname, lastname, username, allUsers, true);
-                    // if (newUser == null) repeat getting username for user
+                    String username;
+                    boolean repeatUsername = false;
+                    do {
+                        Print.printSameLine("Enter username: ");
+                        username = reader.nextLine();
+
+                        // add error check for already existing username
+                        User newUser = createNewUser(firstname, lastname, username, allUsers, true);
+                        Print.print("Username already exists, please choose another username.");
+                        if (newUser == null) repeatUsername = true;
+                    } while (repeatUsername);
+
                     Print.print("User " + username + " was created successfully.");
 
                     repeat = true;
                     break;
                 case 2:
-                    // get company's information
-                    Print.printSameLine("Enter company name: ");
-                    String name = reader.nextLine();
+                    String name;
+                    boolean repeatName = false;
+                    do {
+                        // get company's information
+                        Print.printSameLine("Enter company name: ");
+                        name = reader.nextLine();
 
-                    // add error check for already existing company
-                    Company newCompany = createNewCompany(name, allCompanies, true);
-                    // if (newUser == null) repeat getting name for company
+                        // add error check for already existing company
+                        Company newCompany = createNewCompany(name, allCompanies, true);
+                        if (newCompany == null) repeatName = true;
+                    } while (repeatName);
                     Print.print("Company " + name + " was created successfully.");
 
                     repeat = true;
