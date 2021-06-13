@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 abstract class SQL {
     protected static final Secrets secrets = new Secrets();
-    protected final String wrapper = "{}";
+    public static String wrapper = "{}";
 }
 
 class CreateSQL extends SQL {
@@ -179,8 +179,6 @@ class CreateSQL extends SQL {
 }
 
 class UpdateSQL extends SQL {
-    private static Object wrapper;
-
     protected static void addObjectToDB(Object obj) {
         String query;
 

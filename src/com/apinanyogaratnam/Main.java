@@ -37,13 +37,13 @@ public class Main {
                     18. Enter a choice (integer):\s""";
             Print.printSameLine(beginningMenu);
             int option = reader.nextInt();
+            reader.nextLine();
 
             switch (option) {
                 case 1:
                     // get user's information
                     Print.printSameLine("Enter firstname: ");
                     String firstname = reader.nextLine();
-                    reader.nextLine();
                     Print.printSameLine("Enter lastname: ");
                     String lastname = reader.nextLine();
 
@@ -73,7 +73,12 @@ public class Main {
 
                         // add error check for already existing company
                         Company newCompany = createNewCompany(name, allCompanies, true);
-                        if (newCompany == null) repeatName = true;
+                        if (newCompany == null) {
+                            Print.print("Company name already exists.");
+                            repeatName = true;
+                        } else {
+                            repeat = false;
+                        }
                     } while (repeatName);
 
                     Print.print("Company " + name + " was created successfully.");
