@@ -11,6 +11,11 @@ Concepts and tools used:
 - object-oriented programming
 - Unit testing
 
+TODO:
+- error checking interactive
+- release v1.0
+- add new menu options
+
 Notes:
 - users identified with username
 - company identified with company name
