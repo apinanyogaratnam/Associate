@@ -49,7 +49,7 @@ public class Main {
                     String lastname = reader.nextLine();
 
                     String username;
-                    boolean repeatUsername = false;
+                    boolean repeatUsername;
                     do {
                         Print.printSameLine("Enter username: ");
                         username = reader.nextLine();
@@ -58,7 +58,7 @@ public class Main {
                         User newUser = createNewUser(firstname, lastname, username, allUsers, true);
 
                         if (newUser == null) {
-                            Print.print("Username already exists, please choose another username.");repeatUsername = true;
+                            Print.print("Username already exists, please choose another username.");
                             repeatUsername = true;
                         }
                         else repeatUsername = false;
@@ -70,7 +70,7 @@ public class Main {
                     break;
                 case 2:
                     String name;
-                    boolean repeatName = false;
+                    boolean repeatName;
                     do {
                         // get company's information
                         Print.printSameLine("Enter company name: ");
@@ -82,7 +82,7 @@ public class Main {
                         if (newCompany == null) {
                             Print.print("Company name already exists.");
                             repeatName = true;
-                        } else repeat = false;
+                        } else repeatName = false;
                     } while (repeatName);
 
                     Print.print("Company " + name + " was created successfully.");
@@ -90,186 +90,250 @@ public class Main {
                     repeat = true;
                     break;
                 case 3:
-                    Print.printSameLine("Enter the first user's username: ");
-                    String user1 = reader.nextLine();
-                    Print.printSameLine("Enter the second user's username: ");
-                    String user2 = reader.nextLine();
+                    String user1, user2;
+                    User u1, u2;
+                    do {
+                        Print.printSameLine("Enter the first user's username: ");
+                        user1 = reader.nextLine();
+                        Print.printSameLine("Enter the second user's username: ");
+                        user2 = reader.nextLine();
 
-                    User u1 = MainHelper.getUser(user1, allUsers);
-                    User u2 = MainHelper.getUser(user2, allUsers);
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        u2 = MainHelper.getUser(user2, allUsers);
+                        if (u1 == null || u2 == null) Print.print("first or second user's username doesn't exist.");
+                    } while (u1 == null || u2 == null);
 
-                    // if u1 or u2 is null repeat
                     u1.addFriend(u2, allUsers, true);
                     Print.print(user1 + " and " + user2 + " are now friends.");
 
                     repeat = true;
                     break;
                 case 4:
-                    Print.printSameLine("Enter the first user's username: ");
-                    user1 = reader.nextLine();
-                    Print.printSameLine("Enter the second user's username: ");
-                    user2 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter the first user's username: ");
+                        user1 = reader.nextLine();
+                        Print.printSameLine("Enter the second user's username: ");
+                        user2 = reader.nextLine();
 
-                    u1 = MainHelper.getUser(user1, allUsers);
-                    u2 = MainHelper.getUser(user2, allUsers);
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        u2 = MainHelper.getUser(user2, allUsers);
+                        if (u1 == null || u2 == null) Print.print("first or second user's username doesn't exist.");
+                    } while (u1 == null || u2 == null);
 
-                    // if u1 or u2 is null repeat
                     u1.removeFriend(u2, allUsers, true);
                     Print.print(user1 + " and " + user2 + " friendship removed.");
 
                     repeat = true;
                     break;
                 case 5:
-                    Print.printSameLine("Enter user's username: ");
-                    user1 = reader.nextLine();
-                    Print.printSameLine("Enter company's name: ");
-                    String company1 = reader.nextLine();
+                    String company1;
+                    Company c1;
+                    do {
+                        Print.printSameLine("Enter user's username: ");
+                        user1 = reader.nextLine();
+                        Print.printSameLine("Enter company's name: ");
+                        company1 = reader.nextLine();
 
-                    u1 = MainHelper.getUser(company1, allUsers);
-                    Company c1 = MainHelper.getCompany(company1, allCompanies);
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        c1 = MainHelper.getCompany(company1, allCompanies);
+                        if (u1 == null || c1 == null) Print.print("user or company doesn't exist.");
+                    } while (u1 == null || c1 == null);
 
-                    // if u1 or company is null repeat
                     u1.addCompany(c1, allCompanies, true);
+                    Print.print("company added successfully.");
 
                     repeat = true;
                     break;
                 case 6:
-                    Print.printSameLine("Enter user's username: ");
-                    user1 = reader.nextLine();
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter user's username: ");
+                        user1 = reader.nextLine();
+                        Print.printSameLine("Enter company's name: ");
+                        company1 = reader.nextLine();
 
-                    u1 = MainHelper.getUser(company1, allUsers);
-                    c1 = MainHelper.getCompany(company1, allCompanies);
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        c1 = MainHelper.getCompany(company1, allCompanies);
+                        if (u1 == null || c1 == null) Print.print("user or company doesn't exist.");
+                    } while (u1 == null || c1 == null);
 
-                    // if u1 or company is null repeat
                     u1.removeCompany(c1, allCompanies, true);
+
+                    Print.print("company removed successfully.");
 
                     repeat = true;
                     break;
                 case 7:
-                    Print.printSameLine("Enter user's username: ");
-                    user1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter user's username: ");
+                        user1 = reader.nextLine();
 
-                    u1 = MainHelper.getUser(user1, allUsers);
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        if (u1 == null) Print.print("user doesn't exist.");
+                    } while(u1 == null);
 
-                    // if u1 is null repeat
                     Print.print(u1.getFriendsList());
 
                     repeat = true;
                     break;
                 case 8:
-                    Print.printSameLine("Enter user's username");
-                    user1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter user's username");
+                        user1 = reader.nextLine();
 
-                    u1 = MainHelper.getUser(user1, allUsers);
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        if (u1 == null) Print.print("user doesn't exist.");
+                    } while (u1 == null);
 
-                    // if u1 is null repeat
                     Print.print(u1.getCompaniesList());
 
                     repeat = true;
                     break;
                 case 9:
-                    Print.printSameLine("Enter user's name: ");
-                    user1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter user's name: ");
+                        user1 = reader.nextLine();
 
-                    // if user is null repeat
-                    Print.printSameLine("Enter user's new firstname: ");
-                    user2 = reader.nextLine();
+                        Print.printSameLine("Enter user's new firstname: ");
+                        user2 = reader.nextLine();
 
-                    u1 = MainHelper.getUser(user1, allUsers);
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        if (u1 == null) Print.print("user doesn't exist.");
+                    } while (u1 == null);
+
                     u1.updateFirstName(user2, true);
+
+                    Print.print("first name updated successfully.");
 
                     repeat = true;
                     break;
                 case 10:
-                    Print.printSameLine("Enter user's name: ");
-                    user1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter user's name: ");
+                        user1 = reader.nextLine();
 
-                    // if user is null repeat
-                    Print.printSameLine("Enter user's new lastname: ");
-                    user2 = reader.nextLine();
+                        Print.printSameLine("Enter user's new lastname: ");
+                        user2 = reader.nextLine();
 
-                    u1 = MainHelper.getUser(user1, allUsers);
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        if (u1 == null) Print.print("user doesn't exist.");
+                    } while (u1 == null);
+
                     u1.updateLastName(user2, true);
+                    Print.print("last name updated successfully.");
 
                     repeat = true;
                     break;
                 case 11:
-                    Print.printSameLine("Enter user's name: ");
-                    user1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter user's name: ");
+                        user1 = reader.nextLine();
 
-                    // if user is null repeat
-                    Print.printSameLine("Enter user's new username: ");
-                    user2 = reader.nextLine();
+                        // if user is null repeat
+                        Print.printSameLine("Enter user's new username: ");
+                        user2 = reader.nextLine();
 
-                    u1 = MainHelper.getUser(user1, allUsers);
-                    boolean updated = u1.updateUsername(user2, allUsers, true);
-                    // if !updated repeat
+                        u1 = MainHelper.getUser(user1, allUsers);
+                        if (u1 == null) Print.print("user doesn't exist.");
+                        else {
+                            u2 = MainHelper.getUser(user2, allUsers);
+                            if (u2 == null) {
+                                Print.print("username already exists.");
+                                u1 = null;
+                            }
+                        }
+                    } while (u1 == null);
+
+                    u1.updateUsername(user2, allUsers, true);
+                    Print.print("username updated successfully.");
 
                     repeat = true;
                     break;
                 case 12:
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
-                    Print.printSameLine("Enter network's name: ");
-                    String company2 = reader.nextLine();
+                    Company c2;
+                    do {
+                        Print.printSameLine("Enter company's name: ");
+                        company1 = reader.nextLine();
+                        Print.printSameLine("Enter network's name: ");
+                        String company2 = reader.nextLine();
 
-                    c1 = MainHelper.getCompany(company1, allCompanies);
-                    Company c2 = MainHelper.getCompany(company2, allCompanies);
+                        c1 = MainHelper.getCompany(company1, allCompanies);
+                        c2 = MainHelper.getCompany(company2, allCompanies);
+                        if (c1 == null || c2 == null) Print.print("company or network doesn't exist.");
+                    } while (c1 == null || c2 == null);
 
-                    // if c1 or c2 is null repeat
                     c1.addNetwork(c2, allCompanies, true);
+
+                    Print.print("network added successfully.");
 
                     repeat = true;
                     break;
                 case 13:
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
-                    Print.printSameLine("Enter network's name: ");
-                    company2 = reader.nextLine();
+                    String company2;
+                    do {
+                        Print.printSameLine("Enter company's name: ");
+                        company1 = reader.nextLine();
+                        Print.printSameLine("Enter network's name: ");
+                        company2 = reader.nextLine();
 
-                    c1 = MainHelper.getCompany(company1, allCompanies);
-                    c2 = MainHelper.getCompany(company2, allCompanies);
+                        c1 = MainHelper.getCompany(company1, allCompanies);
+                        c2 = MainHelper.getCompany(company2, allCompanies);
+                        if (c1 == null || c2 == null) Print.print("company or network doesn't exist.");
+                    } while (c1 == null || c2 == null);
 
-                    // if c1 or c2 is null repeat
                     c1.removeNetwork(c2, allCompanies, true);
+
+                    Print.print("network removed successfully.");
 
                     repeat = true;
                     break;
                 case 14:
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter company's name: ");
+                        company1 = reader.nextLine();
 
-                    // if company1 is null repeat
-                    c1 = MainHelper.getCompany(company1, allCompanies);
+                        // if company1 is null repeat
+                        c1 = MainHelper.getCompany(company1, allCompanies);
+                        if (c1 == null) Print.print("company doesn't exist.");
+                    } while (c1 == null);
 
                     Print.print(c1.getNetworksList());
 
                     repeat = true;
                     break;
                 case 15:
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter company's name: ");
+                        company1 = reader.nextLine();
 
-                    // if company1 is null repeat
-                    c1 = MainHelper.getCompany(company1, allCompanies);
+                        // if company1 is null repeat
+                        c1 = MainHelper.getCompany(company1, allCompanies);
+                        if (c1 == null) Print.print("company doesn't exist.");
+                    } while (c1 == null);
 
                     Print.print(c1.getFollowersList());
 
                     repeat = true;
                     break;
                 case 16:
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
+                    do {
+                        Print.printSameLine("Enter company's name: ");
+                        company1 = reader.nextLine();
 
-                    // if company is null repeat
-                    Print.printSameLine("Enter company's new name: ");
-                    company2 = reader.nextLine();
+                        // if company is null repeat
+                        Print.printSameLine("Enter company's new name: ");
+                        company2 = reader.nextLine();
 
-                    c1 = MainHelper.getCompany(company1, allCompanies);
-                    updated = c1.updateName(company2, allCompanies, true);
-                    // if !updated repeat
+                        c1 = MainHelper.getCompany(company1, allCompanies);
+                        if (c1 == null) {
+                            Print.print("company doesn't exist.");
+                        } else if (MainHelper.getCompany(company2, allCompanies) == null) {
+                            Print.print("company already exists.");
+                            c1 = null;
+                        }
+                    } while (c1 == null);
+                    c1.updateName(company2, allCompanies, true);
+
+                    Print.print("company's name updated successfully.");
 
                     repeat = true;
                     break;
