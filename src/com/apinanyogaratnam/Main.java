@@ -35,7 +35,7 @@ public class Main {
                     16. Update company name
                     17. Print everything in db
                     18. Exit
-                    19. Enter a choice (integer):\s""";
+                    Enter a choice (integer):\s""";
             Print.printSameLine(beginningMenu);
             int option = reader.nextInt();
             reader.nextLine();
@@ -220,6 +220,29 @@ public class Main {
 
                     // if c1 or c2 is null return
                     c1.addNetwork(c2, allCompanies, true);
+
+                    repeat = true;
+                    break;
+                case 13:
+
+                    repeat = true;
+                    break;
+                case 14:
+
+                    repeat = true;
+                    break;
+                case 15:
+
+                    repeat = true;
+                    break;
+                case 16:
+
+                    repeat = true;
+                    break;
+                case 17:
+
+                    repeat = true;
+                    break;
                 case 18:
                     repeat = false;
                     break;
