@@ -137,7 +137,7 @@ public class Company {
         return true;
     }
 
-    private LinkedList<Company> getListOfMutualNetworks(Company company, LinkedList<Company> allCompanies) {
+    private LinkedList<Company> getListOfMutualNetworks(Company company) {
         LinkedList<Company> listOfMutualNetworks = new LinkedList<>();
 
         // comparing and appending mutual networks
@@ -149,7 +149,7 @@ public class Company {
     }
 
     private int getCountOfMutualNetworks(Company company, LinkedList<Company> allCompanies) {
-        return getListOfMutualNetworks(company, allCompanies).size();
+        return getListOfMutualNetworks(company).size();
     }
 
     private LinkedList<Company> getListOfPossiblyNewNetwork(LinkedList<Company> allCompanies) {

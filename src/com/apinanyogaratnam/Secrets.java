@@ -6,20 +6,16 @@ public class Secrets {
     private final String usernameMySQL = "sql5416936";
     private final String passwordMySQL = "6RPSZwqWzY";
 
-    // postgres local db login info
-    private final String urlPostgres = "jdbc:postgresql://localhost/test";
-    private final String usernamePostgres = "apinan";
-    private final String passwordPostgres = "admin";
-
     public String getUrl() {
-        return this.urlPostgres;
+        // postgres local db login info
+        return "jdbc:postgresql://localhost/test";
     }
 
     public String getUsername() {
-        return this.usernamePostgres;
+        return "apinan";
     }
 
     public String getPassword() {
-        return this.passwordPostgres;
+        return  "admin";
     }
 }

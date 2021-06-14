@@ -38,7 +38,7 @@ public class Print {
             // company object
             else if (obj instanceof Company) print("Company name: " + ((Company) obj).getName());
 
-            // object doesnt exist here
+            // object doesn't exist here
         }
     }
 

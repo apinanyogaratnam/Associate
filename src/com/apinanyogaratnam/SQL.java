@@ -656,7 +656,7 @@ class UpdateSQL extends SQL {
                     newCompaniesList += companyFromList + ",";
                 }
 
-                if (newCompaniesList.length() == 1) newCompaniesList = (String)wrapper;
+                if (newCompaniesList.length() == 1) newCompaniesList = wrapper;
                 else newCompaniesList = Utils.removeEndChar(newCompaniesList) + "}";
 
                 query = String.format("UPDATE users SET companies='%s' WHERE username='%s'", newCompaniesList, user.getUsername());
@@ -678,7 +678,7 @@ class UpdateSQL extends SQL {
                     if (followerFromList.equals(user.getUsername())) continue;
                     newFollowersList += followerFromList + ",";
                 }
-                if (newFollowersList.length() == 1) newFollowersList = (String)wrapper;
+                if (newFollowersList.length() == 1) newFollowersList = wrapper;
                 else newFollowersList = Utils.removeEndChar(newFollowersList) + "}";
 
                 query = String.format("UPDATE companies SET followers_list='%s' WHERE name='%s'", newFollowersList, company.getName());
@@ -712,7 +712,7 @@ class UpdateSQL extends SQL {
 
                     newNetworksList += networkFromList + ",";
                 }
-                if (newNetworksList.length() == 1) newNetworksList = (String)wrapper;
+                if (newNetworksList.length() == 1) newNetworksList = wrapper;
                 query = String.format("UPDATE companies SET network_list='%s' WHERE name='%s'", newNetworksList, company.getName());
                 updateDBWithQuery(query);
             }

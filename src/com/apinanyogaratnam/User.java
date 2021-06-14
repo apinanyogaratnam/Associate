@@ -68,7 +68,7 @@ public class User {
         if (!MainHelper.isValidCompany(company.getName(), allCompanies)) return false;
         if (this.isFollowingCompany(company)) return false;
 
-        boolean added = this.companiesList.add(company);
+        this.companiesList.add(company);
         company.addFollower(this, withSQL);
 
         // update db
@@ -151,8 +151,8 @@ public class User {
         if (!MainHelper.isValidUser(friend.username, allUsers)) return false;
         if (!isFollowingUser(friend)) return false;
 
-        this.friendsList.remove(this.friendsList.indexOf(friend));
-        friend.friendsList.remove(friend.friendsList.indexOf(this));
+        this.friendsList.remove(friend);
+        friend.friendsList.remove(this);
 
         // update db
         if (withSQL) UpdateSQL.removeFriend(this, friend);
@@ -167,8 +167,8 @@ public class User {
         if (!isFollowingCompany(company)) return false;
 
         // removing edges between user and company
-        this.companiesList.remove(this.companiesList.indexOf(company));
-        company.getFollowersList().remove(company.getFollowersList().indexOf(this));
+        this.companiesList.remove(company);
+        company.getFollowersList().remove(this);
 
         // update db
         if (withSQL) UpdateSQL.removeCompany(this, company);
@@ -190,18 +190,18 @@ public class User {
         }
 
         // remove from allUsers
-        allUsers.remove(allUsers.indexOf(this));
+        allUsers.remove(this);
 
         if (withSQL) DeleteSQL.deleteObjectFromDB(this);
 
         return true;
     }
 
-    public int getCountOfMutualFriends(User user, LinkedList<User> allUsers) {
-        return getListOfMutualFriends(user, allUsers).size();
+    public int getCountOfMutualFriends(User user) {
+        return getListOfMutualFriends(user).size();
     }
 
-    public LinkedList<User> getListOfMutualFriends(User user, LinkedList<User> allUsers) {
+    public LinkedList<User> getListOfMutualFriends(User user) {
         LinkedList<User> mutualFriends = new LinkedList<>();
 
         for (User friendOfUser : user.friendsList) {
@@ -211,14 +211,14 @@ public class User {
         return mutualFriends;
     }
 
-    public int getDegree(User a, User b, LinkedList<User> allUsers) {
+    public int getDegree(User a, User b) {
         // if a is already following b, return 1
         if (a.isFollowingUser(b)) return 1;
 
         // marking node as visited
         a.visited = true;
         int degree = 0;
-        int temp = 0;
+        int temp;
 
         // looping through a's friends list
         for (User friend : this.friendsList) {
@@ -226,7 +226,7 @@ public class User {
             if (friend.visited) continue;
 
             // recursive call with friend of a's friend list
-            temp = 1 + getDegree(friend, b, allUsers);
+            temp = 1 + getDegree(friend, b);
 
             // updating degree of connection
             if (degree == 0 || (temp > 0 && temp < degree)) degree = temp;
@@ -271,8 +271,8 @@ public class User {
             User currentUser = suggestedUsers.get(i);
             int j = i;
 
-            int numberOfMutualFriends = this.getCountOfMutualFriends(currentUser, allUsers);
-            while (j > 0 && numberOfMutualFriends > this.getCountOfMutualFriends(suggestedUsers.get(j-1), allUsers)) {
+            int numberOfMutualFriends = this.getCountOfMutualFriends(currentUser);
+            while (j > 0 && numberOfMutualFriends > this.getCountOfMutualFriends(suggestedUsers.get(j-1))) {
                 swap(suggestedUsers, j, j-1);
                 j--;
             }

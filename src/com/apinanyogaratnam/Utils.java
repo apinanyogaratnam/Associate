@@ -1,7 +1,5 @@
 package com.apinanyogaratnam;
 
-import java.util.Locale;
-
 public class Utils {
     public static String removeStartEndChars(String string) {
         // try removing start and end chars

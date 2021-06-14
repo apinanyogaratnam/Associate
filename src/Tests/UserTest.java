@@ -6,7 +6,6 @@ import com.apinanyogaratnam.MainHelper;
 import com.apinanyogaratnam.User;
 import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -376,7 +375,7 @@ class  UserTest {
         walter.addFriend(yerrrr, allUsers, false);
 
         // check apinan and walter's mutual friends
-        int count = apinan.getCountOfMutualFriends(walter, allUsers);
+        int count = apinan.getCountOfMutualFriends(walter);
         assertEquals(3, count);
     }
 
@@ -400,7 +399,7 @@ class  UserTest {
         walter.addFriend(yerrrr, allUsers, false);
 
         // check apinan and walter's mutual friends
-        LinkedList<User> mutualFriends = apinan.getListOfMutualFriends(walter, allUsers);
+        LinkedList<User> mutualFriends = apinan.getListOfMutualFriends(walter);
         assertTrue(mutualFriends.contains(lilii));
         assertTrue(mutualFriends.contains(baljeet));
         assertTrue(mutualFriends.contains(yerrrr));
@@ -428,7 +427,7 @@ class  UserTest {
         walter.addFriend(yerrrr, allUsers, false);
 
         // check lilii's degree with baljeet
-        int degree = lilii.getDegree(lilii, baljeet, allUsers);
+        int degree = lilii.getDegree(lilii, baljeet);
         assertEquals(2, degree);
     }
 
