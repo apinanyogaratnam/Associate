@@ -37,3 +37,7 @@ SQL ready: (COMPLETED) <br />
     DELETE: <BR />
         - user: delete user (everything updates across db) - tested <br />
         - company: delete company (everythin updates across db) -tested <br />
+
+
+suggested:
+- print entire db print method
