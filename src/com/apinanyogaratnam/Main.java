@@ -170,41 +170,41 @@ public class Main {
                     repeat = true;
                     break;
                 case 9:
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
+                    Print.printSameLine("Enter user's name: ");
+                    user1 = reader.nextLine();
 
-                    // if company is null repeat
-                    Print.printSameLine("Enter company's new firstname: ");
-                    String company2 = reader.nextLine();
+                    // if user is null repeat
+                    Print.printSameLine("Enter user's new firstname: ");
+                    user2 = reader.nextLine();
 
-                    c1 = MainHelper.getCompany(company1, allCompanies);
-                    c1.updateName(company2, allCompanies, true);
+                    u1 = MainHelper.getUser(user1, allUsers);
+                    u1.updateFirstName(user2, true);
 
                     repeat = true;
                     break;
                 case 10:
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
+                    Print.printSameLine("Enter user's name: ");
+                    user1 = reader.nextLine();
 
-                    // if company is null repeat
-                    Print.printSameLine("Enter company's new lastname: ");
-                    company2 = reader.nextLine();
+                    // if user is null repeat
+                    Print.printSameLine("Enter user's new lastname: ");
+                    user2 = reader.nextLine();
 
-                    c1 = MainHelper.getCompany(company1, allCompanies);
-                    c1.updateName(company2, allCompanies, true);
+                    u1 = MainHelper.getUser(user1, allUsers);
+                    u1.updateLastName(user2, true);
 
                     repeat = true;
                     break;
                 case 11:
-                    Print.printSameLine("Enter company's name: ");
-                    company1 = reader.nextLine();
+                    Print.printSameLine("Enter user's name: ");
+                    user1 = reader.nextLine();
 
-                    // if company is null repeat
-                    Print.printSameLine("Enter company's new name: ");
-                    company2 = reader.nextLine();
+                    // if user is null repeat
+                    Print.printSameLine("Enter user's new username: ");
+                    user2 = reader.nextLine();
 
-                    c1 = MainHelper.getCompany(company1, allCompanies);
-                    boolean updated = c1.updateName(company2, allCompanies, true);
+                    u1 = MainHelper.getUser(user1, allUsers);
+                    boolean updated = u1.updateUsername(user2, allUsers, true);
                     // if !updated repeat
 
                     repeat = true;
@@ -213,33 +213,69 @@ public class Main {
                     Print.printSameLine("Enter company's name: ");
                     company1 = reader.nextLine();
                     Print.printSameLine("Enter network's name: ");
-                    company2 = reader.nextLine();
+                    String company2 = reader.nextLine();
 
                     c1 = MainHelper.getCompany(company1, allCompanies);
                     Company c2 = MainHelper.getCompany(company2, allCompanies);
 
-                    // if c1 or c2 is null return
+                    // if c1 or c2 is null repeat
                     c1.addNetwork(c2, allCompanies, true);
 
                     repeat = true;
                     break;
                 case 13:
+                    Print.printSameLine("Enter company's name: ");
+                    company1 = reader.nextLine();
+                    Print.printSameLine("Enter network's name: ");
+                    company2 = reader.nextLine();
+
+                    c1 = MainHelper.getCompany(company1, allCompanies);
+                    c2 = MainHelper.getCompany(company2, allCompanies);
+
+                    // if c1 or c2 is null repeat
+                    c1.removeNetwork(c2, allCompanies, true);
 
                     repeat = true;
                     break;
                 case 14:
+                    Print.printSameLine("Enter company's name: ");
+                    company1 = reader.nextLine();
+
+                    // if company1 is null repeat
+                    c1 = MainHelper.getCompany(company1, allCompanies);
+
+                    Print.print(c1.getNetworksList());
 
                     repeat = true;
                     break;
                 case 15:
+                    Print.printSameLine("Enter company's name: ");
+                    company1 = reader.nextLine();
+
+                    // if company1 is null repeat
+                    c1 = MainHelper.getCompany(company1, allCompanies);
+
+                    Print.print(c1.getFollowersList());
 
                     repeat = true;
                     break;
                 case 16:
+                    Print.printSameLine("Enter company's name: ");
+                    company1 = reader.nextLine();
+
+                    // if company is null repeat
+                    Print.printSameLine("Enter company's new name: ");
+                    company2 = reader.nextLine();
+
+                    c1 = MainHelper.getCompany(company1, allCompanies);
+                    updated = c1.updateName(company2, allCompanies, true);
+                    // if !updated repeat
 
                     repeat = true;
                     break;
                 case 17:
+                    Print.print(allUsers);
+                    Print.print(allCompanies);
 
                     repeat = true;
                     break;
