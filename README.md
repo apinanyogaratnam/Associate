@@ -15,9 +15,6 @@ Notes:
 - users identified with username
 - company identified with company name
 
-TODO:
-- make main class interactive
-
 SQL ready: (COMPLETED) <br />
 
     CREATE: <br />
