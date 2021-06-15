@@ -17,26 +17,26 @@ Notes:
 
 SQL ready: (COMPLETED) <br />
 
-    CREATE: <br />
-        - user: create new user - tested <br />
-        - company: create new company - tested <br />
+    CREATE:
+        - user: create new user - tested
+        - company: create new company - tested
 
-    READ: <br />
-        - most methods use read to get data <br />
+    READ:
+        - most methods use read to get data
 
-    UPDATE: <br />
-        - user: add friend (everything updates across db) - tested <br />
-        - user: add company (everything updates across db) - tested <br />
-        - user: rename first, last, username (everything updates across db) - tested <br />
-        - user: remove friend (everything updates across db) - tested <br />
-        - user: remove company (everything updates across db) - tested <br />
-        - company: add network (everything updates across db) - tested <br />
-        - company: rename company name (everything updates across db) - tested <br />
-        - company: remove network (everything udpates across db) - tested <br />
+    UPDATE:
+        - user: add friend (everything updates across db) - tested
+        - user: add company (everything updates across db) - tested
+        - user: rename first, last, username (everything updates across db) - tested
+        - user: remove friend (everything updates across db) - tested
+        - user: remove company (everything updates across db) - tested
+        - company: add network (everything updates across db) - tested
+        - company: rename company name (everything updates across db) - tested
+        - company: remove network (everything udpates across db) - tested
 
-    DELETE: <BR />
-        - user: delete user (everything updates across db) - tested <br />
-        - company: delete company (everythin updates across db) -tested <br />
+    DELETE:
+        - user: delete user (everything updates across db) - tested
+        - company: delete company (everythin updates across db) -tested
 
 
 suggested:
